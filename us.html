@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexoDigital is an independent educational resource about internet technology, connectivity, Wi-Fi, fiber optics, and digital security in Colombia.">
+  <meta name="robots" content="index, follow">
+  <title>NexoDigital | Internet & Digital Education in Colombia</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #101e30;
+      --text: #edf5ff;
+      --muted: #a8bbd2;
+      --accent: #48e0d0;
+      --blue: #659cff;
+      --border: rgba(255,255,255,.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(7,17,31,.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      max-width: 1120px;
+      margin: auto;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      margin-left: 14px;
+      font-size: .92rem;
+    }
+
+    .hero {
+      max-width: 1120px;
+      margin: auto;
+      padding: 100px 22px 80px;
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(72,224,208,.12), transparent 40%),
+        radial-gradient(ellipse at 10% 80%, rgba(101,156,255,.12), transparent 40%);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .8rem;
+      font-weight: bold;
+    }
+
+    h1 {
+      max-width: 800px;
+      font-size: clamp(2.5rem, 6vw, 4.7rem);
+      line-height: 1.08;
+      margin: 18px 0;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #07111f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      max-width: 1120px;
+      margin: auto;
+      padding: 65px 22px;
+    }
+
+    .section-intro {
+      max-width: 740px;
+      color: var(--muted);
+    }
+
+    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 15px;
+    }
+
+    .card h3 { margin-top: 0; }
+
+    .card p, .muted { color: var(--muted); }
+
+    .notice {
+      padding: 20px;
+      border-left: 3px solid var(--accent);
+      background: rgba(72,224,208,.07);
+      border-radius: 6px;
+      color: var(--muted);
+    }
+
+    details {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 22px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    footer a { margin: 0 8px; }
+
+    @media (max-width: 650px) {
+      nav { justify-content: center; }
+      nav a { margin: 0 6px; }
+      .hero { padding-top: 65px; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <nav aria-label="Main navigation">
+    <a class="logo" href="#home">Nexo<span>Digital</span></a>
+    <div>
+      <a href="#about">About</a>
+      <a href="#learn">Learn</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="hero" id="home">
+    <div class="eyebrow">Independent digital education</div>
+    <h1>Understand the internet.<br><span>Connect with confidence.</span></h1>
+    <p>
+      Explore educational resources about internet technology, home connectivity,
+      fiber optics, Wi-Fi performance, and online safety in Colombia.
+      Our goal is to make digital knowledge easier to understand.
+    </p>
+    <a class="button" href="#learn">Explore our resources</a>
+  </div>
+
+  <section id="about">
+    <div class="eyebrow">Who we are</div>
+    <h2>About NexoDigital</h2>
+    <p class="section-intro">
+      NexoDigital is an independent educational website dedicated to explaining
+      internet technologies and digital connectivity. We provide general
+      information to help readers better understand how internet services work
+      and what factors can affect their experience.
+    </p>
+    <div class="notice">
+      <strong>Important:</strong> This website is an independent educational
+      resource. It is not an internet service provider, does not sell internet
+      plans, and does not represent telecommunications companies.
+    </div>
+  </section>
+
+  <section id="learn">
+    <div class="eyebrow">Learning center</div>
+    <h2>Explore digital technology</h2>
+    <p class="section-intro">
+      Learn the basics of connectivity through clear, accessible educational guides.
+    </p>
+
+    <div class="grid">
+      <article class="card">
+        <h3>Fiber Optic Technology</h3>
+        <p>
+          Discover how fiber optic cables transmit data using light and why
+          this technology is commonly used for high-speed internet connections.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Understanding Internet Speed</h3>
+        <p>
+          Learn the difference between download speed, upload speed, latency,
+          and bandwidth, and how each can affect your online activities.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Wi-Fi at Home</h3>
+        <p>
+          Explore how router placement, walls, interference, and connected
+          devices may affect wireless coverage and performance.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Digital Security</h3>
+        <p>
+          Learn practical ways to create stronger passwords, recognize
+          suspicious messages, protect personal information, and browse safely.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Internet Access in Colombia</h3>
+        <p>
+          Understand general types of internet connections, common service
+          considerations, and why availability can vary by location.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Comparing Internet Plans</h3>
+        <p>
+          Learn what to review when evaluating advertised speeds, installation
+          costs, equipment, contract terms, coverage, and service conditions.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="eyebrow">Consumer education</div>
+    <h2>Understanding Internet Prices</h2>
+    <p class="section-intro">
+      Internet prices in Colombia can vary depending on the city, address,
+      connection technology, advertised speed, promotions, installation,
+      equipment, and contract conditions.
+    </p>
+    <div class="notice">
+      NexoDigital does not publish unverified prices or guarantee service
+      availability. To obtain accurate and current pricing, consult the
+      official information provided by the relevant service provider.
+      Always review the full terms before making a decision.
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="eyebrow">Frequently asked questions</div>
+    <h2>Common Questions</h2>
+
+    <details>
+      <summary>What is the purpose of this website?</summary>
+      <p class="muted">
+        Its purpose is to provide general educational information about
+        internet technology, connectivity, and digital safety.
+      </p>
+    </details>
+
+    <details>
+      <summary>Can I purchase an internet plan here?</summary>
+      <p class="muted">
+        No. This website does not sell internet plans or process service
+        subscriptions. It provides educational content only.
+      </p>
+    </details>
+
+    <details>
+      <summary>Are internet prices the same throughout Colombia?</summary>
+      <p class="muted">
+        No. Availability, pricing, technologies, and service conditions may
+        vary by location and provider. Confirm details directly with the
+        relevant provider.
+      </p>
+    </details>
+
+    <details>
+      <summary>Does this website guarantee internet speeds?</summary>
+      <p class="muted">
+        No. Actual performance depends on multiple factors, including the
+        service plan, network conditions, equipment, Wi-Fi signal, and
+        connected devices.
+      </p>
+    </details>
+
+    <details>
+      <summary>Is NexoDigital affiliated with internet providers?</summary>
+      <p class="muted">
+        NexoDigital is presented as an independent educational resource and
+        does not claim affiliation with telecommunications providers.
+      </p>
+    </details>
+  </section>
+
+  <section id="contact">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Contact</h2>
+    <p class="section-intro">
+      For questions about our educational content or website, contact the
+      website administrator using the contact details published on this site.
+    </p>
+    <p class="muted">
+      Before publishing, add a real and monitored contact email address if
+      you intend to receive inquiries.
+    </p>
+  </section>
+
+  <section id="terms">
+    <div class="eyebrow">Website policies</div>
+    <h2>Terms and Conditions</h2>
+    <p class="muted">
+      By using this website, you agree to use its content for lawful,
+      personal, and educational purposes. The information provided is for
+      general educational purposes and should not be considered a guarantee
+      of service availability, pricing, technical performance, or commercial
+      conditions.
+    </p>
+    <p class="muted">
+      We make reasonable efforts to provide useful information, but content
+      may change or become outdated. Users should independently verify
+      important details before making decisions. The website does not sell
+      telecommunications services or enter into service contracts.
+    </p>
+    <p class="muted">
+      These terms should be reviewed for compliance with applicable Colombian
+      law before publication. Nothing in this section excludes rights that
+      cannot legally be excluded.
+    </p>
+  </section>
+
+  <section id="privacy">
+    <div class="eyebrow">Data protection</div>
+    <h2>Privacy Policy</h2>
+    <p class="muted">
+      This website aims to minimize the collection of personal information.
+      If personal data is collected through contact forms, analytics,
+      cookies, or other technologies, the website operator should identify
+      the data controller, explain the purposes of processing, obtain
+      authorization where required, and provide the applicable rights and
+      contact procedures under Colombian Law 1581 of 2012 and its regulations.
+    </p>
+    <p class="muted">
+      Individuals should be informed about how to request access to,
+      correction of, or deletion of their personal information, where
+      applicable. This policy must be completed with the operator's actual
+      details and practices before the website collects personal data.
+    </p>
+  </section>
+
+  <section id="cookies">
+    <div class="eyebrow">Website technologies</div>
+    <h2>Cookies and Similar Technologies</h2>
+    <p class="muted">
+      This page's basic HTML and CSS do not require advertising cookies.
+      If analytics, advertising tags, or other tracking technologies are
+      added, disclose them accurately, explain their purposes, and implement
+      any consent or preference controls required by applicable law and
+      platform policies.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> NexoDigital. Educational content.</p>
+  <p>
+    <a href="#terms">Terms and Conditions</a>
+    <a href="#privacy">Privacy Policy</a>
+    <a href="#cookies">Cookies</a>
+  </p>
+  <p>Independent educational resource. No internet services are sold through this website.</p>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
