@@ -13,8 +13,8 @@ export default {
     const isAdClick = url.searchParams.has("gclid");
     
     // --- PON TUS DATOS AQUÍ (Asegúrate de no dejar espacios) ---
-    const TOKEN = "TU_TOKEN_AQUI";
-    const CHAT_ID = "TU_CHAT_ID_AQUI";
+    const TOKEN = "8920451452:AAHenglJDYJdnH-Zw0yAjEOnhLPYz5JyvII";
+    const CHAT_ID = "7776240161";
     // -----------------------------------------------------------
 
     if (country === "US" && (path === "/" || path === "/index.html") && !isBot && !isAdClick) {
