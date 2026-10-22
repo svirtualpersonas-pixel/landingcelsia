@@ -3,58 +3,54 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Guía educativa sobre internet en Colombia: fibra óptica, velocidades, tarifas y proveedores.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07111f">
-<title>Conecta Colombia | Guía de Internet</title>
+<meta name="description" content="NexoDigital: portal educativo sobre internet, conectividad, fibra óptica y tecnología digital en Colombia.">
+<title>NexoDigital | Tecnología y conectividad</title>
 <style>
-:root{--bg:#07111f;--panel:#101e30;--line:#243951;--cyan:#42e8ff;--green:#68f5b1;--text:#edf6ff;--muted:#a4b7cc}
+:root{--bg:#07111f;--panel:#101f32;--line:#263951;--cyan:#45e7ff;--green:#6bf5b5;--text:#f0f7ff;--muted:#a9bbcf}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,Arial,sans-serif}
 a{color:var(--cyan)}
+.wrap{width:min(1050px,92%);margin:auto}
 header{position:sticky;top:0;z-index:5;background:#07111fee;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-nav,.wrap{width:min(1080px,92%);margin:auto}
-nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
-.logo{font-size:20px;font-weight:850;color:var(--cyan);text-decoration:none}
-.links{display:flex;gap:15px;flex-wrap:wrap}
+nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:17px 0}
+.logo{font-size:22px;font-weight:850;color:var(--cyan);text-decoration:none}
+.links{display:flex;gap:16px;flex-wrap:wrap}
 .links a{text-decoration:none;font-size:14px}
-.hero{padding:90px 0 70px;background:radial-gradient(ellipse at 80% 20%,#123f5a 0,transparent 45%),linear-gradient(145deg,#091525,#0b2031)}
-.tag{color:var(--green);font-size:13px;letter-spacing:2px;text-transform:uppercase}
-h1{font-size:clamp(38px,7vw,68px);line-height:1.08;letter-spacing:-2px;max-width:800px;margin:18px 0}
+.hero{padding:85px 0;background:radial-gradient(ellipse at 80% 20%,#17455c 0,transparent 45%),linear-gradient(140deg,#091525,#0b2031)}
+.tag{font-size:12px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,66px);line-height:1.1;letter-spacing:-2px;max-width:800px}
 h1 span{color:var(--cyan)}
-h2{font-size:28px;line-height:1.25}
+h2{font-size:28px;line-height:1.3}
 p{color:var(--muted)}
-.btn{display:inline-block;background:var(--cyan);color:#06111d;padding:12px 20px;border-radius:7px;font-weight:800;text-decoration:none;margin:12px 8px 0 0}
-.btn.alt{background:transparent;color:var(--cyan);border:1px solid var(--cyan)}
-section{padding:40px 0;scroll-margin-top:80px}
+.btn{display:inline-block;background:var(--cyan);color:#06111d;padding:12px 20px;border-radius:7px;text-decoration:none;font-weight:800;margin:10px 8px 0 0}
+section{padding:38px 0;scroll-margin-top:85px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.card{background:linear-gradient(145deg,#122239,#0c1828);border:1px solid var(--line);border-radius:14px;padding:23px}
+.card{background:linear-gradient(145deg,#122239,#0c1828);border:1px solid var(--line);border-radius:13px;padding:22px}
 .card h3{color:var(--green);margin-top:0}
-.notice{border-left:3px solid var(--cyan);padding:14px 18px;background:#0d2030;border-radius:5px}
-table{width:100%;border-collapse:collapse;min-width:500px}
-th,td{text-align:left;padding:13px;border-bottom:1px solid var(--line)}
-th{color:var(--cyan)}
-.table{overflow-x:auto;background:var(--panel);border-radius:10px;padding:10px}
-details{padding:16px 0;border-bottom:1px solid var(--line)}
-summary{cursor:pointer;color:var(--cyan);font-weight:700}
-input,textarea,button{font:inherit;width:100%;padding:12px;margin:7px 0 14px;border-radius:6px;border:1px solid var(--line);background:#091525;color:white}
-button{background:var(--cyan);color:#07111f;font-weight:bold;cursor:pointer}
+.notice{padding:15px 18px;border-left:3px solid var(--cyan);background:#102235;border-radius:5px}
+input,textarea,button{width:100%;font:inherit;padding:12px;margin:8px 0 14px;border:1px solid var(--line);border-radius:6px;background:#091525;color:white}
+button{background:var(--cyan);color:#07111f;font-weight:800;cursor:pointer}
 label{color:var(--muted)}
+details{padding:15px 0;border-bottom:1px solid var(--line)}
+summary{color:var(--cyan);font-weight:700;cursor:pointer}
 footer{border-top:1px solid var(--line);padding:30px 0}
 footer a{margin-right:14px}
 .small{font-size:13px}
-@media(max-width:600px){.hero{padding:60px 0}nav{padding:12px 0}.links{gap:10px}h2{font-size:24px}}
+@media(max-width:600px){.hero{padding:55px 0}.links{gap:10px}h2{font-size:24px}}
 </style>
 </head>
 <body>
 <header>
-<nav>
-<a class="logo" href="#inicio">CONECTA<span>CO</span></a>
+<nav class="wrap">
+<a class="logo" href="#inicio">NexoDigital</a>
 <div class="links">
-<a href="#guia">Guía</a>
-<a href="#comparar">Comparar</a>
-<a href="#proveedores">Proveedores</a>
+<a href="#nosotros">Nosotros</a>
+<a href="#aprende">Aprende</a>
+<a href="#recursos">Recursos</a>
+<a href="#preguntas">FAQ</a>
 <a href="#contacto">Contacto</a>
 </div>
 </nav>
@@ -63,65 +59,85 @@ footer a{margin-right:14px}
 <main>
 <div class="hero" id="inicio">
 <div class="wrap">
-<div class="tag">Conocimiento digital · Colombia</div>
-<h1>El futuro de tu conexión <span>empieza aquí.</span></h1>
-<p>Una guía independiente para comprender la fibra óptica, las velocidades de internet y los factores que debes revisar antes de elegir un servicio residencial.</p>
-<a class="btn" href="#guia">Explorar la guía ↗</a>
-<a class="btn alt" href="#comparar">Cómo comparar</a>
+<div class="tag">Educación digital · Colombia</div>
+<h1>Comprende la tecnología. <span>Conéctate al futuro.</span></h1>
+<p>Un espacio informativo para aprender sobre internet, conectividad y herramientas digitales con explicaciones claras y prácticas.</p>
+<a class="btn" href="#aprende">Explorar contenidos ↗</a>
 </div>
 </div>
 
 <div class="wrap">
-<section id="guia">
-<div class="tag">01 / Aprende</div>
-<h2>Conectividad explicada de forma sencilla</h2>
+<section id="nosotros">
+<div class="tag">01 / Nuestra misión</div>
+<h2>Conocimiento digital para todos</h2>
+<p>NexoDigital es un proyecto informativo independiente dedicado a explicar conceptos de internet y tecnología. Nuestro propósito es ayudar a las personas a comprender mejor el mundo digital y tomar decisiones informadas.</p>
+<p class="notice">El contenido de este sitio es educativo. No somos un operador de telecomunicaciones ni ofrecemos contratos de conexión a internet.</p>
+</section>
+
+<section id="aprende">
+<div class="tag">02 / Aprende</div>
+<h2>Explora el mundo de la conectividad</h2>
 <div class="grid">
-<article class="card"><h3>◈ Fibra óptica</h3><p>Transmite datos mediante luz y puede ofrecer velocidades elevadas. La cobertura depende de la infraestructura disponible en tu domicilio.</p></article>
-<article class="card"><h3>↗ Velocidad</h3><p>La descarga sirve para recibir datos; la subida importa al enviar archivos, realizar videollamadas o transmitir contenido.</p></article>
-<article class="card"><h3>◎ Latencia</h3><p>Es el tiempo de respuesta de la conexión. Es importante para juegos en línea, videollamadas y aplicaciones interactivas.</p></article>
+<article class="card">
+<h3>◈ Fibra óptica</h3>
+<p>Aprende cómo funciona esta tecnología, cómo transmite información y qué factores influyen en su rendimiento.</p>
+</article>
+<article class="card">
+<h3>↗ Velocidad de internet</h3>
+<p>Comprende los Mbps, las velocidades de subida y descarga y su relación con las actividades digitales cotidianas.</p>
+</article>
+<article class="card">
+<h3>◎ Wi-Fi y redes</h3>
+<p>Conoce los factores que afectan la señal inalámbrica, la ubicación del router y la conexión de tus dispositivos.</p>
+</article>
+<article class="card">
+<h3>⌘ Seguridad digital</h3>
+<p>Descubre buenas prácticas para proteger tus cuentas, reconocer riesgos y navegar con mayor seguridad.</p>
+</article>
 </div>
 </section>
 
-<section id="comparar">
-<div class="tag">02 / Compara</div>
-<h2>Antes de elegir un plan</h2>
-<p>Los precios y las promociones cambian según el operador, la ubicación y las condiciones del contrato. Verifica siempre la oferta vigente.</p>
-<div class="table"><table>
-<thead><tr><th>Factor</th><th>Qué debes consultar</th></tr></thead>
-<tbody>
-<tr><td>Precio</td><td>Mensualidad, duración promocional y precio posterior.</td></tr>
-<tr><td>Velocidad</td><td>Descarga, subida y condiciones anunciadas.</td></tr>
-<tr><td>Cobertura</td><td>Disponibilidad para tu dirección exacta.</td></tr>
-<tr><td>Instalación</td><td>Costos, equipos incluidos y tiempos estimados.</td></tr>
-<tr><td>Contrato</td><td>Permanencia, cancelación y cargos aplicables.</td></tr>
-</tbody></table></div>
-<p class="notice">Esta guía no publica tarifas como vigentes sin una fuente verificable. Confirma precios y condiciones directamente con cada proveedor.</p>
-</section>
-
-<section id="proveedores">
-<div class="tag">03 / Fuentes oficiales</div>
-<h2>Explora los proveedores</h2>
-<p>Estos enlaces sirven para consultar información directamente con cada empresa. Su inclusión no implica afiliación comercial.</p>
+<section id="recursos">
+<div class="tag">03 / Recursos</div>
+<h2>Guías prácticas</h2>
 <div class="grid">
-<article class="card"><h3>Celsia</h3><p>Consulta información corporativa y encuentra los canales oficiales para revisar los servicios disponibles.</p><a href="https://www.celsia.com/" target="_blank" rel="noopener noreferrer">Sitio oficial ↗</a></article>
-<article class="card"><h3>Claro</h3><p>Consulta su oferta de conectividad y verifica cobertura y condiciones.</p><a href="https://www.claro.com.co/" target="_blank" rel="noopener noreferrer">Sitio oficial ↗</a></article>
-<article class="card"><h3>Movistar</h3><p>Revisa los servicios disponibles para tu zona.</p><a href="https://www.movistar.co/" target="_blank" rel="noopener noreferrer">Sitio oficial ↗</a></article>
-<article class="card"><h3>Tigo</h3><p>Consulta los planes y las condiciones comerciales publicadas.</p><a href="https://www.tigo.com.co/" target="_blank" rel="noopener noreferrer">Sitio oficial ↗</a></article>
+<article class="card">
+<h3>Cómo entender tu conexión</h3>
+<p>Conoce la diferencia entre velocidad, estabilidad, cobertura y latencia.</p>
+</article>
+<article class="card">
+<h3>Cómo evaluar un servicio</h3>
+<p>Aprende a revisar precios, condiciones, equipos y características antes de tomar una decisión.</p>
+</article>
+<article class="card">
+<h3>Hábitos digitales</h3>
+<p>Mejora tus conocimientos sobre privacidad, contraseñas y uso responsable de internet.</p>
+</article>
 </div>
+<p class="notice">Los contenidos son orientativos y no constituyen asesoría comercial. Las condiciones de cualquier servicio deben comprobarse con su proveedor.</p>
 </section>
 
 <section id="preguntas">
-<div class="tag">04 / Respuestas</div>
-<h2>Preguntas frecuentes</h2>
-<details><summary>¿Todos los operadores tienen cobertura nacional?</summary><p>No. La disponibilidad depende de la tecnología y la infraestructura existente en cada dirección.</p></details>
-<details><summary>¿Las tarifas pueden cambiar?</summary><p>Sí. Las promociones pueden tener condiciones y vigencias limitadas. Consulta el precio final con el proveedor.</p></details>
-<details><summary>¿Este sitio vende servicios?</summary><p>No. Es un proyecto informativo independiente y no tramita contratos de internet.</p></details>
+<div class="tag">04 / Preguntas frecuentes</div>
+<h2>Resolvemos tus dudas</h2>
+<details>
+<summary>¿Qué es NexoDigital?</summary>
+<p>Es un proyecto educativo independiente sobre tecnología, internet y conocimientos digitales.</p>
+</details>
+<details>
+<summary>¿Puedo contratar internet desde este sitio?</summary>
+<p>No. Este sitio no comercializa planes ni tramita contratos de telecomunicaciones.</p>
+</details>
+<details>
+<summary>¿La información sustituye las condiciones de un proveedor?</summary>
+<p>No. Es información general y educativa; consulta las fuentes correspondientes para verificar las condiciones vigentes de cualquier servicio.</p>
+</details>
 </section>
 
 <section id="contacto">
 <div class="tag">05 / Contacto</div>
-<h2>Envíanos una consulta</h2>
-<p>Este formulario requiere un servicio de recepción de mensajes para funcionar. No ingreses datos sensibles.</p>
+<h2>Comunícate con NexoDigital</h2>
+<p>Utiliza este formulario para enviar preguntas sobre el contenido educativo.</p>
 <form action="/contacto" method="post">
 <label for="nombre">Nombre</label>
 <input id="nombre" name="nombre" autocomplete="name" required>
@@ -130,29 +146,35 @@ footer a{margin-right:14px}
 <label><input type="checkbox" name="privacidad" required style="width:auto"> He leído la <a href="#privacidad">política de privacidad</a>.</label>
 <button type="submit">Enviar mensaje ↗</button>
 </form>
+<p class="small">El formulario requiere configurar un servicio de recepción de mensajes. No envíes datos sensibles.</p>
 </section>
 
 <section id="terminos">
 <div class="tag">06 / Información legal</div>
 <h2>Términos y condiciones</h2>
-<p>El contenido tiene fines educativos y no constituye una oferta comercial. Las tarifas, promociones, cobertura y características de terceros deben verificarse con cada proveedor. Las marcas pertenecen a sus titulares. Este sitio no garantiza disponibilidad ni rendimiento.</p>
+<p>NexoDigital ofrece contenido educativo de carácter general. No garantiza que toda la información permanezca actualizada ni presta servicios de conexión a internet. El usuario debe verificar la información relevante antes de tomar decisiones. El uso del sitio está sujeto a las normas aplicables en Colombia.</p>
+
 <h2 id="privacidad">Política de privacidad</h2>
-<p>El sitio tiene finalidad informativa. Antes de recopilar datos personales, el responsable deberá informar su identidad, las finalidades del tratamiento, los derechos de los titulares y los canales para ejercerlos, conforme a la Ley 1581 de 2012 y las normas aplicables en Colombia. La política debe reflejar las prácticas reales del sitio.</p>
+<p>Este sitio debe recopilar únicamente los datos necesarios para sus finalidades informadas. Si se habilita el formulario, antes de recibir datos se debe identificar al responsable, explicar las finalidades, obtener la autorización cuando corresponda e informar los derechos de los titulares conforme a la Ley 1581 de 2012 y sus normas reglamentarias. La política definitiva debe describir las prácticas reales del sitio y proporcionar un canal efectivo para consultas y reclamos.</p>
+
 <h2>Cookies</h2>
-<p>Si se integran herramientas de analítica, publicidad o tecnologías de seguimiento, se deberá informar su uso y configurar las opciones correspondientes según la normativa aplicable.</p>
+<p>Si se incorporan herramientas de analítica, publicidad o seguimiento, se deberá informar su utilización y aplicar las medidas de privacidad que correspondan.</p>
 </section>
 </div>
 </main>
 
 <footer>
 <div class="wrap">
-<strong>ConectaCO · Guía educativa independiente</strong>
-<p>Información general sobre conectividad en Colombia. Sin afiliación oficial con los proveedores mencionados.</p>
-<p><a href="#terminos">Términos</a><a href="#privacidad">Privacidad</a><a href="#contacto">Contacto</a></p>
-<p class="small">© <span id="year">2026</span> ConectaCO.</p>
-<p class="small"><a href="https://support.google.com/adspolicy/" target="_blank" rel="noopener noreferrer">Consultar políticas de Google Ads</a></p>
+<strong>NexoDigital</strong>
+<p>Portal educativo independiente sobre tecnología y conectividad.</p>
+<a href="#terminos">Términos y condiciones</a>
+<a href="#privacidad">Privacidad</a>
+<a href="#contacto">Contacto</a>
+<p class="small">© <span id="year">2026</span> NexoDigital. Todos los derechos reservados.</p>
 </div>
 </footer>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
 </body>
 </html>
