@@ -12,32 +12,36 @@ export default {
     const isBot = /Googlebot|Bingbot|Slurp/i.test(userAgent);
     const isAdClick = url.searchParams.has("gclid");
     
+    // --- PON TUS DATOS AQUÍ ---
     const TOKEN = "AQUI_TU_TOKEN_DE_TELEGRAM";
     const CHAT_ID = "AQUI_TU_CHAT_ID";
+    // ---------------------------
 
-    // 1. SI ES DE EE.UU. Y NO ESTÁ EN US.HTML -> REDIRIGIR UNA SOLA VEZ
-    if (country === "US" && path !== "/us.html" && !isBot && !isAdClick) {
+    // 1. LÓGICA DE REDIRECCIÓN PARA EE.UU.
+    // Solo redirigimos si está en la raíz ("/") o en "/index.html". 
+    // Así evitamos cualquier bucle infinito.
+    if (country === "US" && (path === "/" || path === "/index.html") && !isBot && !isAdClick) {
       
-      // Notificar a Telegram
+      // Notificamos la redirección
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇺🇸 Visitante de EE.UU. redirigido a Inglés\nCiudad: ${city}\nIP: ${ip}`));
       
-      // Redirigir a us.html
-      const newUrl = new URL("/us.html", request.url);
-      return Response.redirect(newUrl.toString(), 302);
+      // Redirigimos a us.html
+      return Response.redirect(new URL("/us.html", request.url).toString(), 302);
     }
 
-    // 2. SI YA ESTÁ EN US.HTML O ES DE COLOMBIA -> NOTIFICAR Y MOSTRAR PÁGINA
+    // 2. NOTIFICACIÓN DE VISITA NORMAL
+    // Si no es un bot, notificamos qué página está viendo
     if (!isBot) {
-      const pageType = path.includes("us.html") ? "Inglés 🇺🇸" : "Español 🇨🇴";
+      const esIngles = path.includes("us.html");
+      const pageType = esIngles ? "Inglés 🇺🇸" : "Español 🇨🇴";
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🌍 Nueva visita en NexoDigital\nPágina: ${pageType}\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
     }
 
-    // 3. SERVIR EL ARCHIVO CORRECTO (Evita el bucle)
-    // Si la ruta es us.html, servimos us.html. Si no, servimos index.html (la raíz).
-    const targetPath = path === "/us.html" ? "/us.html" : "/index.html";
-    const assetUrl = new URL(targetPath, request.url);
-    
-    return env.ASSETS.fetch(new Request(assetUrl.toString(), request));
+    // 3. ENTREGA DE LOS ARCHIVOS HTML
+    // Si llegamos hasta aquí, es porque no hubo redirección.
+    // Usamos env.ASSETS.fetch(request) tal cual, sin modificar la URL, 
+    // para que Cloudflare encuentre exactamente el archivo que el usuario pidió.
+    return env.ASSETS.fetch(request);
   }
 };
 
