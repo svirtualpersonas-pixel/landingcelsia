@@ -19,7 +19,10 @@ export default {
 
     // 1. Redirección para EE.UU.
     if (country === "US" && (path === "/" || path === "/index.html") && !isBot && !isAdClick) {
+      
+      // Enviamos la notificación en segundo plano sin bloquear la redirección
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇺🇸 Visitante de EE.UU. redirigido a Inglés\nCiudad: ${city}\nIP: ${ip}`));
+      
       return Response.redirect(new URL("/us.html", request.url).toString(), 302);
     }
 
@@ -30,12 +33,8 @@ export default {
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🌍 Nueva visita en NexoDigital\nPágina: ${pageType}\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
     }
 
-    // 3. ENTREGA DE LOS ARCHIVOS HTML (A PRUEBA DE FALLOS)
-    // Si el navegador pide us.html, le damos us.html. Si pide cualquier otra cosa, le damos index.html.
-    const archivo = path.includes("us.html") ? "/us.html" : "/index.html";
-    const assetUrl = new URL(archivo, request.url);
-    
-    return env.ASSETS.fetch(new Request(assetUrl.toString(), request));
+    // 3. ENTREGA DE LOS ARCHIVOS (Método nativo de Pages)
+    return env.ASSETS.fetch(request);
   }
 };
 
@@ -43,12 +42,11 @@ export default {
 async function enviarTelegram(token, chatId, text) {
   const tgUrl = `https://api.telegram.org/bot${token}/sendMessage`;
   try {
-    const res = await fetch(tgUrl, {
+    await fetch(tgUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: chatId, text: text })
     });
-    if (!res.ok) console.error("Error Telegram:", await res.text());
   } catch (e) {
     console.error("Error Fetch:", e);
   }
