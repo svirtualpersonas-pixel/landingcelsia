@@ -12,48 +12,52 @@ export default {
     const isBot = /Googlebot|Bingbot|Slurp/i.test(userAgent);
     const isAdClick = url.searchParams.has("gclid");
     
-    // --- PON TUS DATOS AQUÍ ---
-    const TOKEN = "AQUI_TU_TOKEN_DE_TELEGRAM";
-    const CHAT_ID = "AQUI_TU_CHAT_ID";
-    // ---------------------------
+    // --- PON TUS DATOS AQUÍ (Cuidado con los espacios) ---
+    const TOKEN = "TU_TOKEN_DE_TELEGRAM_AQUI";
+    const CHAT_ID = "TU_CHAT_ID_AQUI";
+    // ------------------------------------------------------
 
-    // 1. LÓGICA DE REDIRECCIÓN PARA EE.UU.
-    // Solo redirigimos si está en la raíz ("/") o en "/index.html". 
-    // Así evitamos cualquier bucle infinito.
+    // 1. Redirección para EE.UU.
     if (country === "US" && (path === "/" || path === "/index.html") && !isBot && !isAdClick) {
       
-      // Notificamos la redirección
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇺🇸 Visitante de EE.UU. redirigido a Inglés\nCiudad: ${city}\nIP: ${ip}`));
       
-      // Redirigimos a us.html
       return Response.redirect(new URL("/us.html", request.url).toString(), 302);
     }
 
-    // 2. NOTIFICACIÓN DE VISITA NORMAL
-    // Si no es un bot, notificamos qué página está viendo
+    // 2. Notificación de visita normal
     if (!isBot) {
       const esIngles = path.includes("us.html");
       const pageType = esIngles ? "Inglés 🇺🇸" : "Español 🇨🇴";
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🌍 Nueva visita en NexoDigital\nPágina: ${pageType}\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
     }
 
-    // 3. ENTREGA DE LOS ARCHIVOS HTML
-    // Si llegamos hasta aquí, es porque no hubo redirección.
-    // Usamos env.ASSETS.fetch(request) tal cual, sin modificar la URL, 
-    // para que Cloudflare encuentre exactamente el archivo que el usuario pidió.
+    // 3. Entregar el HTML
     return env.ASSETS.fetch(request);
   }
 };
 
 async function enviarTelegram(token, chatId, text) {
-  if (!token || !chatId || token === "AQUI_TU_TOKEN_DE_TELEGRAM") return;
+  if (!token || !chatId || token === "TU_TOKEN_DE_TELEGRAM_AQUI") {
+    console.error("DEBUG: Faltan las credenciales en el código.");
+    return;
+  }
+  
   try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: chatId, text: text })
     });
+    
+    // Si Telegram rechaza el mensaje, lo mostramos en consola
+    if (!res.ok) {
+      const errorData = await res.text();
+      console.error("DEBUG Telegram Error:", errorData);
+    } else {
+      console.log("DEBUG: Notificación enviada con éxito.");
+    }
   } catch (e) {
-    console.error("Error Telegram:", e);
+    console.error("DEBUG Fetch Error:", e);
   }
 }
