@@ -12,52 +12,43 @@ export default {
     const isBot = /Googlebot|Bingbot|Slurp/i.test(userAgent);
     const isAdClick = url.searchParams.has("gclid");
     
-    // --- PON TUS DATOS AQUÍ (Cuidado con los espacios) ---
-    const TOKEN = "TU_TOKEN_DE_TELEGRAM_AQUI";
+    // --- PON TUS DATOS AQUÍ (Asegúrate de no dejar espacios) ---
+    const TOKEN = "TU_TOKEN_AQUI";
     const CHAT_ID = "TU_CHAT_ID_AQUI";
-    // ------------------------------------------------------
+    // -----------------------------------------------------------
 
-    // 1. Redirección para EE.UU.
     if (country === "US" && (path === "/" || path === "/index.html") && !isBot && !isAdClick) {
-      
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇺🇸 Visitante de EE.UU. redirigido a Inglés\nCiudad: ${city}\nIP: ${ip}`));
-      
       return Response.redirect(new URL("/us.html", request.url).toString(), 302);
     }
 
-    // 2. Notificación de visita normal
     if (!isBot) {
       const esIngles = path.includes("us.html");
       const pageType = esIngles ? "Inglés 🇺🇸" : "Español 🇨🇴";
       ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🌍 Nueva visita en NexoDigital\nPágina: ${pageType}\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
     }
 
-    // 3. Entregar el HTML
     return env.ASSETS.fetch(request);
   }
 };
 
 async function enviarTelegram(token, chatId, text) {
-  if (!token || !chatId || token === "TU_TOKEN_DE_TELEGRAM_AQUI") {
-    console.error("DEBUG: Faltan las credenciales en el código.");
-    return;
-  }
+  if (!token || !chatId || token === "TU_TOKEN_AQUI") return;
+
+  // Usamos una IP directa de Telegram para evitar bloqueos de DNS de Cloudflare
+  const url = `https://149.154.167.220/bot${token}/sendMessage`; 
   
   try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Host": "api.telegram.org" // Esto engaña a Telegram para que acepte la IP
+      },
       body: JSON.stringify({ chat_id: chatId, text: text })
     });
-    
-    // Si Telegram rechaza el mensaje, lo mostramos en consola
-    if (!res.ok) {
-      const errorData = await res.text();
-      console.error("DEBUG Telegram Error:", errorData);
-    } else {
-      console.log("DEBUG: Notificación enviada con éxito.");
-    }
+    if (!res.ok) console.error("Error API:", await res.text());
   } catch (e) {
-    console.error("DEBUG Fetch Error:", e);
+    console.error("Error Fetch:", e);
   }
 }
