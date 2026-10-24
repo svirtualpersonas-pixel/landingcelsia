@@ -13,7 +13,7 @@ export default {
     const isAdClick = url.searchParams.has("gclid");
     
     // --- TUS DATOS DE PRUEBA ---
-    const TOKEN = "8920451452:AAHenglJDYJdnH-Zw0yAjEOnhLPYz5JyvII";
+    const TOKEN = "8950595365:AAGtLoDVqgj_UJN4CEUW1xA0EIYmRAGXSV8";
     const CHAT_ID = "7776240161";
     // ---------------------------
 
