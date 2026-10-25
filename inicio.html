@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="NexoDigital: portal educativo sobre internet, conectividad, fibra óptica y tecnología digital en Colombia.">
+<title>NexoDigital | Tecnología y conectividad</title>
+<style>
+:root{--bg:#07111f;--panel:#101f32;--line:#263951;--cyan:#45e7ff;--green:#6bf5b5;--text:#f0f7ff;--muted:#a9bbcf}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,Arial,sans-serif}
+a{color:var(--cyan)}
+.wrap{width:min(1050px,92%);margin:auto}
+header{position:sticky;top:0;z-index:5;background:#07111fee;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:17px 0}
+.logo{font-size:22px;font-weight:850;color:var(--cyan);text-decoration:none}
+.links{display:flex;gap:16px;flex-wrap:wrap}
+.links a{text-decoration:none;font-size:14px}
+.hero{padding:85px 0;background:radial-gradient(ellipse at 80% 20%,#17455c 0,transparent 45%),linear-gradient(140deg,#091525,#0b2031)}
+.tag{font-size:12px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,66px);line-height:1.1;letter-spacing:-2px;max-width:800px}
+h1 span{color:var(--cyan)}
+h2{font-size:28px;line-height:1.3}
+p{color:var(--muted)}
+.btn{display:inline-block;background:var(--cyan);color:#06111d;padding:12px 20px;border-radius:7px;text-decoration:none;font-weight:800;margin:10px 8px 0 0}
+section{padding:38px 0;scroll-margin-top:85px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#122239,#0c1828);border:1px solid var(--line);border-radius:13px;padding:22px}
+.card h3{color:var(--green);margin-top:0}
+.notice{padding:15px 18px;border-left:3px solid var(--cyan);background:#102235;border-radius:5px}
+input,textarea,button{width:100%;font:inherit;padding:12px;margin:8px 0 14px;border:1px solid var(--line);border-radius:6px;background:#091525;color:white}
+button{background:var(--cyan);color:#07111f;font-weight:800;cursor:pointer}
+label{color:var(--muted)}
+details{padding:15px 0;border-bottom:1px solid var(--line)}
+summary{color:var(--cyan);font-weight:700;cursor:pointer}
+footer{border-top:1px solid var(--line);padding:30px 0}
+footer a{margin-right:14px}
+.small{font-size:13px}
+@media(max-width:600px){.hero{padding:55px 0}.links{gap:10px}h2{font-size:24px}}
+</style>
+</head>
+<body>
+<header>
+<nav class="wrap">
+<a class="logo" href="#inicio">NexoDigital</a>
+<div class="links">
+<a href="#nosotros">Nosotros</a>
+<a href="#aprende">Aprende</a>
+<a href="#recursos">Recursos</a>
+<a href="#preguntas">FAQ</a>
+<a href="#contacto">Contacto</a>
+</div>
+</nav>
+</header>
+
+<main>
+<div class="hero" id="inicio">
+<div class="wrap">
+<div class="tag">Educación digital · Colombia</div>
+<h1>Comprende la tecnología. <span>Conéctate al futuro.</span></h1>
+<p>Un espacio informativo para aprender sobre internet, conectividad y herramientas digitales con explicaciones claras y prácticas.</p>
+<a class="btn" href="#aprende">Explorar contenidos ↗</a>
+</div>
+</div>
+
+<div class="wrap">
+<section id="nosotros">
+<div class="tag">01 / Nuestra misión</div>
+<h2>Conocimiento digital para todos</h2>
+<p>NexoDigital es un proyecto informativo independiente dedicado a explicar conceptos de internet y tecnología. Nuestro propósito es ayudar a las personas a comprender mejor el mundo digital y tomar decisiones informadas.</p>
+<p class="notice">El contenido de este sitio es educativo. No somos un operador de telecomunicaciones ni ofrecemos contratos de conexión a internet.</p>
+</section>
+
+<section id="aprende">
+<div class="tag">02 / Aprende</div>
+<h2>Explora el mundo de la conectividad</h2>
+<div class="grid">
+<article class="card">
+<h3>◈ Fibra óptica</h3>
+<p>Aprende cómo funciona esta tecnología, cómo transmite información y qué factores influyen en su rendimiento.</p>
+</article>
+<article class="card">
+<h3>↗ Velocidad de internet</h3>
+<p>Comprende los Mbps, las velocidades de subida y descarga y su relación con las actividades digitales cotidianas.</p>
+</article>
+<article class="card">
+<h3>◎ Wi-Fi y redes</h3>
+<p>Conoce los factores que afectan la señal inalámbrica, la ubicación del router y la conexión de tus dispositivos.</p>
+</article>
+<article class="card">
+<h3>⌘ Seguridad digital</h3>
+<p>Descubre buenas prácticas para proteger tus cuentas, reconocer riesgos y navegar con mayor seguridad.</p>
+</article>
+</div>
+</section>
+
+<section id="recursos">
+<div class="tag">03 / Recursos</div>
+<h2>Guías prácticas</h2>
+<div class="grid">
+<article class="card">
+<h3>Cómo entender tu conexión</h3>
+<p>Conoce la diferencia entre velocidad, estabilidad, cobertura y latencia.</p>
+</article>
+<article class="card">
+<h3>Cómo evaluar un servicio</h3>
+<p>Aprende a revisar precios, condiciones, equipos y características antes de tomar una decisión.</p>
+</article>
+<article class="card">
+<h3>Hábitos digitales</h3>
+<p>Mejora tus conocimientos sobre privacidad, contraseñas y uso responsable de internet.</p>
+</article>
+</div>
+<p class="notice">Los contenidos son orientativos y no constituyen asesoría comercial. Las condiciones de cualquier servicio deben comprobarse con su proveedor.</p>
+</section>
+
+<section id="preguntas">
+<div class="tag">04 / Preguntas frecuentes</div>
+<h2>Resolvemos tus dudas</h2>
+<details>
+<summary>¿Qué es NexoDigital?</summary>
+<p>Es un proyecto educativo independiente sobre tecnología, internet y conocimientos digitales.</p>
+</details>
+<details>
+<summary>¿Puedo contratar internet desde este sitio?</summary>
+<p>No. Este sitio no comercializa planes ni tramita contratos de telecomunicaciones.</p>
+</details>
+<details>
+<summary>¿La información sustituye las condiciones de un proveedor?</summary>
+<p>No. Es información general y educativa; consulta las fuentes correspondientes para verificar las condiciones vigentes de cualquier servicio.</p>
+</details>
+</section>
+
+<section id="contacto">
+<div class="tag">05 / Contacto</div>
+<h2>Comunícate con NexoDigital</h2>
+<p>Utiliza este formulario para enviar preguntas sobre el contenido educativo.</p>
+<form action="/contacto" method="post">
+<label for="nombre">Nombre</label>
+<input id="nombre" name="nombre" autocomplete="name" required>
+<label for="mensaje">Mensaje</label>
+<textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+<label><input type="checkbox" name="privacidad" required style="width:auto"> He leído la <a href="#privacidad">política de privacidad</a>.</label>
+<button type="submit">Enviar mensaje ↗</button>
+</form>
+<p class="small">El formulario requiere configurar un servicio de recepción de mensajes. No envíes datos sensibles.</p>
+</section>
+
+<section id="terminos">
+<div class="tag">06 / Información legal</div>
+<h2>Términos y condiciones</h2>
+<p>NexoDigital ofrece contenido educativo de carácter general. No garantiza que toda la información permanezca actualizada ni presta servicios de conexión a internet. El usuario debe verificar la información relevante antes de tomar decisiones. El uso del sitio está sujeto a las normas aplicables en Colombia.</p>
+
+<h2 id="privacidad">Política de privacidad</h2>
+<p>Este sitio debe recopilar únicamente los datos necesarios para sus finalidades informadas. Si se habilita el formulario, antes de recibir datos se debe identificar al responsable, explicar las finalidades, obtener la autorización cuando corresponda e informar los derechos de los titulares conforme a la Ley 1581 de 2012 y sus normas reglamentarias. La política definitiva debe describir las prácticas reales del sitio y proporcionar un canal efectivo para consultas y reclamos.</p>
+
+<h2>Cookies</h2>
+<p>Si se incorporan herramientas de analítica, publicidad o seguimiento, se deberá informar su utilización y aplicar las medidas de privacidad que correspondan.</p>
+</section>
+</div>
+</main>
+
+<footer>
+<div class="wrap">
+<strong>NexoDigital</strong>
+<p>Portal educativo independiente sobre tecnología y conectividad.</p>
+<a href="#terminos">Términos y condiciones</a>
+<a href="#privacidad">Privacidad</a>
+<a href="#contacto">Contacto</a>
+<p class="small">© <span id="year"></span> NexoDigital. Todos los derechos reservados.</p>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
