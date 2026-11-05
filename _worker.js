@@ -1,59 +1,44 @@
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
     const cf = request.cf || {};
     
-    // Obtenemos los datos del visitante
     const country = cf.country || "Desconocido";
     const city = cf.city || "Desconocido";
     const ip = request.headers.get("CF-Connecting-IP") || "Desconocido";
     const userAgent = request.headers.get("User-Agent") || "";
     
-    // Verificamos si es un bot
     const isBot = /Googlebot|Bingbot|Slurp/i.test(userAgent);
+    const isAdClick = url.searchParams.has("gclid");
     
-    // --- TUS DATOS ---
+    // --- TUS DATOS DE PRUEBA ---
     const TOKEN = "8920451452:AAHenglJDYJdnH-Zw0yAjEOnhLPYz5JyvII";
     const CHAT_ID = "7776240161";
-    // -----------------
+    // ---------------------------
 
-    // =======================================================
-    // 🔥 BLOQUEO TOTAL PARA COLOMBIA (Cualquier ruta, sin excepciones)
-    // =======================================================
-    if (country === "CO" && !isBot) {
+    // 1. Redirección para EE.UU.
+    if (country === "US" && (path === "/" || path === "/index.html") && !isBot && !isAdClick) {
       
-      // Enviamos la alerta a Telegram
-      ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇨🇴 COLOMBIA BLOQUEADO\nCiudad: ${city}\nIP: ${ip}\nRuta intentada: ${path}`));
+      // Enviamos la notificación en segundo plano sin bloquear la redirección
+      ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇺🇸 Visitante de EE.UU. redirigido a Inglés\nCiudad: ${city}\nIP: ${ip}`));
       
-      // Redirección inmediata a Google
-      return Response.redirect("https://damaspopular.vercel.app/", 302);
-    }
-
-    // =======================================================
-    // 🇺🇸 REDIRECCIÓN PARA ESTADOS UNIDOS
-    // =======================================================
-    if (country === "US" && (path === "/" || path === "/index.html") && !isBot) {
-      ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇺🇸 EE.UU. redirigido a Inglés\nCiudad: ${city}\nIP: ${ip}`));
       return Response.redirect(new URL("/us.html", request.url).toString(), 302);
     }
 
-    // =======================================================
-    // 🌍 VISITAS NORMALES (Resto del mundo)
-    // =======================================================
+    // 2. Notificación de visita normal
     if (!isBot) {
       const esIngles = path.includes("us.html");
-      const pageType = esIngles ? "Inglés 🇺🇸" : "Español";
-      ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🌍 Nueva visita\nPágina: ${pageType}\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
+      const pageType = esIngles ? "Inglés 🇺🇸" : "Español 🇨🇴";
+      ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🌍 Nueva visita en NexoDigital\nPágina: ${pageType}\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
     }
 
-    // ENTREGA DE ARCHIVOS
+    // 3. ENTREGA DE LOS ARCHIVOS (Método nativo de Pages)
     return env.ASSETS.fetch(request);
   }
 };
 
-// Función de envío a Telegram
+// Función de envío normal
 async function enviarTelegram(token, chatId, text) {
   const tgUrl = `https://api.telegram.org/bot${token}/sendMessage`;
   try {
@@ -66,4 +51,3 @@ async function enviarTelegram(token, chatId, text) {
     console.error("Error Fetch:", e);
   }
 }
-   
