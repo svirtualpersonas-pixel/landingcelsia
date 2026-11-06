@@ -1,179 +1,359 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07111f">
-<meta name="description" content="NexoDigital: portal educativo sobre internet, conectividad, fibra óptica y tecnología digital en Colombia.">
-<title>NexoDigital | Tecnología y conectividad</title>
-<style>
-:root{--bg:#07111f;--panel:#101f32;--line:#263951;--cyan:#45e7ff;--green:#6bf5b5;--text:#f0f7ff;--muted:#a9bbcf}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 system-ui,Arial,sans-serif}
-a{color:var(--cyan)}
-.wrap{width:min(1050px,92%);margin:auto}
-header{position:sticky;top:0;z-index:5;background:#07111fee;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-nav{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:17px 0}
-.logo{font-size:22px;font-weight:850;color:var(--cyan);text-decoration:none}
-.links{display:flex;gap:16px;flex-wrap:wrap}
-.links a{text-decoration:none;font-size:14px}
-.hero{padding:85px 0;background:radial-gradient(ellipse at 80% 20%,#17455c 0,transparent 45%),linear-gradient(140deg,#091525,#0b2031)}
-.tag{font-size:12px;letter-spacing:2px;color:var(--green);text-transform:uppercase}
-h1{font-size:clamp(38px,7vw,66px);line-height:1.1;letter-spacing:-2px;max-width:800px}
-h1 span{color:var(--cyan)}
-h2{font-size:28px;line-height:1.3}
-p{color:var(--muted)}
-.btn{display:inline-block;background:var(--cyan);color:#06111d;padding:12px 20px;border-radius:7px;text-decoration:none;font-weight:800;margin:10px 8px 0 0}
-section{padding:38px 0;scroll-margin-top:85px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.card{background:linear-gradient(145deg,#122239,#0c1828);border:1px solid var(--line);border-radius:13px;padding:22px}
-.card h3{color:var(--green);margin-top:0}
-.notice{padding:15px 18px;border-left:3px solid var(--cyan);background:#102235;border-radius:5px}
-input,textarea,button{width:100%;font:inherit;padding:12px;margin:8px 0 14px;border:1px solid var(--line);border-radius:6px;background:#091525;color:white}
-button{background:var(--cyan);color:#07111f;font-weight:800;cursor:pointer}
-label{color:var(--muted)}
-details{padding:15px 0;border-bottom:1px solid var(--line)}
-summary{color:var(--cyan);font-weight:700;cursor:pointer}
-footer{border-top:1px solid var(--line);padding:30px 0}
-footer a{margin-right:14px}
-.small{font-size:13px}
-@media(max-width:600px){.hero{padding:55px 0}.links{gap:10px}h2{font-size:24px}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vuelos Futuristas — Palabras clave</title>
+  <style>
+    /* ===== RESET ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; }
+
+    /* ===== BODY / FONDO ===== */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #000000 70%);
+      color: #e6f7ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    /* ===== AVION ANIMADO ===== */
+    .fondo-avion {
+      position: fixed;
+      top: 20%;
+      left: -120px;
+      width: 120px;
+      opacity: 0.12;
+      z-index: 0;
+      animation: volar 18s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes volar {
+      from { transform: translateX(0) translateY(-20%); }
+      to   { transform: translateX(140vw) translateY(-20%); }
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .wrap {
+      width: 100%;
+      max-width: 980px;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .wrap { grid-template-columns: 1fr; padding-bottom: 40px; }
+    }
+
+    /* ===== CARD PRINCIPAL ===== */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border: 1px solid rgba(0,255,255,0.06);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 30px rgba(0,170,255,0.06);
+      backdrop-filter: blur(8px);
+    }
+
+    .title {
+      color: #00eaff;
+      font-size: 1.6rem;
+      text-shadow: 0 0 10px #00eaff;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #cfeffb;
+      margin-bottom: 18px;
+    }
+
+    /* ===== BOTONES PRINCIPALES ===== */
+    .actions {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 18px;
+    }
+    .btn {
+      background: linear-gradient(90deg,#00cfff,#0080ff);
+      color: #001;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0,170,255,0.18);
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,170,255,0.28); }
+
+    /* ===== PANEL DE KEYWORDS ===== */
+    .panel {
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid rgba(0,255,255,0.04);
+      max-height: 460px;
+      overflow: auto;
+    }
+
+    .panel-header {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .search {
+      flex:1;
+      min-width: 160px;
+    }
+
+    .input {
+      width:100%;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.4);
+      color: #e6f7ff;
+    }
+
+    .controls { display:flex; gap:8px; }
+
+    .copy-btn {
+      padding:8px 12px;
+      border-radius:10px;
+      border:1px solid rgba(0,255,255,0.08);
+      background: linear-gradient(90deg,#002a4d,#003b73);
+      color:#cfeffb;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .copy-btn:hover{ filter:brightness(1.05); }
+
+    /* ===== TAGS ===== */
+    .tags {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .tag {
+      background: linear-gradient(90deg, rgba(0,170,255,0.12), rgba(0,120,255,0.08));
+      padding:8px 12px;
+      border-radius: 999px;
+      color: #cfeffb;
+      font-weight:600;
+      font-size:0.95rem;
+      border:1px solid rgba(0,255,255,0.04);
+      cursor: default;
+      transition: transform .12s ease;
+    }
+    .tag:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,170,255,0.06); }
+
+    /* ===== SIDEBAR INFO ===== */
+    .sidebar {
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      position:sticky;
+      top:22px;
+      height: fit-content;
+    }
+
+    .info {
+      padding:14px;
+      border-radius:12px;
+      background: rgba(255,255,255,0.02);
+      border:1px solid rgba(0,255,255,0.04);
+    }
+    .info h4 { color:#00eaff; margin-bottom:6px; }
+    .meta { color:#bfefff; font-size:0.95rem; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: 28px;
+      color: #9fcfe6;
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    /* scrollbar small */
+    .panel::-webkit-scrollbar { height:8px; width:8px; }
+    .panel::-webkit-scrollbar-thumb { background: rgba(0,170,255,0.12); border-radius:8px; }
+  </style>
 </head>
 <body>
-<header>
-<nav class="wrap">
-<a class="logo" href="#inicio">NexoDigital</a>
-<div class="links">
-<a href="#nosotros">Nosotros</a>
-<a href="#aprende">Aprende</a>
-<a href="#recursos">Recursos</a>
-<a href="#preguntas">FAQ</a>
-<a href="#contacto">Contacto</a>
-</div>
-</nav>
-</header>
 
-<main>
-<div class="hero" id="inicio">
-<div class="wrap">
-<div class="tag">Educación digital · Colombia</div>
-<h1>Comprende la tecnología. <span>Conéctate al futuro.</span></h1>
-<p>Un espacio informativo para aprender sobre internet, conectividad y herramientas digitales con explicaciones claras y prácticas.</p>
-<a class="btn" href="#aprende">Explorar contenidos ↗</a>
-</div>
-</div>
+  <!-- avion animado -->
+  <img class="fondo-avion" src="https://cdn-icons-png.flaticon.com/512/69/69906.png" alt="avion">
 
-<div class="wrap">
-<section id="nosotros">
-<div class="tag">01 / Nuestra misión</div>
-<h2>Conocimiento digital para todos</h2>
-<p>NexoDigital es un proyecto informativo independiente dedicado a explicar conceptos de internet y tecnología. Nuestro propósito es ayudar a las personas a comprender mejor el mundo digital y tomar decisiones informadas.</p>
-<p class="notice">El contenido de este sitio es educativo. No somos un operador de telecomunicaciones ni ofrecemos contratos de conexión a internet.</p>
-</section>
+  <div class="wrap">
 
-<section id="aprende">
-<div class="tag">02 / Aprende</div>
-<h2>Explora el mundo de la conectividad</h2>
-<div class="grid">
-<article class="card">
-<h3>◈ Fibra óptica</h3>
-<p>Aprende cómo funciona esta tecnología, cómo transmite información y qué factores influyen en su rendimiento.</p>
-</article>
-<article class="card">
-<h3>↗ Velocidad de internet</h3>
-<p>Comprende los Mbps, las velocidades de subida y descarga y su relación con las actividades digitales cotidianas.</p>
-</article>
-<article class="card">
-<h3>◎ Wi-Fi y redes</h3>
-<p>Conoce los factores que afectan la señal inalámbrica, la ubicación del router y la conexión de tus dispositivos.</p>
-</article>
-<article class="card">
-<h3>⌘ Seguridad digital</h3>
-<p>Descubre buenas prácticas para proteger tus cuentas, reconocer riesgos y navegar con mayor seguridad.</p>
-</article>
-</div>
-</section>
+    <!-- AREA PRINCIPAL -->
+    <div class="card">
+      <div class="title">✈ Vuelos Futuristas — Palabras clave</div>
+      <div class="subtitle">Lista optimizada de frases para tu campaña Google Ads. Usa búsqueda o copia todo para pegar en Keyword Planner.</div>
 
-<section id="recursos">
-<div class="tag">03 / Recursos</div>
-<h2>Guías prácticas</h2>
-<div class="grid">
-<article class="card">
-<h3>Cómo entender tu conexión</h3>
-<p>Conoce la diferencia entre velocidad, estabilidad, cobertura y latencia.</p>
-</article>
-<article class="card">
-<h3>Cómo evaluar un servicio</h3>
-<p>Aprende a revisar precios, condiciones, equipos y características antes de tomar una decisión.</p>
-</article>
-<article class="card">
-<h3>Hábitos digitales</h3>
-<p>Mejora tus conocimientos sobre privacidad, contraseñas y uso responsable de internet.</p>
-</article>
-</div>
-<p class="notice">Los contenidos son orientativos y no constituyen asesoría comercial. Las condiciones de cualquier servicio deben comprobarse con su proveedor.</p>
-</section>
+  <a href="#" onclick="window.location.href=atob('aHR0cHM6Ly90aXF1dGVzYmFyYXRvLnZlcmNlbC5hcHAv')">
+          <button class="btn">✈ Cotizar</button>
+        </a>
+        <a href="#" onclick="window.location.href=atob('aHR0cHM6Ly90aXF1dGVzYmFyYXRvLnZlcmNlbC5hcHAv')">
+          <button class="btn">🛒 Reservar</button>
+        </a>
+      <!-- PANEL DE KEYWORDS -->
+      <div class="panel" id="panel">
+        <div class="panel-header">
+          <div class="search">
+            <input id="q" class="input" placeholder="Buscar palabra clave..." />
+          </div>
+          <div class="controls">
+            <button class="copy-btn" id="copyAll">Copiar todo</button>
+            <button class="copy-btn" id="copyVisible" title="Copia solo las visibles">Copiar visibles</button>
+          </div>
+        </div>
 
-<section id="preguntas">
-<div class="tag">04 / Preguntas frecuentes</div>
-<h2>Resolvemos tus dudas</h2>
-<details>
-<summary>¿Qué es NexoDigital?</summary>
-<p>Es un proyecto educativo independiente sobre tecnología, internet y conocimientos digitales.</p>
-</details>
-<details>
-<summary>¿Puedo contratar internet desde este sitio?</summary>
-<p>No. Este sitio no comercializa planes ni tramita contratos de telecomunicaciones.</p>
-</details>
-<details>
-<summary>¿La información sustituye las condiciones de un proveedor?</summary>
-<p>No. Es información general y educativa; consulta las fuentes correspondientes para verificar las condiciones vigentes de cualquier servicio.</p>
-</details>
-</section>
+        <div id="tags" class="tags">
+          <!-- Tags: se insertan desde JS -->
+        </div>
+      </div>
+    </div>
 
-<section id="contacto">
-<div class="tag">05 / Contacto</div>
-<h2>Comunícate con NexoDigital</h2>
-<p>Utiliza este formulario para enviar preguntas sobre el contenido educativo.</p>
-<form action="/contacto" method="post">
-<label for="nombre">Nombre</label>
-<input id="nombre" name="nombre" autocomplete="name" required>
-<label for="mensaje">Mensaje</label>
-<textarea id="mensaje" name="mensaje" rows="4" required></textarea>
-<label><input type="checkbox" name="privacidad" required style="width:auto"> He leído la <a href="#privacidad">política de privacidad</a>.</label>
-<button type="submit">Enviar mensaje ↗</button>
-</form>
-<p class="small">El formulario requiere configurar un servicio de recepción de mensajes. No envíes datos sensibles.</p>
-</section>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="info">
+        <h4>Consejos rápidos</h4>
+        <p class="meta">• Filtra por ciudad para crear grupos de anuncios.<br>
+        • Usa concordancias amplias + palabras negativas.<br>
+        • Verifica volumen con Keyword Planner (Colombia).</p>
+      </div>
 
-<section id="terminos">
-<div class="tag">06 / Información legal</div>
-<h2>Términos y condiciones</h2>
-<p>NexoDigital ofrece contenido educativo de carácter general. No garantiza que toda la información permanezca actualizada ni presta servicios de conexión a internet. El usuario debe verificar la información relevante antes de tomar decisiones. El uso del sitio está sujeto a las normas aplicables en Colombia.</p>
+      <div class="info">
+        <h4>Top ciudades</h4>
+        <p class="meta">Bogotá, Medellín, Cartagena, Cali, San Andrés, Pereira, Bucaramanga, Santa Marta.</p>
+      </div>
 
-<h2 id="privacidad">Política de privacidad</h2>
-<p>Este sitio debe recopilar únicamente los datos necesarios para sus finalidades informadas. Si se habilita el formulario, antes de recibir datos se debe identificar al responsable, explicar las finalidades, obtener la autorización cuando corresponda e informar los derechos de los titulares conforme a la Ley 1581 de 2012 y sus normas reglamentarias. La política definitiva debe describir las prácticas reales del sitio y proporcionar un canal efectivo para consultas y reclamos.</p>
+      <div class="info">
+        <h4>Formato listo</h4>
+        <p class="meta">Las frases están listas para copiar y pegar en Google Ads → <strong>Planificador de palabras clave</strong>.</p>
+      </div>
+    </aside>
 
-<h2>Cookies</h2>
-<p>Si se incorporan herramientas de analítica, publicidad o seguimiento, se deberá informar su utilización y aplicar las medidas de privacidad que correspondan.</p>
-</section>
-</div>
-</main>
+  </div>
 
-<footer>
-<div class="wrap">
-<strong>NexoDigital</strong>
-<p>Portal educativo independiente sobre tecnología y conectividad.</p>
-<a href="#terminos">Términos y condiciones</a>
-<a href="#privacidad">Privacidad</a>
-<a href="#contacto">Contacto</a>
-<p class="small">© <span id="year"></span> NexoDigital. Todos los derechos reservados.</p>
-</div>
-</footer>
-<script>
-document.getElementById("year").textContent=new Date().getFullYear();
-</script>
+  <footer>
+    © 2025 Vuelos Futuristas — Lista de palabras clave preparada para campaña Google Ads
+  </footer>
+
+  <script>
+    // ====== LISTA DE 40 PALABRAS (30 + 10 adicionales) ======
+    const keywords = [
+      "vuelos Bogotá Medellín baratos",
+      "tiquetes baratos Bogotá Cartagena",
+      "vuelos baratos Bogotá Cali",
+      "ofertas vuelos Medellín Santa Marta",
+      "promociones nacionales vuelos Colombia",
+      "vuelos low cost Bogotá San Andrés",
+      "tiquetes Medellín Cartagena baratos",
+      "vuelos Bogotá Bucaramanga baratos",
+      "vuelos Cali Medellín ofertas",
+      "vuelos baratos Pereira Bogotá",
+      "vuelos económicos nacional Colombia",
+      "vuelos baratos Cartagena Santa Marta",
+      "tiquetes baratos Bogotá Barranquilla",
+      "promociones vuelos Bogotá San Andrés",
+      "vuelos Bogotá Cúcuta ofertas",
+      "vuelos baratos Bucaramanga Medellín",
+      "vuelos Medellín Cali baratos",
+      "vuelos nacionales baratos Colombia",
+      "vuelos baratos Bogotá Pereira",
+      "tiquetes baratos destinos nacionales",
+      "ofertas vuelos Bogotá Montería",
+      "vuelos baratos Pereira Cartagena",
+      "vuelos baratos Medellín Bucaramanga",
+      "vuelos baratos Cali Santa Marta",
+      "promociones Bogotá Medellín ida y vuelta",
+      "vuelos baratos Colombia hoy",
+      "tiquetes baratos Medellín Pereira",
+      "vuelos Bogotá Santa Marta promoción",
+      "vuelos baratos destino nacional",
+      "ofertas vuelos Medellín San Andrés",
+      /* 10 adicionales */
+      "vuelos baratos a Cali desde Bogotá",
+      "promociones de tiquetes aéreos en Colombia",
+      "vuelos económicos a Cartagena todo el año",
+      "tiquetes baratos Pereira Medellín",
+      "vuelos nacionales en oferta hoy",
+      "tiquetes aéreos baratos Bogotá San Andrés",
+      "vuelos de última hora baratos Colombia",
+      "vuelos Medellín Santa Marta promociones",
+      "vuelos ida y regreso baratos Colombia",
+      "tiquetes baratos Cali Cartagena"
+    ];
+
+    // ====== Mostrar tags ======
+    const tagsContainer = document.getElementById('tags');
+    function renderTags(list) {
+      tagsContainer.innerHTML = '';
+      list.forEach(k => {
+        const el = document.createElement('div');
+        el.className = 'tag';
+        el.textContent = k;
+        tagsContainer.appendChild(el);
+      });
+    }
+    renderTags(keywords);
+
+    // ====== Buscador en vivo ======
+    const q = document.getElementById('q');
+    q.addEventListener('input', () => {
+      const v = q.value.trim().toLowerCase();
+      if (!v) { renderTags(keywords); return; }
+      const filtered = keywords.filter(k => k.toLowerCase().includes(v));
+      renderTags(filtered);
+    });
+
+    // ====== Copiar funciones ======
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copiado al portapapeles ✅');
+      }).catch(err => {
+        // fallback
+        const t = document.createElement('textarea');
+        t.value = text;
+        document.body.appendChild(t);
+        t.select();
+        try { document.execCommand('copy'); alert('Copiado al portapapeles ✅'); }
+        catch(e){ alert('Error al copiar: ' + e); }
+        t.remove();
+      });
+    }
+
+    document.getElementById('copyAll').addEventListener('click', () => {
+      copyText(keywords.join('\n'));
+    });
+
+    document.getElementById('copyVisible').addEventListener('click', () => {
+      // copiar solo las visibles (en el DOM actualmente)
+      const visible = Array.from(document.querySelectorAll('#tags .tag')).map(t => t.textContent);
+      if (visible.length === 0) { alert('No hay palabras visibles para copiar.'); return; }
+      copyText(visible.join('\n'));
+    });
+
+    // ====== Entrada: animar aparición de botones (opcional) ======
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const panel = document.querySelector('.botones');
+        if (panel) panel.classList?.add('visible');
+      }, 700);
+    });
+  </script>
 </body>
 </html>

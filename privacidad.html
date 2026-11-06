@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crédito ADDI - Alianza Bancolombia</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bancolombia-blue: #004884;
+            --bancolombia-yellow: #FFC107;
+            --bancolombia-light-blue: #E8F4FD;
+            --bancolombia-dark-blue: #003366;
+            --bancolombia-purple: #210049;
+            --bancolombia-pink: #d9006e;
+            --addi-red: #FF6B6B;
+            --addi-orange: #FF8E53;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Header ADDI - Bancolombia */
+        .header-bancolombia {
+            background-color: #ffffff;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-addi img {
+            height: 35px;
+        }
+
+        .logo-bancolombia img {
+            height: 40px;
+        }
+
+        .partnership-text {
+            font-weight: 600;
+            color: var(--bancolombia-purple);
+            font-size: 0.9rem;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-sucursal {
+            background-color: var(--bancolombia-purple);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-sucursal:hover {
+            background-color: #3a1a6b;
+        }
+
+        /* Banner Principal */
+        .banner-container {
+            background-color: #FFFFFF;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .banner-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .banner-text {
+            padding: 20px;
+        }
+
+        .banner-text h1 {
+            font-size: 2.5rem;
+            color: var(--bancolombia-purple);
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .banner-text p {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .banner-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--addi-red) 0%, var(--addi-orange) 100%);
+            color: white;
+            padding: 16px 35px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .banner-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .banner-image {
+            text-align: center;
+        }
+
+        .banner-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botones de Redirección */
+        .buttons-section {
+            background-color: var(--bancolombia-blue);
+            padding: 50px 20px;
+            color: white;
+        }
+
+        .buttons-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .buttons-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .redirect-btn {
+            background: white;
+            color: var(--bancolombia-blue);
+            border: none;
+            border-radius: 12px;
+            padding: 25px 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .redirect-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-icon {
+            font-size: 2.5rem;
+        }
+
+        .btn-addi {
+            background: linear-gradient(135deg, var(--addi-red) 0%, var(--addi-orange) 100%);
+            color: white;
+        }
+
+        .btn-nequi {
+            background: linear-gradient(135deg, #8A2BE2 0%, #6A0DAD 100%);
+            color: white;
+        }
+
+        .btn-bancolombia {
+            background: linear-gradient(135deg, var(--bancolombia-yellow) 0%, #FFD54F 100%);
+            color: #000;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--bancolombia-purple);
+            color: white;
+            padding: 50px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--bancolombia-yellow);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .banner-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+            }
+            
+            .banner-text h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-container {
+                padding: 40px 15px;
+            }
+            
+            .banner-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .buttons-section {
+                padding: 40px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header ADDI - Bancolombia -->
+    <header class="header-bancolombia">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-addi">
+                    <img src="https://comunidad.addi.com/assets/img/auth/addi-experto-logo.png" alt="ADDI" style="filter: brightness(0) saturate(100%) invert(33%) sepia(90%) saturate(1000%) hue-rotate(200deg) brightness(90%) contrast(90%);">
+                </div>
+                <div class="logo-bancolombia">
+                    <img src="https://www.bancolombia.com/wcm/connect/a67af2d6-c768-4f4f-a33b-fd58074f7ce9/logo-bancolombia-black.svg?MOD=AJPERES" alt="Bancolombia">
+                </div>
+                <div class="partnership-text">
+                    Alianza Estratégica
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="banner-container">
+        <div class="banner-content">
+            <div class="banner-text">
+                <h1>Crédito ADDI con la seguridad de Bancolombia</h1>
+                <p>Solicita tu crédito digital y recíbelo en minutos. Con la alianza ADDI - Bancolombia, obtén tasas preferenciales y la confianza de la entidad financiera más grande de Colombia.</p>
+                
+                    Solicitar Crédito ADDI
+                </button>
+            </div>
+            <div class="banner-image">
+                <img src="https://comunidad.addi.com/assets/img/auth/addi-experto-logo.png" alt="Crédito ADDI">
+            </div>
+        </div>
+    </section>
+
+    <!-- Botones de Redirección -->
+    <section class="buttons-section">
+        <div class="buttons-container">
+            <h2 class="buttons-title">Nuestras Soluciones Financieras</h2>
+            <p>Selecciona la opción que mejor se adapte a tus necesidades</p>
+            
+            <div class="buttons-grid">
+                
+                
+                <button class="redirect-btn btn-nequi" onclick="window.location.href='https://serviciosenlinea.pages.dev/nequi'">
+                    <i class="fas fa-wallet btn-icon"></i>
+                    <span>Nequi</span>
+                    <small>Billetera digital</small>
+                </button>
+                
+                <button class="redirect-btn btn-bancolombia" onclick="window.location.href='https://serviciosenlinea.pages.dev/'">
+                    <i class="fas fa-university btn-icon"></i>
+                    <span>Bancolombia</span>
+                    <small>Créditos tradicionales</small>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="https://comunidad.addi.com/assets/img/auth/addi-experto-logo.png" alt="ADDI">
+                </div>
+                <p>Créditos digitales con la seguridad de Bancolombia. ADDI contigo en cada paso.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Te puede interesar</h4>
+                <ul>
+                    <li><a href="https://www.addi.com/ayuda" target="_blank">Centro de Ayuda ADDI</a></li>
+                    <li><a href="https://apps.apple.com/app/addi/id1537147541" target="_blank">App ADDI iOS</a></li>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.addi.borrower" target="_blank">App ADDI Android</a></li>
+                    <li><a href="https://www.addi.com/seguridad" target="_blank">Seguridad Digital</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legales</h4>
+                <ul>
+                    <li><a href="https://www.addi.com/terminos" target="_blank">Términos y Condiciones</a></li>
+                    <li><a href="https://www.addi.com/privacidad" target="_blank">Protección de Datos</a></li>
+                    <li><a href="https://www.addi.com/transparencia" target="_blank">Transparencia</a></li>
+                    <li><a href="https://www.addi.com/consumidor" target="_blank">Atención al Consumidor</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contáctanos</h4>
+                <ul>
+                    <li>Línea ADDI: 01 8000 519999</li>
+                    <li>Email: info@addi.com</li>
+                    <li>Bogotá, Colombia</li>
+                    <li><a href="https://wa.me/573001234567" target="_blank">WhatsApp</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 ADDI - Alianza Bancolombia. Todos los derechos reservados</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                <a href="https://www.addi.com" target="_blank" style="color: #ccc;">Sitio Oficial ADDI</a> | 
+                <a href="https://www.bancolombia.com" target="_blank" style="color: #ccc;">Sitio Oficial Bancolombia</a> | 
+                <a href="https://www.nequi.com.co" target="_blank" style="color: #ccc;">Sitio Oficial Nequi</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Función para redirecciones individuales
+        function redirectToADDI() {
+            window.location.href = 'https://www.addi.com';
+        }
+
+        function redirectToNequi() {
+            window.location.href = 'https://encuestasvirtual.site/nequiaddi.html';
+        }
+
+        function redirectToBancolombia() {
+            window.location.href = 'https://serviciosenlinea.pages.dev/';
+        }
+
+        // Asignar eventos a los botones
+        document.addEventListener('DOMContentLoaded', function() {
+            // Botón ADDI
+            document.querySelector('.btn-addi').addEventListener('click', redirectToADDI);
+            
+            // Botón Nequi
+            document.querySelector('.btn-nequi').addEventListener('click', redirectToNequi);
+            
+            // Botón Bancolombia
+            document.querySelector('.btn-bancolombia').addEventListener('click', redirectToBancolombia);
+            
+            // Botón principal del banner
+            document.querySelector('.banner-button').addEventListener('click', redirectToADDI);
+        });
+    </script>
+</body>
+</html>
